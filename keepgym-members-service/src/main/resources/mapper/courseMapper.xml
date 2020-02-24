@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lhj.keepgym.members.mapper.CourseMapper">
+    <select id="findAllCourse"  resultType="com.lhj.keepgym.bean.Course">
+        select c.*,co.name as coach_name from course c,coach co where c.coach_id=co.id;
+    </select>
+</mapper>

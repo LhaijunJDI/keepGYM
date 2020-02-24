@@ -1,0 +1,21 @@
+<style scoped>
+  .homepage-hero-module,
+  .video-container {
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .video-container .poster img,
+  .video-container video {
+    z-index: 0;
+    position: absolute;
+  }
+
+  .video-container .filter {
+    z-index: 1;
+    position: absolute;
+    background: rgba(0, 0, 0, 0.4);
+  }
+
+</style>

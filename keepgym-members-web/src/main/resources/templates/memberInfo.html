@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>memberInfo</title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="members/assets/images/keep-icon.jpg">
+    <title>Elegant Admin Template - The Ultimate Multipurpose admin template</title>
+    <!-- Custom CSS -->
+    <link href="members/dist/css/style.css" rel="stylesheet">
+    <!-- page css -->
+    <link href="members/dist/css/pages/icon-page.css" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="members/dist/js/memberInfo.js">
+</head>
+<body class="skin-default-dark fixed-layout">
+<!-- ============================================================== -->
+<!-- Preloader - style you can find in spinners.css -->
+<!-- ============================================================== -->
+<div id="app">
+    <div class="preloader">
+        <div class="loader">
+            <div class="loader__figure"></div>
+            <p class="loader__label">Elegant admin</p>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <div id="main-wrapper">
+        <!-- ============================================================== -->
+        <!-- Topbar header - style you can find in pages.scss -->
+        <!-- ============================================================== -->
+        <header class="topbar">
+            <nav class="navbar top-navbar navbar-expand-md navbar-dark">
+                <!-- ============================================================== -->
+                <!-- Logo -->
+                <!-- ============================================================== -->
+                <div class="navbar-header">
+                    <a class="navbar-brand" th:href="@{'/toMemberGym?memberId='+${memberId}}">
+                        <!-- Logo icon --><b>
+                        <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
+                        <!-- Dark Logo icon -->
+                        <img src="members/assets/images/keep-icon.jpg" style="width: 40px;height: 40px;" alt="homepage"
+                             class="dark-logo"/>
+                        <!-- Light Logo icon -->
+                    </b>
+                    </a>
+                </div>
+                <!-- ============================================================== -->
+                <!-- End Logo -->
+                <!-- ============================================================== -->
+                <div class="navbar-collapse">
+                <!--    <h1>健身是世界上最公平的事,付出多少,收获多少。</h1>-->
+                </div>
+            </nav>
+        </header>
+        <!-- ============================================================== -->
+        <!-- End Topbar header -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <aside class="left-sidebar">
+            <div class="d-flex no-block nav-text-box align-items-center">
+                <span><img src="members/assets/images/keep-icon.jpg" style="width: 40px;height: 40px;"
+                           alt="elegant admin template"></span>
+                <a class="waves-effect waves-dark ml-auto hidden-sm-down" href="javascript:void(0)"><i
+                        class="ti-menu"></i></a>
+                <a class="nav-toggler waves-effect waves-dark ml-auto hidden-sm-up" href="javascript:void(0)"><i
+                        class="ti-menu ti-close"></i></a>
+            </div>
+            <!-- Sidebar scroll-->
+            <div class="scroll-sidebar">
+                <!-- Sidebar navigation-->
+                <nav class="sidebar-nav">
+                    <ul id="sidebarnav">
+                        <li><a class="waves-effect waves-dark" th:href="@{'/toMemberGym?memberId='+${memberId}}"
+                               aria-expanded="false">
+                            <i class="fa fa-tachometer"></i><span class="hide-menu">打卡记录</span></a></li>
+                        <li><a class="waves-effect waves-dark" th:href="@{'/toMemberCourse?memberId='+${memberId}}"
+                               aria-expanded="false"><i
+                                class="fa fa-user-circle-o"></i><span class="hide-menu">课表信息</span></a></li>
+                        <li><a class="waves-effect waves-dark" th:href="@{'/toMemberCoach?memberId='+${memberId}}"
+                               aria-expanded="false"><i
+                                class="fa fa-table"></i><span class="hide-menu"></span>教练详情</a></li>
+                        <li><a class="waves-effect waves-dark" th:href="@{'/toMemberInfo?memberId='+${memberId}}"
+                               aria-expanded="false"><i class="fa fa-smile-o"></i><span
+                                class="hide-menu"></span>个人信息</a></li>
+                        <li><a class="waves-effect waves-dark" th:href="@{'/toMemberNotice?memberId='+${memberId}}"
+                               aria-expanded="false"><i
+                                class="fa fa-globe"></i><span class="hide-menu"></span>消息通知</a></li>
+                        <li><a class="waves-effect waves-dark" th:href="@{'/toMemberFeedback?memberId='+${memberId}}"
+                               aria-expanded="false"><i
+                                class="fa fa-bookmark-o"></i><span class="hide-menu"></span>意见反馈</a></li>
+                        <div class="text-center m-t-30">
+                            <el-button type="danger" @click="loginout()">退出登录</el-button>
+                        </div>
+                    </ul>
+
+                </nav>
+                <!-- End Sidebar navigation -->
+            </div>
+            <!-- End Sidebar scroll-->
+        </aside>
+        <!-- ============================================================== -->
+        <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Page wrapper  -->
+        <!-- ============================================================== -->
+        <div class="page-wrapper">
+            <!-- ============================================================== -->
+            <!-- Container fluid  -->
+            <!-- ============================================================== -->
+            <div class="container-fluid">
+                <!-- ============================================================== -->
+                <!-- Bread crumb and right sidebar toggle -->
+                <!-- ============================================================== -->
+                <div class="row page-titles">
+                    <div class="col-md-5 align-self-center">
+                        <h3 class="text-themecolor">个人信息</h3>
+                    </div>
+                    <div class="col-md-7 align-self-center text-right">
+                        <div class="d-flex justify-content-end align-items-center">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a
+                                        th:href="@{'/toMemberGym?memberId='+${memberId}}">Home</a></li>
+                                <li class="breadcrumb-item active">个人信息</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <!-- ============================================================== -->
+                <!-- End Bread crumb and right sidebar toggle -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- Start Page Content -->
+                <!-- ============================================================== -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div>
+                                <section>
+                                    <div>
+                                        <el-form ref="form" :model="form" :rules="rules" label-width="150px"
+                                                 class="demo-ruleForm">
+                                            <input type="hidden" name="memberId" id="memberId"
+                                                   th:value="${memberId}"><br>
+                                            <el-form-item label="姓名：" required="true">
+                                                <el-input v-model="form.username"></el-input>
+                                            </el-form-item>
+                                            <el-form-item label="性别：" required="true">
+                                                <el-select v-model="form.gender" placeholder="请选择性别"
+                                                           style="width: 250px;">
+                                                    <el-option label="男" value="1"></el-option>
+                                                    <el-option label="女" value="2"></el-option>
+                                                </el-select>
+                                            </el-form-item>
+                                            <el-form-item label="联系电话：" prop="phone" required="true">
+                                                <el-input v-model="form.phone"></el-input>
+                                            </el-form-item>
+                                            <el-form-item prop="email" label="电子邮箱：" required="true">
+                                                <el-input v-model="form.email"></el-input>
+                                            </el-form-item>
+                                            <el-form-item label="居住地址：" required="true">
+                                                <el-input v-model="form.address"></el-input>
+                                            </el-form-item>
+                                            <el-form-item label="办理时间：">
+                                                <el-col :span="11">
+                                                    <el-date-picker type="date" placeholder="选择日期"
+                                                                    v-model="form.createTime" disabledDate="true"
+                                                                    style="width: 250px;"
+                                                                    disabled="true"></el-date-picker>
+                                                </el-col>
+                                            </el-form-item>
+                                            <el-form-item label="结束时间：">
+                                                <el-col :span="11">
+                                                    <el-date-picker type="date" placeholder="选择日期"
+                                                                    v-model="form.endTime" disabledDate="true"
+                                                                    style="width: 250px;"
+                                                                    disabled="true"></el-date-picker>
+                                                </el-col>
+                                            </el-form-item>
+                                            <el-form-item label="是否到期：">
+                                                <el-switch v-model="form.expire" disabled="true"></el-switch>
+                                            </el-form-item>
+
+                                            <el-form-item>
+                                                <el-button type="primary" @click="onSubmit('form')">修改</el-button>
+                                                <el-button type="info" @click="alterPwdDialog = true">修改密码</el-button>
+                                                <el-button @click="reset()">重置</el-button>
+
+                                            </el-form-item>
+                                        </el-form>
+                                        <el-dialog title="修改密码" :visible.sync="alterPwdDialog">
+                                            <el-form :model="pwd"  :rules="rules" ref="pwd">
+                                                <el-form-item label="原密码：" :label-width="formLabelWidth">
+                                                    <el-input v-model="pwd.originPwd"  placeholder="输入原密码" show-password></el-input>
+                                                </el-form-item>
+                                                <el-form-item label="新密码：" :label-width="formLabelWidth" prop="newPwd">
+                                                    <el-input v-model="pwd.newPwd"  placeholder="输入新密码" show-password></el-input>
+                                                </el-form-item>
+                                                <el-form-item label="确认密码：" :label-width="formLabelWidth" prop="confirmPwd">
+                                                    <el-input v-model="pwd.confirmPwd"  placeholder="再次确认密码" show-password></el-input>
+                                                </el-form-item>
+                                            </el-form>
+                                            <div slot="footer" class="dialog-footer">
+                                                <el-button @click="resetPwd()">重 置</el-button>
+                                                <el-button type="primary" @click="alterPwd()">修 改</el-button>
+                                            </div>
+                                        </el-dialog>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- End Wrapper -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- All Jquery -->
+<!-- ============================================================== -->
+<script src="members/assets/node_modules/jquery/jquery-3.2.1.min.js"></script>
+<!-- Bootstrap tether Core JavaScript -->
+<script src="members/assets/node_modules/popper/popper.min.js"></script>
+<script src="members/assets/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- slimscrollbar scrollbar JavaScript -->
+<script src="members/dist/js/perfect-scrollbar.jquery.min.js"></script>
+<!--Wave Effects -->
+<script src="members/dist/js/waves.js"></script>
+<!--Menu sidebar -->
+<script src="members/dist/js/sidebarmenu.js"></script>
+<!--stickey kit -->
+<script src="members/assets/node_modules/sticky-kit-master/dist/sticky-kit.min.js"></script>
+<script src="members/assets/node_modules/sparkline/jquery.sparkline.min.js"></script>
+<!--Custom JavaScript -->
+<script src="members/dist/js/custom.min.js"></script>
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<!-- import JavaScript -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script src="members/dist/js/memberInfo.js"></script>
+</body>
+</html>

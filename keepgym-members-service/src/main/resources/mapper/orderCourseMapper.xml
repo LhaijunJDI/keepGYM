@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lhj.keepgym.members.mapper.OrderCourseMapper">
+    <select id="findOrderCourseById" parameterType="String" resultType="com.lhj.keepgym.bean.OrderCourse">
+        select * from order_course where member_id = #{memberId} and course_id = #{courseId};
+    </select>
+
+    <update id="updateCourseNum" parameterType="String">
+        update course set num = num-1 where course_id = #{courseId}
+    </update>
+</mapper>
