@@ -2,6 +2,7 @@ package com.lhj.keepgym.bean;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -21,11 +22,28 @@ public class Members implements Serializable {
     private String gender;
     private String phone;
     private String address;
-    private String create_id;
+    private String createId;
     private Date createTime;
+
     private Date endTime;
+
+    @Transient
+    private String strEndTime;
+
     @Transient
     private String expire;
+
+    //剩余天数
+    @Transient
+    private String remainTime;
+
     private String email;
+
+    private String level;
+
+    private String status;
+
+    private String confirm;
+
 
 }

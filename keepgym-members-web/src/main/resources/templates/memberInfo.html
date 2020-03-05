@@ -131,7 +131,7 @@
                         <div class="d-flex justify-content-end align-items-center">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a
-                                        th:href="@{'/toMemberGym?memberId='+${memberId}}">Home</a></li>
+                                        th:href="@{'/toMemberInfo?memberId='+${memberId}}" th:text="'当前用户：'+${memberName}"></a></li>
                                 <li class="breadcrumb-item active">个人信息</li>
                             </ol>
                         </div>
@@ -191,9 +191,13 @@
                                             <el-form-item label="是否到期：">
                                                 <el-switch v-model="form.expire" disabled="true"></el-switch>
                                             </el-form-item>
+                                            <el-form-item label="剩余时间：">
+                                                <el-tag size="small" closable >{{form.remainTime}}天</el-tag>
+                                                <el-progress :percentage="percentage" stroke-width="50px"></el-progress>
 
+                                            </el-form-item>
                                             <el-form-item>
-                                                <el-button type="primary" @click="onSubmit('form')">修改</el-button>
+                                                <el-button type="primary" @click="onSubmit('form')">修改信息</el-button>
                                                 <el-button type="info" @click="alterPwdDialog = true">修改密码</el-button>
                                                 <el-button @click="reset()">重置</el-button>
 

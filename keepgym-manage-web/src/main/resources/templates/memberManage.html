@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <title>会员管理 - keepGym后台管理系统模板</title>
+    <link rel="icon" href="images/keep-icon.jpg" type="image/ico">
+    <meta name="author" content="yinqi">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="css/style.min.css" rel="stylesheet">
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+
+</head>
+
+<body>
+<div id="app">
+    <div class="lyear-layout-web">
+        <div class="lyear-layout-container">
+            <!--左侧导航-->
+            <aside class="lyear-layout-sidebar">
+
+                <!-- logo -->
+                <div id="logo" class="sidebar-header">
+                    <a th:href="@{'/toManageIndex?managerId='+${managerId}}"><img src="images/logo-sidebar.png" title="LightYear" alt="LightYear"/></a>
+                </div>
+                <div class="lyear-layout-sidebar-scroll">
+
+                    <nav class="sidebar-main">
+                        <ul class="nav nav-drawer">
+                            <li class="nav-item active"><a th:href="@{'/toManageIndex?managerId='+${managerId}}"><i class="mdi mdi-home"></i> 后台首页</a></li>
+                            <li class="nav-item nav-item-has-subnav">
+                                <a href="javascript:void(0)"><i class="mdi mdi-palette"></i> 数据管理</a>
+                                <ul class="nav nav-subnav">
+                                    <li><a th:href="@{'/toMemberManage?managerId='+${managerId}}">会员管理</a></li>
+                                    <li><a th:href="@{'/toEmployeeManage?managerId='+${managerId}}">员工管理</a></li>
+                                    <li><a th:href="@{'/toCourseManage?managerId='+${managerId}}">课程管理</a></li>
+                                </ul>
+                            </li>
+
+                            <li class="nav-item nav-item-has-subnav">
+                                <a href="javascript:void(0)"><i class="mdi mdi-language-javascript"></i> 系统功能</a>
+                                <ul class="nav nav-subnav">
+                                    <li><a href="#">工资发放</a></li>
+                                    <li><a href="#">消息通知</a></li>
+                                    <li><a href="#">数据备份</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    </nav>
+
+
+                </div>
+
+            </aside>
+            <!--End 左侧导航-->
+
+            <!--头部信息-->
+            <header class="lyear-layout-header">
+
+                <nav class="navbar navbar-default">
+                    <div class="topbar">
+
+                        <div class="topbar-left">
+                            <div class="lyear-aside-toggler">
+                                <span class="lyear-toggler-bar"></span>
+                                <span class="lyear-toggler-bar"></span>
+                                <span class="lyear-toggler-bar"></span>
+                            </div>
+                            <span class="navbar-page-title"> 会员管理 - keepGym后台管理系统 </span>
+                        </div>
+
+                        <ul class="topbar-right">
+                            <li class="dropdown dropdown-profile">
+                                <a href="javascript:void(0)" data-toggle="dropdown">
+                                    <span>当前用户： <span class="caret"></span></span>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    <li><a href="lyear_pages_login.html"><i class="mdi mdi-logout-variant"></i> 退出登录</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <!--切换主题配色-->
+                            <li class="dropdown dropdown-skin">
+                                <span data-toggle="dropdown" class="icon-palette"><i class="mdi mdi-palette"></i></span>
+                                <ul class="dropdown-menu dropdown-menu-right" data-stopPropagation="true">
+                                    <li class="drop-title"><p>主题</p></li>
+                                    <li class="drop-skin-li clearfix">
+                  <span class="inverse">
+                    <input type="radio" name="site_theme" value="default" id="site_theme_1" checked>
+                    <label for="site_theme_1"></label>
+                  </span>
+                                        <span>
+                    <input type="radio" name="site_theme" value="dark" id="site_theme_2">
+                    <label for="site_theme_2"></label>
+                  </span>
+                                        <span>
+                    <input type="radio" name="site_theme" value="translucent" id="site_theme_3">
+                    <label for="site_theme_3"></label>
+                  </span>
+                                    </li>
+                                    <li class="drop-title"><p>LOGO</p></li>
+                                    <li class="drop-skin-li clearfix">
+                  <span class="inverse">
+                    <input type="radio" name="logo_bg" value="default" id="logo_bg_1" checked>
+                    <label for="logo_bg_1"></label>
+                  </span>
+                                        <span>
+                    <input type="radio" name="logo_bg" value="color_2" id="logo_bg_2">
+                    <label for="logo_bg_2"></label>
+                  </span>
+                                        <span>
+                    <input type="radio" name="logo_bg" value="color_3" id="logo_bg_3">
+                    <label for="logo_bg_3"></label>
+                  </span>
+                                        <span>
+                    <input type="radio" name="logo_bg" value="color_4" id="logo_bg_4">
+                    <label for="logo_bg_4"></label>
+                  </span>
+                                        <span>
+                    <input type="radio" name="logo_bg" value="color_5" id="logo_bg_5">
+                    <label for="logo_bg_5"></label>
+                  </span>
+                                        <span>
+                    <input type="radio" name="logo_bg" value="color_6" id="logo_bg_6">
+                    <label for="logo_bg_6"></label>
+                  </span>
+                                        <span>
+                    <input type="radio" name="logo_bg" value="color_7" id="logo_bg_7">
+                    <label for="logo_bg_7"></label>
+                  </span>
+                                        <span>
+                    <input type="radio" name="logo_bg" value="color_8" id="logo_bg_8">
+                    <label for="logo_bg_8"></label>
+                  </span>
+                                    </li>
+                                    <li class="drop-title"><p>头部</p></li>
+                                    <li class="drop-skin-li clearfix">
+                  <span class="inverse">
+                    <input type="radio" name="header_bg" value="default" id="header_bg_1" checked>
+                    <label for="header_bg_1"></label>                      
+                  </span>
+                                        <span>
+                    <input type="radio" name="header_bg" value="color_2" id="header_bg_2">
+                    <label for="header_bg_2"></label>                      
+                  </span>
+                                        <span>
+                    <input type="radio" name="header_bg" value="color_3" id="header_bg_3">
+                    <label for="header_bg_3"></label>
+                  </span>
+                                        <span>
+                    <input type="radio" name="header_bg" value="color_4" id="header_bg_4">
+                    <label for="header_bg_4"></label>                      
+                  </span>
+                                        <span>
+                    <input type="radio" name="header_bg" value="color_5" id="header_bg_5">
+                    <label for="header_bg_5"></label>                      
+                  </span>
+                                        <span>
+                    <input type="radio" name="header_bg" value="color_6" id="header_bg_6">
+                    <label for="header_bg_6"></label>                      
+                  </span>
+                                        <span>
+                    <input type="radio" name="header_bg" value="color_7" id="header_bg_7">
+                    <label for="header_bg_7"></label>
+                  </span>
+                                        <span>
+                    <input type="radio" name="header_bg" value="color_8" id="header_bg_8">
+                    <label for="header_bg_8"></label>
+                  </span>
+                                    </li>
+                                    <li class="drop-title"><p>侧边栏</p></li>
+                                    <li class="drop-skin-li clearfix">
+                  <span class="inverse">
+                    <input type="radio" name="sidebar_bg" value="default" id="sidebar_bg_1" checked>
+                    <label for="sidebar_bg_1"></label>
+                  </span>
+                                        <span>
+                    <input type="radio" name="sidebar_bg" value="color_2" id="sidebar_bg_2">
+                    <label for="sidebar_bg_2"></label>
+                  </span>
+                                        <span>
+                    <input type="radio" name="sidebar_bg" value="color_3" id="sidebar_bg_3">
+                    <label for="sidebar_bg_3"></label>
+                  </span>
+                                        <span>
+                    <input type="radio" name="sidebar_bg" value="color_4" id="sidebar_bg_4">
+                    <label for="sidebar_bg_4"></label>
+                  </span>
+                                        <span>
+                    <input type="radio" name="sidebar_bg" value="color_5" id="sidebar_bg_5">
+                    <label for="sidebar_bg_5"></label>
+                  </span>
+                                        <span>
+                    <input type="radio" name="sidebar_bg" value="color_6" id="sidebar_bg_6">
+                    <label for="sidebar_bg_6"></label>
+                  </span>
+                                        <span>
+                    <input type="radio" name="sidebar_bg" value="color_7" id="sidebar_bg_7">
+                    <label for="sidebar_bg_7"></label>
+                  </span>
+                                        <span>
+                    <input type="radio" name="sidebar_bg" value="color_8" id="sidebar_bg_8">
+                    <label for="sidebar_bg_8"></label>
+                  </span>
+                                    </li>
+                                </ul>
+                            </li>
+                            <!--切换主题配色-->
+                        </ul>
+
+                    </div>
+                </nav>
+
+            </header>
+            <!--End 头部信息-->
+
+            <!--页面主要内容-->
+            <main class="lyear-layout-content">
+
+                <div class="container-fluid">
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header"><h4>会员打卡</h4></div>
+                                <div class="card-body" style="height: 500px;">
+                                    <input type="hidden" name="managerId" id="managerId"
+                                           th:value="${managerId}"><br>
+                                    <br>
+                                    <el-form ref="form" :model="form" label-width="80px">
+                                        <el-form-item label="会员Id:">
+                                            <el-input v-model="memberId"></el-input>
+                                        </el-form-item>
+                                        <el-form-item>
+                                            <el-button type="success" round @click="clockIn()" icon="el-icon-check">打
+                                                卡
+                                            </el-button>
+                                            <el-divider direction="vertical"></el-divider>
+                                            <el-button type="warning" round @click="clockOut()" icon="el-icon-close">离
+                                                开
+                                            </el-button>
+                                            <el-divider direction="vertical"></el-divider>
+                                            <el-button type="info" round @click="stopCardDialog = true" icon="el-icon-minus">停 卡
+                                            </el-button>
+                                            <el-divider direction="vertical"></el-divider>
+                                            <el-button type="primary" round @click="renew()" icon="el-icon-plus">续 费
+                                            </el-button>
+                                        </el-form-item>
+                                    </el-form>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header"><h4>会员办理</h4></div>
+                                <div class="card-body">
+                                    <el-form ref="form" :model="form" label-width="80px">
+                                        <el-form-item label="姓名：">
+                                            <el-input v-model="form.username"></el-input>
+                                        </el-form-item>
+                                        <el-form-item label="性别：">
+                                            <el-select v-model="form.gender" placeholder="请选择性别">
+                                                <el-option label="男" value="1"></el-option>
+                                                <el-option label="女" value="2"></el-option>
+                                            </el-select>
+                                        </el-form-item>
+                                        <el-form-item label="电话：">
+                                            <el-input v-model="form.phone"></el-input>
+                                        </el-form-item>
+                                        <el-form-item label="email:">
+                                            <el-input v-model="form.email"></el-input>
+                                        </el-form-item>
+                                        <el-form-item label="地址：">
+                                            <el-input v-model="form.address"></el-input>
+                                        </el-form-item>
+                                        <el-form-item label="类型：">
+                                            <el-select v-model="form.level" placeholder="请选择办理类型">
+                                                <el-option label="年卡（￥1200）" value="年卡"></el-option>
+                                                <el-option label="季卡（￥600）" value="季卡"></el-option>
+                                                <el-option label="月卡（￥200）" value="月卡"></el-option>
+                                            </el-select>
+                                        </el-form-item>
+                                        <el-form-item>
+                                            <el-button type="primary" @click="onSubmit()">立即办理</el-button>
+                                            <el-button @click="resetForm()">重置</el-button>
+                                        </el-form-item>
+                                    </el-form>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header"><h4>会员列表</h4></div>
+                        <div class="card-body">
+                            <template>
+                                <el-table
+                                        :data="tables"
+                                        border
+                                        height="300"
+                                        stripe
+                                        style="width: 100%">
+                                    <el-table-column
+                                            prop="id"
+                                            label="会员id"
+                                            width="120">
+                                    </el-table-column>
+                                    <el-table-column
+                                            prop="username"
+                                            label="姓名"
+                                            width="120">
+                                    </el-table-column>
+                                    <el-table-column
+                                            prop="gender"
+                                            label="性别"
+                                            width="120">
+                                    </el-table-column>
+                                    <el-table-column
+                                            prop="phone"
+                                            label="电话"
+                                            width="120">
+                                    </el-table-column>
+                                    <el-table-column
+                                            prop="email"
+                                            label="邮箱"
+                                            width="200">
+                                    </el-table-column>
+                                    <el-table-column
+                                            prop="address"
+                                            label="地址"
+                                            width="300">
+                                    </el-table-column>
+                                    <el-table-column
+                                            prop="strEndTime"
+                                            label="到期时间"
+                                            width="120">
+                                    </el-table-column>
+                                    <el-table-column
+                                            prop="level"
+                                            label="会员卡等级"
+                                            width="120">
+                                    </el-table-column>
+                                    <el-table-column
+                                            prop="createId"
+                                            label="办理员工"
+                                            width="120">
+                                    </el-table-column>
+                                    <el-table-column
+                                            prop="status"
+                                            label="会员卡状态"
+                                            width="120">
+                                    </el-table-column>
+                                    <el-table-column
+                                            align="right"
+                                            width="150">
+                                        <template slot="header" slot-scope="scope">
+                                            <el-input
+                                                    icon="el-icon-search"
+                                                    v-model="search"
+                                                    size="mini"
+                                                    placeholder="输入关键字搜索"></el-input>
+                                        </template>
+                                        <template slot-scope="scope" align="center">
+                                            <el-button @click="editMemberInfo(scope.row.id)" type="text" size="small">
+                                                编辑
+                                            </el-button>
+                                            <el-button size="small" type="text" @click="confirmDelete(scope.row.id)">
+                                                删除
+                                            </el-button>
+                                        </template>
+                                    </el-table-column>
+                                </el-table>
+                            </template>
+
+                            <!--会员续费-->
+                            <el-dialog title="会员续费" :visible.sync="renewDialog">
+                                <el-form :model="memberInfo">
+                                    <el-form-item label="到期时间" :label-width="formLabelWidth">
+                                        <el-date-picker
+                                                v-model="memberInfo.endTime"
+                                                type="date"
+                                                placeholder="到期时间"
+                                                disable=true>
+                                        </el-date-picker>
+                                    </el-form-item>
+                                    <el-form-item label="续费类型" :label-width="formLabelWidth">
+                                        <el-select v-model="renew.level" placeholder="请选择续费类型">
+                                            <el-option
+                                                    label="年卡（￥900）"
+                                                    value="年卡">
+                                            </el-option>
+                                            <el-option
+                                                    label="季卡（￥400）"
+                                                    value="季卡">
+                                            </el-option>
+                                            <el-option
+                                                    label="月卡（￥80）"
+                                                    value="月卡">
+                                            </el-option>
+                                        </el-select>
+                                    </el-form-item>
+                                    <el-form-item label="续费时间" :label-width="formLabelWidth">
+                                        <el-select v-model="renew.time" placeholder="请选择续费时间">
+                                            <el-option label="1" value="1"></el-option>
+                                            <el-option label="2" value="2"></el-option>
+                                            <el-option label="3" value="3"></el-option>
+                                        </el-select>
+                                    </el-form-item>
+                                </el-form>
+                                <div slot="footer" class="dialog-footer">
+                                    <el-button type="primary" @click="dialogFormVisible = true ">续 费</el-button>
+                                    <el-button @click="dialogFormVisible = false">取 消</el-button>
+                                </div>
+                            </el-dialog>
+
+
+                            <!--会员停卡-->
+                            <el-dialog title="会员续费" :visible.sync="stopCardDialog">
+                                <el-form :model="memberInfo">
+
+                                    <el-form-item label="停卡时间" :label-width="formLabelWidth">
+                                        <el-select v-model="renew.level" placeholder="请选择停卡时间">
+                                            <el-option
+                                                    label="一个月（￥50）"
+                                                    value="1">
+                                            </el-option>
+                                            <el-option
+                                                    label="两个月（￥90）"
+                                                    value="2">
+                                            </el-option>
+                                            <el-option
+                                                    label="三个月（￥120）"
+                                                    value="3">
+                                            </el-option>
+                                        </el-select>
+                                    </el-form-item>
+
+                                </el-form>
+                                <div slot="footer" class="dialog-footer">
+                                    <el-button type="primary" @click="renewTime()">申 请</el-button>
+                                    <el-button @click="dialogFormVisible = false">取 消</el-button>
+                                </div>
+                            </el-dialog>
+
+                            <el-dialog title="修改信息" :visible.sync="dialogFormVisible">
+                                <el-form :model="memberInfo">
+                                    <el-form-item label="姓名：" :label-width="formLabelWidth">
+                                        <el-input v-model="memberInfo.username" autocomplete="off"></el-input>
+                                    </el-form-item>
+                                    <el-form-item label="性别：" :label-width="formLabelWidth">
+                                        <el-select v-model="memberInfo.gender" placeholder="请选择性别">
+                                            <el-option label="男" value="1"></el-option>
+                                            <el-option label="女" value="2"></el-option>
+                                        </el-select>
+                                    </el-form-item>
+                                    <el-form-item label="电话：" :label-width="formLabelWidth">
+                                        <el-input v-model="memberInfo.phone" autocomplete="off"></el-input>
+                                    </el-form-item>
+                                    <el-form-item label="邮箱：" :label-width="formLabelWidth">
+                                        <el-input v-model="memberInfo.email" autocomplete="off"></el-input>
+                                    </el-form-item>
+                                    <el-form-item label="地址：" :label-width="formLabelWidth">
+                                        <el-input v-model="memberInfo.address" autocomplete="off"></el-input>
+                                    </el-form-item>
+                                    </el-form-item>
+                                </el-form>
+                                <div slot="footer" class="dialog-footer">
+                                    <el-button type="primary" @click="alterMemberInfo()">修 改</el-button>
+                                    <el-button @click="dialogFormVisible = false">取 消</el-button>
+                                </div>
+                            </el-dialog>
+                        </div>
+                    </div>
+                </div>
+            </main>
+            <!--End 页面主要内容-->
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/perfect-scrollbar.min.js"></script>
+<script type="text/javascript" src="js/main.min.js"></script>
+<!-- import Vue before Element -->
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<!-- 引入组件库 -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script src="js/membersManage.js"></script>
+</body>
+</html>

@@ -2,12 +2,10 @@ package com.lhj.keepgym.bean;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 import java.io.Serializable;
 
@@ -28,13 +26,19 @@ public class OrderCourse implements Serializable {
     private int id;
 
     private String courseId;
-    
-    private String memberId;
-    
-    private String memberName;
-    
-    private Date orderTime;
 
+    private String memberId;
+
+    private String memberName;
+
+    private Date orderTime;
+    @Transient
+    private String strOrderTime;
+
+    @Transient
+    private String courseName;
+
+    private String status;
 
 
 }

@@ -30,6 +30,7 @@ new Vue({
             $.ajax({
                 url: "/toSearchAllCourse",
                 type: "get",
+                contentType: "application/json",
                 success: function (data) {
                     console.log(data);
                     if (data != null) {

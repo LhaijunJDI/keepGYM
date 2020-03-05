@@ -67,5 +67,7 @@ public class Coach implements Serializable {
 
     private String teachTime;
 
+    private String bankCard;
+
 
 }

@@ -24,6 +24,7 @@ new Vue({
         this.getAllCoach();
     },
     methods: {
+        //获取全部教练的信息并传递给form
         getAllCoach() {
             let that = this;
             var memberId = document.getElementById("memberId").value;
@@ -40,6 +41,7 @@ new Vue({
                 }
             });
         },
+
         onSubmit(courseId) {
             let that = this;
             var mid = document.getElementById("memberId").value;
@@ -88,6 +90,16 @@ new Vue({
             });
         },
 
+        //退出登录
+        loginout(){
+            $.ajax({
+                url:"/loginOut",
+                type:"get",
+                data:{},
+                success:function () {
+                }
+            })
+        }
 
     }
 })

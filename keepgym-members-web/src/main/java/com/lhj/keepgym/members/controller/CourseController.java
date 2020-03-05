@@ -1,6 +1,7 @@
 package com.lhj.keepgym.members.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.lhj.keepgym.annotations.LoginRequired;
 import com.lhj.keepgym.bean.Course;
 import com.lhj.keepgym.service.CourseService;
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,7 @@ public class CourseController {
     private CourseService courseService;
 
     //前往课程详情页面
+    @LoginRequired
     @RequestMapping("/toMemberCourse")
     public String toMemberCourse(String memberId, Model model) {
         model.addAttribute("memberId", memberId);
@@ -25,6 +27,7 @@ public class CourseController {
     }
 
     //查找全部课程信息
+    @LoginRequired
     @GetMapping("/toSearchAllCourse")
     @ResponseBody
     public List<Course> toSearchAllCourse(){

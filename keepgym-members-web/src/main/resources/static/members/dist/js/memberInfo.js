@@ -66,10 +66,19 @@ new Vue({
                 phone: '',
                 address: '',
                 email: '',
+                remainTime:''
             },
 
             formLabelWidth: '100px',
             alterPwdDialog: false,
+            percentage:'100',
+            color:[
+                {color:'#f5160f',percentage:'20',},
+                {color:'#f56c05',percentage:'40',},
+                {color:'#f5ea0e',percentage:'60',},
+                {color:'#9ef50a',percentage:'80',},
+                {color:'#0cf547',percentage:'100',},
+                ],
 
             pwd: {
                 originPwd: '',
@@ -131,6 +140,14 @@ new Vue({
                         that.form.phone = data.phone;
                         that.form.address = data.address;
                         that.form.expire = data.expire;
+                        that.form.remainTime = data.remainTime;
+                        that.percentage = Math.round((data.remainTime/365)*100);
+
+                    }else{
+                        that.$message({
+                            message: '请求超时，请刷新重试!',
+                            type: 'warning'
+                        });
                     }
                 }
             });
@@ -211,6 +228,6 @@ new Vue({
         },
         reset(){
             this.getMemberInfo();
-        }
+        },
     }
 })

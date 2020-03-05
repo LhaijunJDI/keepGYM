@@ -15,33 +15,28 @@ public class CoachServiceImpl implements CoachService {
     private CoachMapper coachMapper;
 
     @Override
-    public Coach queryById(String id) {
-        return null;
-    }
-
-    @Override
-    public List<Coach> queryAllByLimit(int offset, int limit) {
-        return null;
-    }
-
-    @Override
-    public Coach insert(Coach coach) {
-        return null;
-    }
-
-    @Override
-    public Coach update(Coach coach) {
-        return null;
-    }
-
-    @Override
-    public boolean deleteById(String id) {
-        return false;
-    }
-
-    @Override
     public List<Coach> findAllCoach() {
         List<Coach> coaches = coachMapper.selectAll();
         return coaches;
+    }
+
+    @Override
+    public Coach findCoachById(String coachId) {
+        return null;
+    }
+
+    @Override
+    public String updateCoach(Coach coach) {
+        return null;
+    }
+
+    @Override
+    public String deleteCoach(String coachId) {
+        return null;
+    }
+
+    @Override
+    public String insertCoach(Coach coach) {
+        return null;
     }
 }

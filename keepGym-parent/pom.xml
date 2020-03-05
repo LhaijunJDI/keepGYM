@@ -18,6 +18,8 @@
         <module>../keepGym-service-util</module>
         <module>../keepgym-members-service</module>
         <module>../keepgym-members-web</module>
+        <module>../keepgym-manage-service</module>
+        <module>../keepgym-manage-web</module>
     </modules>
 
     <groupId>com.lhj.keepGYM</groupId>

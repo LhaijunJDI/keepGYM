@@ -17,11 +17,15 @@ import java.io.Serializable;
 public class Manager implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    private String managerName;
+    private String id;
+    private String name;
     private String password;
-    private int gender;
+    private String gender;
     private String phone;
     private String address;
     private String position;
+
+    private String email;
+
+    private String bankCard;
 }

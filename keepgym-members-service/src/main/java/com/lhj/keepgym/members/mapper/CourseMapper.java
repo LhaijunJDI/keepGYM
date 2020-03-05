@@ -8,5 +8,6 @@ import java.util.List;
 
 @Repository
 public interface CourseMapper extends Mapper<Course> {
+    //查找所有的课程
     public List<Course> findAllCourse();
 }

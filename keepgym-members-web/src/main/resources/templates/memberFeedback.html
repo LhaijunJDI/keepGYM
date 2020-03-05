@@ -138,7 +138,7 @@
                         <div class="d-flex justify-content-end align-items-center">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a
-                                        th:href="@{'/toMemberGym?memberId='+${memberId}}">Home</a></li>
+                                        th:href="@{'/toMemberInfo?memberId='+${memberId}}" th:text="'当前用户：'+${memberName}"></a></li>
                                 <li class="breadcrumb-item active">意见反馈</li>
                             </ol>
                         </div>

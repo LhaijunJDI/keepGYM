@@ -1,19 +1,32 @@
 package com.lhj.keepgym.members.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
-import com.lhj.keepgym.bean.Members;
 import com.lhj.keepgym.members.mapper.MembersMapper;
+import com.lhj.keepgym.bean.Members;
 import com.lhj.keepgym.service.MembersService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import tk.mybatis.mapper.entity.Example;
+
+import java.util.List;
 
 @Service
 public class MembersServiceImpl implements MembersService {
 
     @Autowired
     private MembersMapper membersMapper;
+
+    @Override
+    public Members findMemberByIdAndPwd(String id,String password) {
+        Members member = new Members();
+        member.setId(id);
+        member.setPassword(password);
+        Members members = membersMapper.selectOne(member);
+        if(members == null){
+            return null;
+        }
+        return members;
+    }
 
     @Override
     public Members findMemberById(String id) {
@@ -45,6 +58,36 @@ public class MembersServiceImpl implements MembersService {
             }
         }
         return "fail";
+    }
+
+    @Override
+    public String insertMember(Members members) {
+        return null;
+    }
+
+    @Override
+    public List<Members> findAllMembers() {
+        return null;
+    }
+
+    @Override
+    public String deleteMemberById(String memberId) {
+        return null;
+    }
+
+    @Override
+    public String updateRenewMember(String memberId, String createId, String level, String time) {
+        return null;
+    }
+
+    @Override
+    public String updateStopCardMember(String memberId, String createId, String time) {
+        return null;
+    }
+
+    @Override
+    public List<Members> findAllEndTimeMembers() {
+        return null;
     }
 
 
