@@ -64,7 +64,7 @@
                 <!-- End Logo -->
                 <!-- ============================================================== -->
                 <div class="navbar-collapse">
-                  <!--  <h1>健身是世界上最公平的事,付出多少,收获多少。</h1>-->
+                    <!--  <h1>健身是世界上最公平的事,付出多少,收获多少。</h1>-->
                 </div>
             </nav>
         </header>
@@ -102,13 +102,15 @@
                                 class="hide-menu"></span>个人信息</a></li>
                         <li><a class="waves-effect waves-dark" th:href="@{'/toMemberNotice?memberId='+${memberId}}"
                                aria-expanded="false"><i
-                                class="fa fa-globe"></i><span class="hide-menu"></span>消息通知</a></li>
+                                class="fa fa-globe"></i><span class="hide-menu"></span>
+                            <el-badge :value="messageNum" class="item" type="primary">消息通知</el-badge>
+                        </a></li>
                         <li><a class="waves-effect waves-dark" th:href="@{'/toMemberFeedback?memberId='+${memberId}}"
                                aria-expanded="false"><i
                                 class="fa fa-bookmark-o"></i><span class="hide-menu"></span>意见反馈</a></li>
-                        <div class="text-center m-t-30">
-                            <el-button type="danger" @click="loginout()">退出登录</el-button>
-                        </div>
+                       <li>
+                            <a class="waves-effect waves-dark" th:href="@{/toLoginOut}">退出登录</a>
+                       </li>
                     </ul>
 
                 </nav>
@@ -138,7 +140,8 @@
                         <div class="d-flex justify-content-end align-items-center">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a
-                                        th:href="@{'/toMemberInfo?memberId='+${memberId}}" th:text="'当前用户：'+${memberName}"></a></li>
+                                        th:href="@{'/toMemberInfo?memberId='+${memberId}}"
+                                        th:text="'当前用户：'+${memberName}"></a></li>
                                 <li class="breadcrumb-item active">团体课表</li>
                             </ol>
                         </div>
@@ -160,19 +163,25 @@
                                         <el-row gutter="5">
                                             <input type="hidden" name="memberId" id="memberId"
                                                    th:value="${memberId}"><br>
-                                            <el-col :span="6" v-for="(item,i) in form" :value="item" >
+                                            <el-col :span="6" v-for="(item,i) in form" :value="item">
                                                 <el-card :body-style="{ padding: '10px' }" shadow="hover">
-                                                    <img :src="item.picSrc" class="image">
+                                                    <img :src="item.picSrc" class="image" >
                                                     <div style="padding: 14px">
-                                                        <span><h3>课程名称：{{ item.name }}</h3></span><el-divider></el-divider>
-                                                        <span>课程类型：{{ item.type }}</span> <el-divider direction="vertical"></el-divider>
+                                                        <span><h3>课程名称：{{ item.name }}</h3></span>
+                                                        <el-divider></el-divider>
+                                                        <span>课程类型：{{ item.type }}</span>
+                                                        <el-divider direction="vertical"></el-divider>
                                                         <span>课程教练：{{ item.coachName }}</span> <br>
-                                                        <span>课程内容：{{ item.content }}</span><el-divider direction="vertical"></el-divider>
+                                                        <span>课程内容：{{ item.content }}</span>
+                                                        <el-divider direction="vertical"></el-divider>
                                                         <span>剩余人数：{{ item.num }}</span><br>
                                                         <div class="bottom clearfix">
-                                                            <time class="time" >开课时间：{{ item.strStartTime }}</time><br>
+                                                            <time class="time">开课时间：{{ item.strStartTime }}</time>
+                                                            <br>
                                                             <time class="time">结束时间：{{ item.strEndTime }}</time>
-                                                            <el-button type="submit" class="button" @click="onSubmit(item.courseId)">预约课程</el-button>
+                                                            <el-button type="submit" class="button"
+                                                                       @click="confirmOnSubmit(item.courseId)">预约课程
+                                                            </el-button>
                                                         </div>
                                                     </div>
                                                 </el-card>

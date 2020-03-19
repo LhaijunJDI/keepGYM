@@ -37,16 +37,16 @@
                                 <ul class="nav nav-subnav">
                                     <li><a th:href="@{'/toMemberManage?managerId='+${managerId}}">会员管理</a></li>
                                     <li><a th:href="@{'/toEmployeeManage?managerId='+${managerId}}">员工管理</a></li>
-                                    <li><a th:href="@{'/toCourseManage?managerId='+${managerId}}">课程管理</a></li>
+                                    <li><a th:href="@{'/toCourseManage?managerId='+${managerId}}">团课私教</a></li>
                                 </ul>
                             </li>
 
                             <li class="nav-item nav-item-has-subnav">
                                 <a href="javascript:void(0)"><i class="mdi mdi-language-javascript"></i> 系统功能</a>
                                 <ul class="nav nav-subnav">
-                                    <li><a href="#">工资发放</a></li>
-                                    <li><a href="#">消息通知</a></li>
-                                    <li><a href="#">数据备份</a></li>
+                                    <li><a th:href="@{'/toFeedbackManage?managerId='+${managerId}}">意见反馈</a></li>
+                                    <li><a th:href="@{'/toNoticeManage?managerId='+${managerId}}">消息通知</a></li>
+                                    <li><a th:href="@{'/toBackUpManage?managerId='+${managerId}}">数据备份</a></li>
                                     <input type="hidden" name="managerId" id="managerId"
                                            th:value="${managerId}"><br>
                                 </ul>
@@ -72,16 +72,16 @@
                                 <span class="lyear-toggler-bar"></span>
                                 <span class="lyear-toggler-bar"></span>
                             </div>
-                            <span class="navbar-page-title"> 课程管理 </span>
+                            <span class="navbar-page-title"> 团课私教 </span>
                         </div>
 
                         <ul class="topbar-right">
                             <li class="dropdown dropdown-profile">
                                 <a href="javascript:void(0)" data-toggle="dropdown">
-                                    <span>当前用户： <span class="caret"></span></span>
+                                    <span th:text="'当前管理员：'+${managerName}"><span class="caret"></span></span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-right">
-                                    <li><a href="lyear_pages_login.html"><i class="mdi mdi-logout-variant"></i> 退出登录</a>
+                                    <li><a th:href="@{'/toLoginOut'}"></i> 退出登录</a>
                                     </li>
                                 </ul>
                             </li>
@@ -228,7 +228,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="card">
-                                <div class="card-header"><h4>课程列表</h4>
+                                <div class="card-header"><h4>预约课程</h4>
                                     <div style="text-align: right ; width: 200px">
                                         <el-button type="primary" width="200" icon="el-icon-circle-plus-outline"
                                                    @click="resetCourseInfo()">发布课程
@@ -240,7 +240,7 @@
                                         <el-table
                                                 :data="tables"
                                                 border
-                                                height="700"
+                                                height="400"
                                                 stripe
                                                 style="width: 100%">
                                             <el-table-column
@@ -262,7 +262,7 @@
                                             <el-table-column
                                                     prop="coachId"
                                                     label="教练id"
-                                                    width="120">
+                                                    width="80">
                                             </el-table-column>
                                             <el-table-column
                                                     prop="coachName"
@@ -272,7 +272,7 @@
                                             <el-table-column
                                                     prop="num"
                                                     label="剩余人数"
-                                                    width="120">
+                                                    width="80">
                                             </el-table-column>
                                             <el-table-column
                                                     prop="content"
@@ -292,11 +292,11 @@
                                             <el-table-column
                                                     prop="picSrc"
                                                     label="图片路径"
-                                                    width="180">
+                                                    width="200">
                                             </el-table-column>
                                             <el-table-column
                                                     align="right"
-                                                    width="200">
+                                                    width="240">
                                                 <template slot="header" slot-scope="scope">
                                                     <el-input
                                                             icon="search"
@@ -305,6 +305,10 @@
                                                             placeholder="输入关键字搜索"></el-input>
                                                 </template>
                                                 <template slot-scope="scope" align="center">
+                                                    <el-button @click="orderCourseDia(scope.row.courseId)" type="text"
+                                                               size="small">
+                                                        预约课程
+                                                    </el-button>
                                                     <el-button @click="showPic(scope.row.picSrc)" type="text"
                                                                size="small">
                                                         显示图片
@@ -321,101 +325,193 @@
                                             </el-table-column>
                                         </el-table>
                                     </template>
-
-                                    <!-- 修改课程信息的dialog-->
-                                    <el-dialog title="修改课程信息" :visible.sync="dialogFormVisible">
-                                        <el-form :model="courseInfo">
-                                            <el-form-item label="课程名称：" :label-width="formLabelWidth">
-                                                <el-input v-model="courseInfo.name" autocomplete="off"></el-input>
-                                            </el-form-item>
-                                            <el-form-item label="类型：" :label-width="formLabelWidth">
-                                                <el-input v-model="courseInfo.type" autocomplete="off"></el-input>
-                                            </el-form-item>
-                                            <el-form-item label="教练id：" :label-width="formLabelWidth">
-                                                <el-input v-model="courseInfo.coachId" autocomplete="off"></el-input>
-                                            </el-form-item>
-                                            <el-form-item label="开始时间：" :label-width="formLabelWidth">
-                                                <el-input v-model="courseInfo.strStartTime"
-                                                          autocomplete="off"></el-input>
-                                            </el-form-item>
-                                            <el-form-item label="结束时间：" :label-width="formLabelWidth">
-                                                <el-input v-model="courseInfo.strEndTime" autocomplete="off"></el-input>
-                                            </el-form-item>
-                                            <el-form-item label="课程描述：" :label-width="formLabelWidth">
-                                                <el-input v-model="courseInfo.content" autocomplete="off"></el-input>
-                                            </el-form-item>
-                                            <el-form-item label="图片路径：" :label-width="formLabelWidth">
-                                                <el-input v-model="courseInfo.picSrc" autocomplete="off"></el-input>
-                                                <div style="text-align: right">
-                                                    <el-button @click="showPic(courseInfo.picSrc)" type="text"
-                                                               size="small">
-                                                        显示图片
-                                                    </el-button>
-                                                </div>
-                                            </el-form-item>
-                                        </el-form>
-                                        <div slot="footer" class="dialog-footer">
-                                            <el-button type="primary" @click="alterCourseInfo()">修 改</el-button>
-                                            <el-button @click="dialogFormVisible = false">取 消</el-button>
-                                        </div>
-                                    </el-dialog>
-
-                                    <!-- 发布课程信息的dialog-->
-                                    <el-dialog title="发布课程" :visible.sync="addCourseDialog">
-                                        <el-form :model="courseInfo">
-                                            <el-form-item label="课程id：" :label-width="formLabelWidth">
-                                                <el-input v-model="courseInfo.courseId" autocomplete="off"
-                                                          placeholder="请设置课程唯一id"></el-input>
-                                            </el-form-item>
-                                            <el-form-item label="课程名称：" :label-width="formLabelWidth">
-                                                <el-input v-model="courseInfo.name" autocomplete="off"
-                                                          placeholder="请输入课程名称"></el-input>
-                                            </el-form-item>
-                                            <el-form-item label="类型：" :label-width="formLabelWidth">
-                                                <el-input v-model="courseInfo.type" autocomplete="off"
-                                                          placeholder="请输入课程类型"></el-input>
-                                            </el-form-item>
-                                            <el-form-item label="教练id：" :label-width="formLabelWidth">
-                                                <el-input v-model="courseInfo.coachId" autocomplete="off"
-                                                          placeholder="请输入教练id"></el-input>
-                                            </el-form-item>
-                                            <el-form-item label="开始时间：" :label-width="formLabelWidth">
-                                                <el-input v-model="courseInfo.strStartTime" autocomplete="off"
-                                                          placeholder="输入格式:2020-02-02 10:00"></el-input>
-                                            </el-form-item>
-                                            <el-form-item label="结束时间：" :label-width="formLabelWidth">
-                                                <el-input v-model="courseInfo.strEndTime" autocomplete="off"
-                                                          placeholder="输入格式:2020-02-02 10:00"></el-input>
-                                            </el-form-item>
-                                            <el-form-item label="课程描述：" :label-width="formLabelWidth">
-                                                <el-input v-model="courseInfo.content" autocomplete="off"
-                                                          placeholder="请输入课程描述"></el-input>
-                                            </el-form-item>
-                                            <el-form-item label="图片路径：" :label-width="formLabelWidth">
-                                                <el-input v-model="courseInfo.picSrc" autocomplete="off"
-                                                          placeholder="请输入课程图片路径：members/assets/images/course/...jpg"></el-input>
-                                                <div style="text-align: right">
-                                                    <el-button @click="showPic(courseInfo.picSrc)" type="text"
-                                                               size="small">
-                                                        显示图片
-                                                    </el-button>
-                                                </div>
-                                            </el-form-item>
-                                        </el-form>
-                                        <div slot="footer" class="dialog-footer">
-                                            <el-button type="primary" @click="addCourse()">发 布</el-button>
-                                            <el-button @click="dialogFormVisible = false">取 消</el-button>
-                                        </div>
-                                    </el-dialog>
-
-                                    <el-dialog title="查看图片" :visible.sync="showPicDialog">
-                                        <el-image :src="pictureSrc"></el-image>
-                                    </el-dialog>
                                 </div>
-
+                            </div>
+                            <div class="card">
+                                <div class="card-header"><h4>购买私教</h4>
+                                </div>
+                                <div class="card-body">
+                                    <template>
+                                        <el-table
+                                                :data="coachList"
+                                                border
+                                                height="400"
+                                                stripe
+                                                style="width: 100%">
+                                            <el-table-column
+                                                    prop="id"
+                                                    label="教练id"
+                                                    width="120">
+                                            </el-table-column>
+                                            <el-table-column
+                                                    prop="name"
+                                                    label="姓名"
+                                                    width="120">
+                                            </el-table-column>
+                                            <el-table-column
+                                                    prop="gender"
+                                                    label="性别"
+                                                    width="120">
+                                            </el-table-column>
+                                            <el-table-column
+                                                    prop="type"
+                                                    label="类型"
+                                                    width="200">
+                                            </el-table-column>
+                                            <el-table-column
+                                                    prop="teachTime"
+                                                    label="教龄"
+                                                    width="200">
+                                            </el-table-column>
+                                            <el-table-column
+                                                    prop="content"
+                                                    label="个性签名"
+                                                    width="450">
+                                            </el-table-column>
+                                            <el-table-column
+                                                    align="right"
+                                                    width="200">
+                                                <template slot-scope="scope" align="center">
+                                                    <el-button @click="orderCoach(scope.row.id)" type="text"
+                                                               size="small">
+                                                        购买私教
+                                                    </el-button>
+                                                </template>
+                                            </el-table-column>
+                                        </el-table>
+                                    </template>
+                                </div>
                             </div>
 
+                            <!-- 修改课程信息的dialog-->
+                            <el-dialog title="修改课程信息" :visible.sync="dialogFormVisible">
+                                <el-form :model="courseInfo">
+                                    <el-form-item label="课程名称：" :label-width="formLabelWidth">
+                                        <el-input v-model="courseInfo.name" autocomplete="off"></el-input>
+                                    </el-form-item>
+                                    <el-form-item label="类型：" :label-width="formLabelWidth">
+                                        <el-input v-model="courseInfo.type" autocomplete="off"></el-input>
+                                    </el-form-item>
+                                    <el-form-item label="教练id：" :label-width="formLabelWidth">
+                                        <el-input v-model="courseInfo.coachId" autocomplete="off"></el-input>
+                                    </el-form-item>
+                                    <el-form-item label="开始时间：" :label-width="formLabelWidth">
+                                        <el-input v-model="courseInfo.strStartTime"
+                                                  autocomplete="off"></el-input>
+                                    </el-form-item>
+                                    <el-form-item label="结束时间：" :label-width="formLabelWidth">
+                                        <el-input v-model="courseInfo.strEndTime" autocomplete="off"></el-input>
+                                    </el-form-item>
+                                    <el-form-item label="课程描述：" :label-width="formLabelWidth">
+                                        <el-input v-model="courseInfo.content" autocomplete="off"></el-input>
+                                    </el-form-item>
+                                    <el-form-item label="图片路径：" :label-width="formLabelWidth">
+                                        <el-input v-model="courseInfo.picSrc" autocomplete="off"></el-input>
+                                        <div style="text-align: right">
+                                            <el-button @click="showPic(courseInfo.picSrc)" type="text"
+                                                       size="small">
+                                                显示图片
+                                            </el-button>
+                                        </div>
+                                    </el-form-item>
+                                </el-form>
+                                <div slot="footer" class="dialog-footer">
+                                    <el-button type="primary" @click="alterCourseInfo()">修 改</el-button>
+                                    <el-button @click="dialogFormVisible = false">取 消</el-button>
+                                </div>
+                            </el-dialog>
+
+                            <!-- 发布课程信息的dialog-->
+                            <el-dialog title="发布课程" :visible.sync="addCourseDialog">
+                                <el-form :model="courseInfo">
+                                    <el-form-item label="课程id：" :label-width="formLabelWidth">
+                                        <el-input v-model="courseInfo.courseId" autocomplete="off"
+                                                  placeholder="请设置课程唯一id"></el-input>
+                                    </el-form-item>
+                                    <el-form-item label="课程名称：" :label-width="formLabelWidth">
+                                        <el-input v-model="courseInfo.name" autocomplete="off"
+                                                  placeholder="请输入课程名称"></el-input>
+                                    </el-form-item>
+                                    <el-form-item label="类型：" :label-width="formLabelWidth">
+                                        <el-input v-model="courseInfo.type" autocomplete="off"
+                                                  placeholder="请输入课程类型"></el-input>
+                                    </el-form-item>
+                                    <el-form-item label="人数：" :label-width="formLabelWidth">
+                                        <el-input v-model="courseInfo.num" autocomplete="off"
+                                                  placeholder="请输入课程人数"></el-input>
+                                    </el-form-item>
+                                    <el-form-item label="教练id：" :label-width="formLabelWidth">
+                                        <el-input v-model="courseInfo.coachId" autocomplete="off"
+                                                  placeholder="请输入教练id"></el-input>
+                                    </el-form-item>
+                                    <el-form-item label="开始时间：" :label-width="formLabelWidth">
+                                        <el-input v-model="courseInfo.strStartTime" autocomplete="off"
+                                                  placeholder="输入格式:2020-02-02 10:00"></el-input>
+                                    </el-form-item>
+                                    <el-form-item label="结束时间：" :label-width="formLabelWidth">
+                                        <el-input v-model="courseInfo.strEndTime" autocomplete="off"
+                                                  placeholder="输入格式:2020-02-02 10:00"></el-input>
+                                    </el-form-item>
+                                    <el-form-item label="课程描述：" :label-width="formLabelWidth">
+                                        <el-input v-model="courseInfo.content" autocomplete="off"
+                                                  placeholder="请输入课程描述"></el-input>
+                                    </el-form-item>
+                                    <el-form-item label="图片路径：" :label-width="formLabelWidth">
+                                        <el-input v-model="courseInfo.picSrc" autocomplete="off"
+                                                  placeholder="请输入课程图片路径：members/assets/images/course/...jpg"></el-input>
+                                        <div style="text-align: right">
+                                            <el-button @click="showPic(courseInfo.picSrc)" type="text"
+                                                       size="small">
+                                                显示图片
+                                            </el-button>
+                                        </div>
+                                    </el-form-item>
+                                </el-form>
+                                <div slot="footer" class="dialog-footer">
+                                    <el-button type="primary" @click="addCourse()">发 布</el-button>
+                                    <el-button @click="addCourseDialog = false">取 消</el-button>
+                                </div>
+                            </el-dialog>
+
+                            <el-dialog title="预约信息" :visible.sync="orderCourseDialog">
+                                <el-form :model="orderInfo">
+                                    <el-form-item label="会员id：" :label-width="formLabelWidth">
+                                        <el-input v-model="orderInfo.memberId" autocomplete="off"
+                                                  placeholder="请输入会员id"></el-input>
+                                    </el-form-item>
+                                </el-form>
+                                <div slot="footer" class="dialog-footer">
+                                    <el-button type="primary" @click="orderCourse()">预 约</el-button>
+                                    <el-button @click="orderCoachDialog = false">取 消</el-button>
+                                </div>
+                            </el-dialog>
+                            <el-dialog title="购买信息" :visible.sync="orderCoachDialog">
+                                <el-form :model="orderInfo">
+                                    <el-form-item label="会员id：" :label-width="formLabelWidth">
+                                        <el-input v-model="orderInfo.memberId" autocomplete="off"
+                                                  placeholder="请输入会员id"></el-input>
+                                    </el-form-item>
+                                    <el-form-item label="购买节数：" :label-width="formLabelWidth">
+                                        <el-select v-model="orderInfo.num" placeholder="请选择">
+                                            <el-option label="7节(￥1400）" value="7">
+                                            </el-option>
+                                            <el-option label="15节(￥2500）" value="15">
+                                            </el-option>
+                                            <el-option label="30节(￥4000）" value="30">
+                                            </el-option>
+                                        </el-select>
+                                    </el-form-item>
+                                </el-form>
+                                <div slot="footer" class="dialog-footer">
+                                    <el-button type="primary" @click="buyCoachClass()">购 买</el-button>
+                                    <el-button @click="orderCoachDialog = false">取 消</el-button>
+                                </div>
+                            </el-dialog>
+                            <el-dialog title="查看图片" :visible.sync="showPicDialog">
+                                <el-image :src="pictureSrc"></el-image>
+                            </el-dialog>
                         </div>
+
                     </div>
 
                 </div>

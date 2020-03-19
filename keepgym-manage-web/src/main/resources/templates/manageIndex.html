@@ -11,6 +11,8 @@
     <link href="css/style.min.css" rel="stylesheet">
     <!-- 引入样式 -->
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <script type="text/javascript" src="js/echarts.min.js"></script>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
 
 </head>
 
@@ -24,28 +26,29 @@
                 <!-- logo -->
                 <div id="logo" class="sidebar-header">
                     <a th:href="@{'/toManageIndex?managerId='+${managerId}}"><img src="images/logo-sidebar.png"
-                                                                                /></a>
+                    /></a>
                 </div>
                 <div class="lyear-layout-sidebar-scroll">
 
                     <nav class="sidebar-main">
                         <ul class="nav nav-drawer">
-                            <li class="nav-item active"><a th:href="@{'/toManageIndex?managerId='+${managerId}}"><i class="mdi mdi-home"></i> 后台首页</a></li>
+                            <li class="nav-item active"><a th:href="@{'/toManageIndex?managerId='+${managerId}}"><i
+                                    class="mdi mdi-home"></i> 后台首页</a></li>
                             <li class="nav-item nav-item-has-subnav">
                                 <a href="javascript:void(0)"><i class="mdi mdi-palette"></i> 数据管理</a>
                                 <ul class="nav nav-subnav">
                                     <li><a th:href="@{'/toMemberManage?managerId='+${managerId}}">会员管理</a></li>
                                     <li><a th:href="@{'/toEmployeeManage?managerId='+${managerId}}">员工管理</a></li>
-                                    <li><a th:href="@{'/toCourseManage?managerId='+${managerId}}">课程管理</a></li>
+                                    <li><a th:href="@{'/toCourseManage?managerId='+${managerId}}">团课私教</a></li>
                                 </ul>
                             </li>
 
                             <li class="nav-item nav-item-has-subnav">
                                 <a href="javascript:void(0)"><i class="mdi mdi-language-javascript"></i> 系统功能</a>
                                 <ul class="nav nav-subnav">
-                                    <li><a href="#">工资发放</a></li>
-                                    <li><a href="#">消息通知</a></li>
-                                    <li><a href="#">数据备份</a></li>
+                                    <li><a th:href="@{'/toFeedbackManage?managerId='+${managerId}}">意见反馈</a></li>
+                                    <li><a th:href="@{'/toNoticeManage?managerId='+${managerId}}">消息通知</a></li>
+                                    <li><a th:href="@{'/toBackUpManage?managerId='+${managerId}}">数据备份</a></li>
                                     <input type="hidden" name="managerId" id="managerId"
                                            th:value="${managerId}"><br>
                                 </ul>
@@ -76,10 +79,10 @@
                         <ul class="topbar-right">
                             <li class="dropdown dropdown-profile">
                                 <a href="javascript:void(0)" data-toggle="dropdown">
-                                    <span>当前用户： <span class="caret"></span></span>
+                                    <span th:text="'当前管理员：'+${managerName}"><span class="caret"></span></span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-right">
-                                    <li><a href="lyear_pages_login.html"><i class="mdi mdi-logout-variant"></i> 退出登录</a>
+                                    <li><a th:href="@{'/toLoginOut'}"> 退出登录</a>
                                     </li>
                                 </ul>
                             </li>
@@ -229,10 +232,10 @@
                                 <div class="card-body clearfix">
                                     <div class="pull-right">
                                         <p class="h6 text-white m-t-0">今日打卡人数</p>
-                                        <p class="h3 text-white m-b-0">102,125.00</p>
+                                        <p class="h3 text-white m-b-0">{{clockMembers}} 人</p>
                                     </div>
                                     <div class="pull-left"><span class="img-avatar img-avatar-48 bg-translucent"><i
-                                            class="mdi mdi-currency-cny fa-1-5x"></i></span></div>
+                                            class="mdi mdi-arrow-down-bold fa-1-5x"></i></span></div>
                                 </div>
                             </div>
                         </div>
@@ -242,7 +245,7 @@
                                 <div class="card-body clearfix">
                                     <div class="pull-right">
                                         <p class="h6 text-white m-t-0">会员总数</p>
-                                        <p class="h3 text-white m-b-0">920,000</p>
+                                        <p class="h3 text-white m-b-0">{{totalMembers}} 人</p>
                                     </div>
                                     <div class="pull-left"><span class="img-avatar img-avatar-48 bg-translucent"><i
                                             class="mdi mdi-account fa-1-5x"></i></span></div>
@@ -251,14 +254,27 @@
                         </div>
 
                         <div class="col-sm-6 col-lg-3">
+                            <div class="card bg-purple">
+                                <div class="card-body clearfix">
+                                    <div class="pull-right">
+                                        <p class="h6 text-white m-t-0">本月新增会员</p>
+                                        <p class="h3 text-white m-b-0">{{newMembers}} 人</p>
+                                    </div>
+                                    <div class="pull-left"><span class="img-avatar img-avatar-48 bg-translucent"><i
+                                            class="mdi mdi-comment-outline fa-1-5x"></i></span></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 col-lg-3">
                             <div class="card bg-success">
                                 <div class="card-body clearfix">
                                     <div class="pull-right">
-                                        <p class="h6 text-white m-t-0">下载总量</p>
-                                        <p class="h3 text-white m-b-0">34,005,000</p>
+                                        <p class="h6 text-white m-t-0">上月收入</p>
+                                        <p class="h3 text-white m-b-0">￥ {{totalIncome}}</p>
                                     </div>
                                     <div class="pull-left"><span class="img-avatar img-avatar-48 bg-translucent"><i
-                                            class="mdi mdi-arrow-down-bold fa-1-5x"></i></span></div>
+                                            class="mdi mdi-currency-cny fa-1-5x"></i></span></div>
                                 </div>
                             </div>
                         </div>
@@ -271,10 +287,17 @@
                         <div class="col-lg-6">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4>每周用户</h4>
+                                    <h4>会员信息</h4>
                                 </div>
                                 <div class="card-body">
-                                    <canvas class="js-chartjs-bars"></canvas>
+                                    <div id="dy1" style="height: 300px;width: 600px;margin-top: 50px;margin-left:20px;">
+                                        <div id="clockChart"
+                                             style="border: 1px solid #438FB9; width:100%; height:100%;"></div>
+                                    </div>
+                                    <div id="dy" style="height: 300px;width: 600px;margin-top: 50px;margin-left:20px;">
+                                        <div id="sexChart"
+                                             style="border: 1px solid #438FB9; width:100%; height:100%;"></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -282,16 +305,22 @@
                         <div class="col-lg-6">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4>交易历史记录</h4>
+                                    <h4>收入情况</h4>
                                 </div>
                                 <div class="card-body">
-                                    <canvas class="js-chartjs-lines"></canvas>
+                                    <div id="dy2" style="height: 300px;width: 600px;margin-top: 50px;margin-left:20px;">
+                                        <div id="incomeChart"
+                                             style="border: 1px solid #438FB9; width:100%; height:100%;"></div>
+                                    </div>
+                                    <div id="dy3" style="height: 300px;width: 600px;margin-top: 50px;margin-left:20px;">
+                                        <div id="incomeTypeChart"
+                                             style="border: 1px solid #438FB9; width:100%; height:100%;"></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
                     </div>
-
 
                 </div>
 
@@ -300,7 +329,6 @@
         </div>
     </div>
 </div>
-<script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/perfect-scrollbar.min.js"></script>
 <script type="text/javascript" src="js/main.min.js"></script>
@@ -308,54 +336,235 @@
 <script src="https://unpkg.com/vue/dist/vue.js"></script>
 <!-- 引入组件库 -->
 <script src="https://unpkg.com/element-ui/lib/index.js"></script>
-<script src="./js/index.js"></script>
-
-<!--图表插件-->
-<script type="text/javascript" src="js/Chart.js"></script>
+<script src="js/manageIndex.js"></script>
 <script type="text/javascript">
-    $(document).ready(function (e) {
-        var $dashChartBarsCnt = jQuery('.js-chartjs-bars')[0].getContext('2d'),
-            $dashChartLinesCnt = jQuery('.js-chartjs-lines')[0].getContext('2d');
-
-        var $dashChartBarsData = {
-            labels: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
-            datasets: [
-                {
-                    label: '注册用户',
-                    borderWidth: 1,
-                    borderColor: 'rgba(0,0,0,0)',
-                    backgroundColor: 'rgba(51,202,185,0.5)',
-                    hoverBackgroundColor: "rgba(51,202,185,0.7)",
-                    hoverBorderColor: "rgba(0,0,0,0)",
-                    data: [2500, 1500, 1200, 3200, 4800, 3500, 1500]
-                }
-            ]
-        };
-        var $dashChartLinesData = {
-            labels: ['2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014'],
-            datasets: [
-                {
-                    label: '交易资金',
-                    data: [20, 25, 40, 30, 45, 40, 55, 40, 48, 40, 42, 50],
-                    borderColor: '#358ed7',
-                    backgroundColor: 'rgba(53, 142, 215, 0.175)',
-                    borderWidth: 1,
-                    fill: false,
-                    lineTension: 0.5
-                }
-            ]
-        };
-
-        new Chart($dashChartBarsCnt, {
-            type: 'bar',
-            data: $dashChartBarsData
-        });
-
-        var myLineChart = new Chart($dashChartLinesCnt, {
-            type: 'line',
-            data: $dashChartLinesData,
-        });
+    $.ajax({
+        method: 'get',
+        url: '/toSearchMembersSex',
+        dataType: 'json',
+        success: function (data) {
+            initSexChat(data);
+        }
     });
+
+    function initSexChat(data) {
+        var myChart = echarts.init(document.getElementById('sexChart'));
+        option = {
+            title: {
+                text: '会员男女比例统计',
+                subtext: '内部数据',
+                x: 'center'
+            },
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                left: 'left',
+                data: data
+            },
+            series: [
+                {
+                    name: '男女数量',
+                    type: 'pie',
+                    radius: '55%',
+                    center: ['50%', '60%'],
+                    data: data,
+                    itemStyle: {
+                        emphasis: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        },
+            myChart.setOption(option);
+    };
 </script>
+<script type="text/javascript">
+    $.ajax({
+        method: 'get',
+        url: '/toSearchAllClock',
+        dataType: 'json',
+        success: function (data) {
+            initClockChat(data);
+        }
+    });
+
+    function initClockChat(data) {
+        var myChart = echarts.init(document.getElementById('clockChart'));
+        option = {
+            title: {
+                text: '近七天会员打卡人数',
+                subtext: '内部数据',
+                x: 'center'
+            },
+            xAxis: {
+                type: 'category',
+                data: ['一天前', '两天前', '三天前', '四天前', '五天前', '六天前', '七天前']
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: [
+                {
+                    name: '打卡人数',
+                    data: data,
+                    type: 'bar',
+                    itemStyle: {
+                        normal: {
+                            label: {
+                                show: true, //开启显示
+                                position: 'top', //在上方显示
+                                textStyle: { //数值样式
+                                    color: 'black',
+                                    fontSize: 16
+                                }
+                            },
+                            color: "#a011dd"
+                        }
+                    },
+
+                },
+                {
+                    name: '打卡人数',
+                    type: 'line',
+                    data: data,
+                    itemStyle: {
+                        normal: {
+                            color: "#87CEFA"
+                        }
+                    }
+                },
+            ]
+        };
+        myChart.setOption(option);
+    }
+</script>
+<script type="text/javascript">
+    $.ajax({
+        method: 'get',
+        url: '/toSearchIncomeAtMonth',
+        dataType: 'json',
+        success: function (data) {
+            initIncomeChat(data);
+        }
+    });
+
+    function initIncomeChat(data) {
+        var myChart = echarts.init(document.getElementById('incomeChart'));
+        option = {
+            title: {
+                text: '近一个月收入情况',
+                subtext: '内部数据',
+                x: 'center'
+            },
+            xAxis: {
+                type: 'category',
+                data: ['一周前', '两周前', '三周前', '四周前']
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: [
+                {
+                    name: '收入总额',
+                    data: data,
+                    type: 'bar',
+                    itemStyle: {
+                        normal: {
+                            label: {
+                                show: true, //开启显示
+                                position: 'top', //在上方显示
+                                textStyle: { //数值样式
+                                    color: 'black',
+                                    fontSize: 16
+                                }
+                            },
+                            color: '#fbbd08'
+                        }
+                    },
+
+                },
+                {
+                    name: '收入总额',
+                    type: 'line',
+                    data: data,
+                    itemStyle: {
+                        normal: {
+                            color: '#6739b6'
+                        }
+                    }
+                },
+            ]
+        };
+        myChart.setOption(option);
+    }
+</script>
+
+<script type="text/javascript">
+    $.ajax({
+        method: 'get',
+        url: '/toSearchIncomeType',
+        dataType: 'json',
+        success: function (data) {
+            initTypeChartChat(data);
+        }
+    });
+
+    function initTypeChartChat(data) {
+        var myChart = echarts.init(document.getElementById('incomeTypeChart'));
+        option = {
+            title: {
+                text: '上个月收入分布',
+                subtext: '内部数据',
+                x: 'center'
+            },
+            xAxis: {
+                type: 'category',
+                data: ['会员办卡', '会员续费', '会员停卡', '私教收入']
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: [
+                {
+                    name: '收入总额',
+                    data: data,
+                    type: 'bar',
+                    itemStyle: {
+                        normal: {
+                            label: {
+                                show: true, //开启显示
+                                position: 'top', //在上方显示
+                                textStyle: { //数值样式
+                                    color: 'black',
+                                    fontSize: 16
+                                }
+                            },
+                            color: '#8dc63f'
+                        }
+                    },
+
+                },
+                {
+                    name: '收入总额',
+                    type: 'line',
+                    data: data,
+                    itemStyle: {
+                        normal: {
+                            color:  '#9c26b0'
+                        }
+                    }
+                },
+            ]
+        };
+        myChart.setOption(option);
+    }
+</script>
+
 </body>
 </html>

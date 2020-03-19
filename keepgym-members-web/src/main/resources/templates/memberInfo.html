@@ -57,7 +57,7 @@
                 <!-- End Logo -->
                 <!-- ============================================================== -->
                 <div class="navbar-collapse">
-                <!--    <h1>健身是世界上最公平的事,付出多少,收获多少。</h1>-->
+                    <!--    <h1>健身是世界上最公平的事,付出多少,收获多少。</h1>-->
                 </div>
             </nav>
         </header>
@@ -95,13 +95,15 @@
                                 class="hide-menu"></span>个人信息</a></li>
                         <li><a class="waves-effect waves-dark" th:href="@{'/toMemberNotice?memberId='+${memberId}}"
                                aria-expanded="false"><i
-                                class="fa fa-globe"></i><span class="hide-menu"></span>消息通知</a></li>
+                                class="fa fa-globe"></i><span class="hide-menu"></span>
+                            <el-badge :value="messageNum" class="item" type="primary">消息通知</el-badge>
+                        </a></li>
                         <li><a class="waves-effect waves-dark" th:href="@{'/toMemberFeedback?memberId='+${memberId}}"
                                aria-expanded="false"><i
                                 class="fa fa-bookmark-o"></i><span class="hide-menu"></span>意见反馈</a></li>
-                        <div class="text-center m-t-30">
-                            <el-button type="danger" @click="loginout()">退出登录</el-button>
-                        </div>
+                        <li>
+                            <a class="waves-effect waves-dark" th:href="@{/toLoginOut}">退出登录</a>
+                        </li>
                     </ul>
 
                 </nav>
@@ -131,7 +133,8 @@
                         <div class="d-flex justify-content-end align-items-center">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a
-                                        th:href="@{'/toMemberInfo?memberId='+${memberId}}" th:text="'当前用户：'+${memberName}"></a></li>
+                                        th:href="@{'/toMemberInfo?memberId='+${memberId}}"
+                                        th:text="'当前用户：'+${memberName}"></a></li>
                                 <li class="breadcrumb-item active">个人信息</li>
                             </ol>
                         </div>
@@ -192,32 +195,55 @@
                                                 <el-switch v-model="form.expire" disabled="true"></el-switch>
                                             </el-form-item>
                                             <el-form-item label="剩余时间：">
-                                                <el-tag size="small" closable >{{form.remainTime}}天</el-tag>
+                                                <el-tag size="small" closable>{{form.remainTime}}天</el-tag>
                                                 <el-progress :percentage="percentage" stroke-width="50px"></el-progress>
 
                                             </el-form-item>
                                             <el-form-item>
                                                 <el-button type="primary" @click="onSubmit('form')">修改信息</el-button>
                                                 <el-button type="info" @click="alterPwdDialog = true">修改密码</el-button>
-                                                <el-button @click="reset()">重置</el-button>
+                                                <el-button type="warning" @click="renewDialog = true">会员续费</el-button>
 
                                             </el-form-item>
                                         </el-form>
+                                       <!-- //修改会员密码的dialog-->
                                         <el-dialog title="修改密码" :visible.sync="alterPwdDialog">
-                                            <el-form :model="pwd"  :rules="rules" ref="pwd">
+                                            <el-form :model="pwd" :rules="rules" ref="pwd">
                                                 <el-form-item label="原密码：" :label-width="formLabelWidth">
-                                                    <el-input v-model="pwd.originPwd"  placeholder="输入原密码" show-password></el-input>
+                                                    <el-input v-model="pwd.originPwd" placeholder="输入原密码"
+                                                              show-password></el-input>
                                                 </el-form-item>
                                                 <el-form-item label="新密码：" :label-width="formLabelWidth" prop="newPwd">
-                                                    <el-input v-model="pwd.newPwd"  placeholder="输入新密码" show-password></el-input>
+                                                    <el-input v-model="pwd.newPwd" placeholder="输入新密码"
+                                                              show-password></el-input>
                                                 </el-form-item>
-                                                <el-form-item label="确认密码：" :label-width="formLabelWidth" prop="confirmPwd">
-                                                    <el-input v-model="pwd.confirmPwd"  placeholder="再次确认密码" show-password></el-input>
+                                                <el-form-item label="确认密码：" :label-width="formLabelWidth"
+                                                              prop="confirmPwd">
+                                                    <el-input v-model="pwd.confirmPwd" placeholder="再次确认密码"
+                                                              show-password></el-input>
                                                 </el-form-item>
                                             </el-form>
                                             <div slot="footer" class="dialog-footer">
                                                 <el-button @click="resetPwd()">重 置</el-button>
                                                 <el-button type="primary" @click="alterPwd()">修 改</el-button>
+                                            </div>
+                                        </el-dialog>
+
+                                       <!-- //会员续费的dialog-->
+                                        <el-dialog title="会员续费" :visible.sync="renewDialog">
+                                            <el-form :model="renewForm" >
+                                                <el-form-item label="续费类型：" required="true">
+                                                    <el-select v-model="renewForm.type" placeholder="请选择续费类型"
+                                                               style="width: 250px;">
+                                                        <el-option label="年卡(￥1200)" value="年卡"></el-option>
+                                                        <el-option label="季卡(￥600)" value="季卡"></el-option>
+                                                        <el-option label="月卡(￥200)" value="月卡"></el-option>
+                                                    </el-select>
+                                                </el-form-item>
+                                            </el-form>
+                                            <div slot="footer" class="dialog-footer">
+                                                <el-button @click="renew()">续 费</el-button>
+                                                <el-button type="primary" @click="renewDialog = false">取消</el-button>
                                             </div>
                                         </el-dialog>
                                     </div>

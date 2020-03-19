@@ -104,14 +104,14 @@
                             <a class="waves-effect waves-dark" th:href="@{'/toMemberNotice?memberId='+${memberId}}"
                                aria-expanded="false"><i
                                     class="fa fa-globe"></i><span class="hide-menu"></span>
-                                <el-badge :value="confirmNum" class="item" type="primary">消息通知</el-badge>
+                                <el-badge :value="messageNum" class="item" type="primary">消息通知</el-badge>
                             </a></li>
                         <li><a class="waves-effect waves-dark" th:href="@{'/toMemberFeedback?memberId='+${memberId}}"
                                aria-expanded="false"><i
                                 class="fa fa-bookmark-o"></i><span class="hide-menu"></span>意见反馈</a></li>
-                        <div class="text-center m-t-30">
-                            <el-button type="danger" @click="loginout()">退出登录</el-button>
-                        </div>
+                        <li>
+                            <a class="waves-effect waves-dark" th:href="@{/toLoginOut}">退出登录</a>
+                        </li>
                     </ul>
                 </nav>
                 <!-- End Sidebar navigation -->
@@ -166,10 +166,15 @@
                                     stripe
                                     style="width: 100%">
                                 <el-table-column
+                                        label="序号"
+                                        type="index"
+                                        width="180">
+                                </el-table-column>
+                                <el-table-column
                                         v-for="item in tableHead"
                                         :label="item.lable"
                                         :prop="item.prop"
-                                        width="180">
+                                        width="200">
                                 </el-table-column>
 
                             </el-table>

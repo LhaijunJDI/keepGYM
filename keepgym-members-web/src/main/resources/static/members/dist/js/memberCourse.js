@@ -17,8 +17,14 @@ new Vue({
             orderInfo: {
                 memberId: '',
                 courseId: '',
-            }
+            },
+            messageNum: '',
         }
+    },
+    mounted() {
+        this.$nextTick(() => {
+            this.toSearchAllNotice();
+        });
     },
     created() {
         this.getAllCourse();
@@ -39,6 +45,18 @@ new Vue({
                         alert("请求超时，请刷新重试！");
                     }
                 }
+            });
+        },
+        confirmOnSubmit(id){
+            let that = this;
+            this.$confirm('你是否要需要该课程?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                that.onSubmit(id);
+            }).catch(() => {
+
             });
         },
         onSubmit(courseId) {
@@ -87,6 +105,38 @@ new Vue({
                     }
                 }
             });
+        },
+        toSearchAllNotice() {
+            let that = this;
+            var memberId = document.getElementById("memberId").value;
+            $.ajax({
+                url: "/toSearchAllNotice",
+                type: "get",
+                data: {
+                    "memberId": memberId,
+                },
+                contentType: 'application/json',
+                success: function (data) {
+                    if (data != null) {
+                        that.memberNotice = data;
+                        that.messageNum = data.length;
+                    }
+                    if (data == null) {
+                        alert("请求超时，请刷新重试！");
+                    }
+                },
+            });
+        },
+        //退出登录
+        loginout(){
+            $.ajax({
+                url:"/loginOut",
+                type:"get",
+                data:{},
+                success:function () {
+
+                }
+            })
         },
 
 

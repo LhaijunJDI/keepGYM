@@ -3,6 +3,7 @@ new Vue({
     data: function () {
         return {
             courseList: [{}],
+            coachList:[{}],
             courseInfo: {
                 courseId: '',
                 name: '',
@@ -20,11 +21,23 @@ new Vue({
             showPicDialog: false,
             pictureSrc: '',
             addCourseDialog: false,
-            search: ''
+            search: '',
+            managerInfo: '',
+            currentCourseId: '',
+            currentCoachId: '',
+            orderCourseDialog: false,
+            orderCoachDialog: false,
+            orderInfo: {
+                memberId: '',
+                num: '',
+            },
+
         }
     },
     created() {
         this.toSearchAllCourse();
+        this.toSearchManagerName();
+        this.toSearchAllCoach();
     },
     computed: {
         // 模糊搜索
@@ -52,6 +65,45 @@ new Vue({
         }
     },
     methods: {
+        toSearchManagerName() {
+            let that = this;
+            var managerId = document.getElementById("managerId").value;
+            $.ajax({
+                url: "/toSearchManagerInfo",
+                type: "get",
+                data: {"managerId": managerId},
+                success: function (data) {
+                    if (data != null) {
+                        that.managerInfo = data;
+                    }
+                }
+            })
+        },
+
+        toSearchAllCoach(){
+            let that = this;
+            $.ajax({
+                url: "/toSearchAllCoach",
+                type: "get",
+                data: {},
+                dataType: "json",
+                success: function (data) {
+                    if (data != null) {
+                        that.coachList = data;
+                    }
+                    if (data == null) {
+                        that.$alert('请刷新后重再试', '教练列表显示失败', {
+                            confirmButtonText: '确定',
+                            callback: action => {
+
+                            }
+                        });
+                    }
+
+                }
+            })
+        },
+
         toSearchAllCourse() {
             let that = this;
             $.ajax({
@@ -60,7 +112,6 @@ new Vue({
                 data: {},
                 dataType: "json",
                 success: function (data) {
-                    console.log(data);
                     if (data != null) {
                         that.courseList = data;
                     }
@@ -68,7 +119,6 @@ new Vue({
                         that.$alert('请刷新后重再试', '课程显示失败', {
                             confirmButtonText: '确定',
                             callback: action => {
-                                that.dialogFormVisible = false;
                             }
                         });
                     }
@@ -190,6 +240,7 @@ new Vue({
                 url: "/toAddCourse",
                 type: "put",
                 data: datas,
+                contentType:"application/json",
                 success: function (data) {
                     if (data == 'success') {
                         that.$alert('', '发布成功', {
@@ -224,9 +275,88 @@ new Vue({
             this.courseInfo.strStartTime = '';
             this.courseInfo.strEndTime = '';
         },
-        resetCourseInfo(){
+        resetCourseInfo() {
             this.resetCourseInfo1();
-            this.addCourseDialog = true ;
-        }
+            this.courseInfo.picSrc = "members/assets/images/course/";
+            this.addCourseDialog = true;
+        },
+
+        orderCourseDia(id) {
+            this.currentCourseId = id;
+            this.orderCourseDialog = true;
+        },
+        orderCoach(id) {
+            this.currentCoachId = id;
+            this.orderCoachDialog = true;
+        },
+        buyCoachClass() {
+            let that = this;
+            var managerId = document.getElementById("managerId").value;
+            $.ajax({
+                url: "/toBuyCoachClass",
+                type: "put",
+                data: {
+                    "coachId": that.currentCoachId,
+                    "memberId": that.orderInfo.memberId,
+                    "num": that.orderInfo.num,
+                    "managerId": managerId
+                },
+                success: function (data) {
+                    if (data === 'success') {
+                        that.$alert('', '购买成功', {
+                            confirmButtonText: '确定',
+                            callback: action => {
+                                window.location.href = location.href;
+                            }
+                        });
+                    }
+                    if (data === 'fail') {
+                        that.$alert('请确认信息是否正确', '购买失败', {
+                            confirmButtonText: '确定',
+                            callback: action => {
+                                window.location.href = location.href;
+                            }
+                        });
+                    }
+                }
+            });
+        },
+        orderCourse() {
+            let that = this;
+            $.ajax({
+                url: "/toOrderCourse",
+                type: "put",
+                data: {
+                   "courseId":that.currentCourseId,"memberId":that.orderInfo.memberId
+                },
+                success: function (data) {
+                    if (data === 'success') {
+                        that.$alert('', '预约成功', {
+                            confirmButtonText: '确定',
+                            callback: action => {
+                                window.location.href = location.href;
+                            }
+                        });
+                    }
+                    if (data === 'fail') {
+                        that.$alert('请确认信息是否正确', '预约失败', {
+                            confirmButtonText: '确定',
+                            callback: action => {
+                                window.location.href = location.href;
+                            }
+                        });
+                    }
+                    if (data === 'already') {
+                        that.$alert('该会员已预约了此课程', '预约失败', {
+                            confirmButtonText: '确定',
+                            callback: action => {
+                                that.orderCourseDialog = false;
+                            }
+                        });
+                    }
+
+                }
+            });
+        },
     },
-})
+});

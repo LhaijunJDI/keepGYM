@@ -7,6 +7,8 @@ import com.lhj.keepgym.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import tk.mybatis.mapper.entity.Example;
 
+import java.text.SimpleDateFormat;
+import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -42,12 +44,87 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public List<Message> findNoticeById(String memberId) {
-        Message message = new Message();
-        message.setReceiveId(memberId);
-        List<Message> messages = messageMapper.select(message);
-        if(messages!=null){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+        Example example = new Example(Message.class);
+        example.createCriteria().andEqualTo("receiveId", memberId).andEqualTo("status", 0);
+        List<Message> messages = messageMapper.selectByExample(example);
+        if (messages != null) {
+            for (Message message : messages) {
+                message.setStrSendTime(simpleDateFormat.format(message.getSendTime()));
+            }
             return messages;
         }
         return null;
+    }
+
+    @Override
+    public List<Message> findCheckNoticeById(String memberId) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+        Example example = new Example(Message.class);
+        example.createCriteria().andEqualTo("receiveId", memberId).andEqualTo("status", 1);
+        List<Message> messages = messageMapper.selectByExample(example);
+        if (messages != null) {
+            for (Message message : messages) {
+                message.setStrSendTime(simpleDateFormat.format(message.getSendTime()));
+            }
+            return messages;
+        }
+        return null;
+    }
+
+    @Override
+    public String updateAllNoticeStatus(String memberId) {
+        Example example = new Example(Message.class);
+        example.createCriteria().andEqualTo("receiveId",memberId);
+        Message message = null;
+        List<Message> messageList = messageMapper.selectByExample(example);
+        Iterator<Message> iterator = messageList.iterator();
+        while (iterator.hasNext()) {
+            message = iterator.next();
+            message.setStatus("1");
+            int i = messageMapper.updateByPrimaryKeySelective(message);
+            if(i<=0){
+               return "fail";
+            }
+        }
+        return "success";
+    }
+
+    @Override
+    public String updateNoticeStatus(String id) {
+        Message message = new Message();
+        message.setId(Integer.parseInt(id));
+        message.setStatus("1");
+        int i = messageMapper.updateByPrimaryKeySelective(message);
+        if(i>0){
+            return "success";
+        }
+        return "fail";
+    }
+
+    @Override
+    public String deleteNoticeById(String id) {
+        int i = messageMapper.deleteByPrimaryKey(Integer.parseInt(id));
+        if(i>0){
+            return "success";
+        }
+        return "fail";
+    }
+
+    @Override
+    public String deleteAllNoticeById(String memberId) {
+        Message message = new Message();
+        Example example = new Example(Message.class);
+        example.createCriteria().andEqualTo("receiveId",memberId);
+        List<Message> messageList = messageMapper.selectByExample(example);
+        Iterator<Message> iterator = messageList.iterator();
+        while (iterator.hasNext()){
+            message = iterator.next();
+            int i = messageMapper.delete(message);
+            if(i<=0){
+                return "fail";
+            }
+        }
+        return "success";
     }
 }

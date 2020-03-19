@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lhj.keepgym.manage.mapper.OrderCoachMapper">
+    <select id="findAllOrders" resultType="com.lhj.keepgym.bean.OrderCoach">
+        select c.name as coach_name,o.* from coach c,order_coach o where c.id = o.coach_id
+    </select>
+</mapper>

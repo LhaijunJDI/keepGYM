@@ -2,6 +2,7 @@ package com.lhj.keepgym.service;
 
 import com.lhj.keepgym.bean.Clock;
 import java.util.List;
+import java.util.Map;
 
 /**
  * (Clock)表服务接口
@@ -17,4 +18,8 @@ public interface ClockService {
     String addClockIn(String memberId);
 
     String addClockOut(String memberId);
+
+    List<Clock> findAllClock();
+
+    List<Integer> findAllClockInWeek();
 }

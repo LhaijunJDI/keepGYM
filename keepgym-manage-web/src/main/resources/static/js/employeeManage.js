@@ -143,7 +143,8 @@ new Vue({
             this.pictureSrc = picSrc;
             this.showPicDialog = true;
         },
-        findCurrentManager() {
+
+       /* findCurrentManager() {
             let that = this;
             this.currentManagerInfo.id = document.getElementById("managerId").value;
             $.ajax({
@@ -157,11 +158,11 @@ new Vue({
                     }
                 }
             })
-        },
+        },*/
 
         editManagerInfo(managerId) {
             let that = this;
-            this.ManagerInfo.id = managerId;
+            this.managerInfo.id = managerId;
             $.ajax({
                 url: "/toSearchManagerInfo",
                 type: "get",
@@ -192,7 +193,7 @@ new Vue({
                 data: datas,
                 contentType: "application/json",
                 success: function (data) {
-                    if (data == 'success') {
+                    if (data === 'success') {
                         that.$alert('', '修改成功', {
                             confirmButtonText: '确定',
                             callback: action => {
@@ -200,7 +201,7 @@ new Vue({
                             }
                         });
                     }
-                    if (data == 'fail') {
+                    if (data === 'fail') {
                         that.$alert('请稍后再试', '修改失败', {
                             confirmButtonText: '确定',
                             callback: action => {
@@ -370,7 +371,7 @@ new Vue({
                 type: "put",
                 data: datas,
                 success: function (data) {
-                    if (data == 'success') {
+                    if (data === 'success') {
                         that.$alert('', '添加员工成功', {
                             confirmButtonText: '确定',
                             callback: action => {
@@ -378,7 +379,7 @@ new Vue({
                             }
                         });
                     }
-                    if (data == 'fail') {
+                    if (data === 'fail') {
                         that.$alert('请稍后再试', '添加失败', {
                             confirmButtonText: '确定',
                             callback: action => {

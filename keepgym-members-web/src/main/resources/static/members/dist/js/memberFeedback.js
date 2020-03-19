@@ -12,7 +12,13 @@ new Vue({
                 resource4: '',
                 resource5: '',
             },
+            messageNum: '',
         }
+    },
+    mounted() {
+        this.$nextTick(() => {
+            this.toSearchAllNotice();
+        });
     },
     created() {
         this.getMemberInfo();
@@ -72,6 +78,39 @@ new Vue({
         this.form.resource4 = '';
         this.form.resource5 = '';
     },
+        //退出登录
+        loginout(){
+            $.ajax({
+                url:"/loginOut",
+                type:"get",
+                data:{},
+                success:function () {
+                }
+            })
+        },
+
+        toSearchAllNotice() {
+            let that = this;
+            var memberId = document.getElementById("memberId").value;
+            $.ajax({
+                url: "/toSearchAllNotice",
+                type: "get",
+                data: {
+                    "memberId": memberId,
+                },
+                contentType: 'application/json',
+                success: function (data) {
+                    if (data != null) {
+                        that.memberNotice = data;
+                        console.log(data.length);
+                        that.messageNum = data.length;
+                    }
+                    if (data == null) {
+                        alert("请求超时，请刷新重试！");
+                    }
+                },
+            });
+        },
 
 }
 })

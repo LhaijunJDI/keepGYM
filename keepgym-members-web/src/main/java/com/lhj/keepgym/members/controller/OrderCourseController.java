@@ -1,6 +1,7 @@
 package com.lhj.keepgym.members.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.lhj.keepgym.annotations.LoginRequired;
 import com.lhj.keepgym.bean.OrderCourse;
 import com.lhj.keepgym.service.OrderCourseService;
 import org.springframework.stereotype.Controller;
@@ -15,7 +16,7 @@ public class OrderCourseController {
     private OrderCourseService orderCourseService;
 
     //预约课程
-
+    @LoginRequired
     @PostMapping("/saveOrderCourse")
     @ResponseBody
     public String saveOrderCourse(@RequestBody OrderCourse orderCourse){

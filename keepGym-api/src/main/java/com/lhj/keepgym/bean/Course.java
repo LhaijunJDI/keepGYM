@@ -50,6 +50,8 @@ public class Course implements Serializable {
 
     @Transient
     private String coachName;
+
+    private Date createTime;
     //private List<Coach> coaches;
 
 

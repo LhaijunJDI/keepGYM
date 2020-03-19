@@ -41,7 +41,7 @@ public class OrderCourseServiceImpl implements OrderCourseService {
         //根据课程id查找课程
         Course course = courseMapper.selectByPrimaryKey(courseId);
         //判断课程信息中的剩余人数是否为0，若为0则返回full表示人数已满
-        if(course.getNum().equals("0")){
+        if("0".equals(course.getNum())){
             return "full";
         }
         orderCourse.setMemberName(members.getUsername());
@@ -50,6 +50,7 @@ public class OrderCourseServiceImpl implements OrderCourseService {
         OrderCourse orderCourse1 =orderCourseMapper.findOrderCourseById(memberId,courseId);
         //预约信息为空则说明该用户并未预约该课程
             if (orderCourse1 == null){
+                orderCourse.setStatus("0");
                 int result = orderCourseMapper.insertSelective(orderCourse);
                 if(result>0){
                     int i = orderCourseMapper.updateCourseNum(courseId);

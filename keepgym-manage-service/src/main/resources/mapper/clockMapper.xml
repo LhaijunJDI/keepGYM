@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lhj.keepgym.manage.mapper.ClockMapper">
+    <select id="findCurrentDayMembers" resultType="com.lhj.keepgym.bean.Clock">
+      select * from clock where TO_DAYS(clock_in_time) = TO_DAYS(NOW())
+    </select>
+    <select id="findADayMembers" resultType="Integer">
+      select count(*) from clock where TO_DAYS(clock_in_time) = TO_DAYS(NOW())-1
+    </select>
+    <select id="findBDayMembers" resultType="Integer">
+      select count(*) from clock where TO_DAYS(clock_in_time) = TO_DAYS(NOW())-2
+    </select>
+    <select id="findCDayMembers" resultType="Integer">
+      select count(*) from clock where TO_DAYS(clock_in_time) = TO_DAYS(NOW())-3
+    </select>
+    <select id="findDDayMembers" resultType="Integer">
+      select count(*) from clock where TO_DAYS(clock_in_time) = TO_DAYS(NOW())-4
+    </select>
+    <select id="findEDayMembers" resultType="Integer">
+      select count(*) from clock where TO_DAYS(clock_in_time) = TO_DAYS(NOW())-5
+    </select>
+    <select id="findFDayMembers" resultType="Integer">
+      select count(*) from clock where TO_DAYS(clock_in_time) = TO_DAYS(NOW())-6
+    </select>
+    <select id="findGDayMembers" resultType="Integer">
+      select count(*) from clock where TO_DAYS(clock_in_time) = TO_DAYS(NOW())-7
+    </select>
+</mapper>

@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import tk.mybatis.mapper.entity.Example;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class MembersServiceImpl implements MembersService {
@@ -87,6 +89,21 @@ public class MembersServiceImpl implements MembersService {
 
     @Override
     public List<Members> findAllEndTimeMembers() {
+        return null;
+    }
+
+    @Override
+    public List<Map<String, String>> findAllMemberSex() {
+        return null;
+    }
+
+    @Override
+    public String findNewMembers() {
+        return null;
+    }
+
+    @Override
+    public List<HashMap<String, Object>> findAllMembersForPoi() {
         return null;
     }
 

@@ -3,9 +3,12 @@ package com.lhj.keepgym.members.controller;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.lhj.keepgym.annotations.LoginRequired;
 import com.lhj.keepgym.bean.Coach;
+import com.lhj.keepgym.bean.OrderCourse;
 import com.lhj.keepgym.service.CoachService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -37,7 +40,8 @@ public class CoachController {
             String enterTime = simpleDateFormat.format(coach1.getEnterTime());
            coach1.setStrEnterTime(enterTime);
         }
-        System.out.println(allCoach.get(0));
         return allCoach;
     }
+
+
 }

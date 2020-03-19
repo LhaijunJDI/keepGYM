@@ -10,9 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import tk.mybatis.mapper.entity.Example;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
+/**
+ * @author Shinelon
+ */
 @Service
 public class ClockServiceImpl implements ClockService {
 
@@ -29,9 +34,6 @@ public class ClockServiceImpl implements ClockService {
 
     @Override
     public String addClockIn(String memberId) {
-        if (memberId == null || memberId.equals(' ')) {
-            return "fail";
-        }
         Members members = membersMapper.selectByPrimaryKey(memberId);
         if (members != null && "可用".equals(members.getStatus())) {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
@@ -53,20 +55,36 @@ public class ClockServiceImpl implements ClockService {
 
     @Override
     public String addClockOut(String memberId) {
-        if (memberId == null || memberId.equals(' ')) {
-            return "fail";
-        }
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-        Date clockOutDate = new Date();
-        simpleDateFormat.format(clockOutDate);
-        Example example = new Example(Clock.class);
-        example.createCriteria().andEqualTo("memberId", memberId);
-        Clock clock = new Clock();
-        clock.setClockOutTime(clockOutDate);
-        int i = clockMapper.updateByExampleSelective(clock, example);
+        int i = clockMapper.updateClockOutTime(memberId);
         if (i > 0) {
             return "success";
         }
         return "fail";
     }
+
+    @Override
+    public List<Clock> findAllClock() {
+        return clockMapper.findCurrentDayMembers();
+    }
+
+    @Override
+    public List<Integer> findAllClockInWeek() {
+        List<Integer> list =new ArrayList<Integer>();
+        Integer aDayMembers = clockMapper.findADayMembers();
+        Integer bDayMembers = clockMapper.findBDayMembers();
+        Integer cDayMembers = clockMapper.findCDayMembers();
+        Integer dDayMembers = clockMapper.findDDayMembers();
+        Integer eDayMembers = clockMapper.findEDayMembers();
+        Integer fDayMembers = clockMapper.findFDayMembers();
+        Integer gDayMembers = clockMapper.findGDayMembers();
+        list.add(aDayMembers);
+        list.add(bDayMembers);
+        list.add(cDayMembers);
+        list.add(dDayMembers);
+        list.add(eDayMembers);
+        list.add(fDayMembers);
+        list.add(gDayMembers);
+        return list;
+    }
+
 }

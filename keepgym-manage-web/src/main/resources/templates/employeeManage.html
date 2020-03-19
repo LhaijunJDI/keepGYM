@@ -37,16 +37,16 @@
                                 <ul class="nav nav-subnav">
                                     <li><a th:href="@{'/toMemberManage?managerId='+${managerId}}">会员管理</a></li>
                                     <li><a th:href="@{'/toEmployeeManage?managerId='+${managerId}}">员工管理</a></li>
-                                    <li><a th:href="@{'/toCourseManage?managerId='+${managerId}}">课程管理</a></li>
+                                    <li><a th:href="@{'/toCourseManage?managerId='+${managerId}}">团课私教</a></li>
                                 </ul>
                             </li>
 
                             <li class="nav-item nav-item-has-subnav">
                                 <a href="javascript:void(0)"><i class="mdi mdi-language-javascript"></i> 系统功能</a>
                                 <ul class="nav nav-subnav">
-                                    <li><a href="#">工资发放</a></li>
-                                    <li><a href="#">消息通知</a></li>
-                                    <li><a href="#">数据备份</a></li>
+                                    <li><a th:href="@{'/toFeedbackManage?managerId='+${managerId}}">意见反馈</a></li>
+                                    <li><a th:href="@{'/toNoticeManage?managerId='+${managerId}}">消息通知</a></li>
+                                    <li><a th:href="@{'/toBackUpManage?managerId='+${managerId}}">数据备份</a></li>
                                     <input type="hidden" name="managerId" id="managerId"
                                            th:value="${managerId}"><br>
                                 </ul>
@@ -79,10 +79,10 @@
                         <ul class="topbar-right">
                             <li class="dropdown dropdown-profile">
                                 <a href="javascript:void(0)" data-toggle="dropdown">
-                                    <span>当前用户： <span class="caret"></span></span>
+                                    <span th:text="'当前管理员：'+${managerName}"><span class="caret"></span></span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-right">
-                                    <li><a href="lyear_pages_login.html"><i class="mdi mdi-logout-variant"></i> 退出登录</a>
+                                    <li><a th:href="@{'/toLoginOut'}"></i> 退出登录</a>
                                     </li>
                                 </ul>
                             </li>
@@ -324,26 +324,21 @@
                                     <el-table-column
                                             prop="id"
                                             label="教练id"
-                                            width="120">
+                                            width="80">
                                     </el-table-column>
                                     <el-table-column
                                             prop="name"
                                             label="姓名"
-                                            width="120">
+                                            width="110">
                                     </el-table-column>
                                     <el-table-column
                                             prop="gender"
                                             label="性别"
-                                            width="120">
+                                            width="80">
                                     </el-table-column>
                                     <el-table-column
                                             prop="phone"
                                             label="电话"
-                                            width="120">
-                                    </el-table-column>
-                                    <el-table-column
-                                            prop="email"
-                                            label="邮箱"
                                             width="120">
                                     </el-table-column>
                                     <el-table-column
@@ -368,7 +363,7 @@
                                     </el-table-column>
                                     <el-table-column
                                             prop="teachTime"
-                                            label="教龄"
+                                            label="教龄(年)"
                                             width="80">
                                     </el-table-column>
                                     <el-table-column
@@ -388,7 +383,7 @@
                                     </el-table-column>
                                     <el-table-column
                                             align="right"
-                                            width="200">
+                                            width="180">
                                         <template slot="header" slot-scope="scope">
                                             <el-input
                                                     icon="search"

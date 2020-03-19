@@ -4,11 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 @AllArgsConstructor
 @Data
@@ -25,5 +23,9 @@ public class Feedback implements Serializable {
     private String resource3;
     private String resource4;
     private String resource5;
+    private Date feedbackTime;
+
+    @Transient
+    private String strFeedbackTime;
 
 }

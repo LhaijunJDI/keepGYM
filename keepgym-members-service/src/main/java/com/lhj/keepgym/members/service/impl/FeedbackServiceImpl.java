@@ -7,6 +7,10 @@ import com.lhj.keepgym.service.FeedbackService;
 import org.springframework.beans.factory.annotation.Autowired;
 import tk.mybatis.mapper.entity.Example;
 
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+
 @Service
 public class FeedbackServiceImpl implements FeedbackService {
 
@@ -21,12 +25,14 @@ public class FeedbackServiceImpl implements FeedbackService {
         feedback1 = feedbackMapper.selectByPrimaryKey(feedback);
         //反馈记录为空则新增
         if (feedback1 == null) {
+            feedback.setFeedbackTime(new Date());
             int insert = feedbackMapper.insertSelective(feedback);
             if (insert > 0) {
                 return "success";
             }
             return "fail";
         } else {//反馈记录不为空则更新
+            feedback.setFeedbackTime(new Date());
             Example example = new Example(Feedback.class);
             example.createCriteria().andEqualTo("memberId", feedback.getMemberId());
             int i = feedbackMapper.updateByExampleSelective(feedback, example);
@@ -35,5 +41,15 @@ public class FeedbackServiceImpl implements FeedbackService {
             }
             return "fail";
         }
+    }
+
+    @Override
+    public List<HashMap<String, Object>> findAllFeedbackForPoi() {
+        return null;
+    }
+
+    @Override
+    public List<Feedback> findAllFeedback() {
+        return null;
     }
 }

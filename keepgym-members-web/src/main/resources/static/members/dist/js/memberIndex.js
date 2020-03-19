@@ -4,7 +4,6 @@ new Vue({
         return {
             form: [{}],
             tableHead: [
-                {lable: '序号', prop: 'id'},
                 {lable: '打卡时间', prop: 'strClockInTime'},
                 {lable: '离开时间', prop: 'strClockOutTime'},
                 {lable: '健身时长(min)   ', prop: 'sportTime'},
@@ -65,11 +64,15 @@ new Vue({
             });
         },
 
-        loginout() {
-            this.$message({
-                message: '您已成功退出！',
-                type: 'warning'
-            });
+        //退出登录
+        loginout(){
+            $.ajax({
+                url:"/loginOut",
+                type:"get",
+                data:{},
+                success:function () {
+                }
+            })
         },
         //显示打卡天数
         handleSelected(day) {

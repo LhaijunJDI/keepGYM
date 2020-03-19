@@ -1,6 +1,8 @@
 package com.lhj.keepgym.service;
 
 import com.lhj.keepgym.bean.Coach;
+
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -21,4 +23,6 @@ public interface CoachService {
     String deleteCoach(String coachId);
 
     String insertCoach(Coach coach);
+
+    List<HashMap<String, Object>> findAllCoachForPoi();
 }

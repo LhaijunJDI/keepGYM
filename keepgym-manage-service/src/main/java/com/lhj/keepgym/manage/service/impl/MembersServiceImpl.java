@@ -60,19 +60,24 @@ public class MembersServiceImpl implements MembersService {
             curr.add(Calendar.YEAR, 1);
             endTime = curr.getTime();
             members.setEndTime(endTime);
+            members.setLevel("年卡");
             income.setMoney("1200.00");
         } else if ("季卡".equals(members.getLevel())) {
             curr.add(Calendar.MONTH, 3);
             endTime = curr.getTime();
             members.setEndTime(endTime);
+            members.setLevel("季卡");
             income.setMoney("600.00");
         } else if ("月卡".equals(members.getLevel())) {
             curr.add(Calendar.MONTH, 1);
             endTime = curr.getTime();
             members.setEndTime(endTime);
+            members.setLevel("月卡");
             income.setMoney("200.00");
         }
         members.setPassword("123456");
+        members.setStatus("可用");
+        members.setConfirm("0");
         int i = membersMapper.insertSelective(members);
         if (i > 0) {
             income.setCreateId(members.getCreateId());
@@ -115,9 +120,6 @@ public class MembersServiceImpl implements MembersService {
 
     @Override
     public String updateRenewMember(String memberId, String createId, String level, String time) {
-        if (memberId == null || memberId.equals(' ') || level == null || time == null) {
-            return "fail";
-        }
         Members members = membersMapper.selectByPrimaryKey(memberId);
         if (members != null) {
             String money = null;
@@ -157,31 +159,32 @@ public class MembersServiceImpl implements MembersService {
 
     @Override
     public String updateStopCardMember(String memberId, String createId, String time) {
-        if (memberId == null || memberId.equals(' ')) {
-            return "fail";
-        }
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Calendar calendar = Calendar.getInstance();
+        Calendar calendar1 = Calendar.getInstance();
         Income income = new Income();
         Members members = membersMapper.selectByPrimaryKey(memberId);
         if (members != null) {
             calendar.setTime(members.getEndTime());
             if ("1".equals(time)) {
                 calendar.add(Calendar.MONTH, 1);
+                calendar1.add(Calendar.MONTH, 1);
                 income.setMoney("50.00");
             }
             if ("2".equals(time)) {
                 calendar.add(Calendar.MONTH, 2);
+                calendar1.add(Calendar.MONTH, 2);
                 income.setMoney("90.00");
             }
             if ("3".equals(time)) {
                 calendar.add(Calendar.MONTH, 3);
+                calendar1.add(Calendar.MONTH, 3);
                 income.setMoney("120.00");
             }
             members.setEndTime(calendar.getTime());
-            members.setStatus("禁用");
+            members.setStatus("禁用至" + simpleDateFormat.format(calendar1.getTime()));
             int i = membersMapper.updateByPrimaryKeySelective(members);
             if (i > 0) {
-
                 income.setRevenueType("会员停卡");
                 income.setCreateId(createId);
                 income.setCreateTime(new Date());
@@ -203,12 +206,12 @@ public class MembersServiceImpl implements MembersService {
         List<Members> members = membersMapper.selectAll();
         if (members != null) {
             for (Members member : members) {
-                if("0".equals(member.getConfirm())){
+                if ("0".equals(member.getConfirm())) {
                     member.setConfirm("未通知");
-                }else{
+                } else {
                     member.setConfirm("已通知");
                 }
-                day = (int)( (member.getEndTime().getTime()-nowTime.getTime()) / (1000 * 60 * 60 * 24));
+                day = (int) ((member.getEndTime().getTime() - nowTime.getTime()) / (1000 * 60 * 60 * 24));
                 if (day < 30) {
                     member.setRemainTime(String.valueOf(day));
                     member.setStrEndTime(simpleDateFormat.format(member.getEndTime()));
@@ -218,5 +221,46 @@ public class MembersServiceImpl implements MembersService {
             return endTimeMembers;
         }
         return null;
+    }
+
+    @Override
+    public List<Map<String, String>> findAllMemberSex() {
+        int memNum = 0;
+        int womenNum = 0;
+        List<Map<String, String>> data = new ArrayList<Map<String, String>>();
+        List<Members> membersList = membersMapper.selectAll();
+        if (membersList != null) {
+            for (Members members : membersList) {
+                if ("1".equals(members.getGender())) {
+                    memNum++;
+                }
+                if ("2".equals(members.getGender())) {
+                    womenNum++;
+                }
+            }
+        }
+        Map<String, String> menMap = new HashMap<String, String>();
+        Map<String, String> womenMap = new HashMap<String, String>();
+        menMap.put("name", "男");
+        menMap.put("value", String.valueOf(memNum));
+        data.add(menMap);
+        womenMap.put("name", "女");
+        womenMap.put("value", String.valueOf(womenNum));
+        data.add(womenMap);
+        return data;
+    }
+
+    @Override
+    public String findNewMembers() {
+        List<Members> members = membersMapper.findNewMembers();
+        if (members != null) {
+            return String.valueOf(members.size());
+        }
+        return null;
+    }
+
+    @Override
+    public List<HashMap<String, Object>> findAllMembersForPoi() {
+        return membersMapper.findAllMembersForPoi();
     }
 }

@@ -2,6 +2,7 @@ package com.lhj.keepgym.service;
 
 import com.lhj.keepgym.bean.Manager;
 
+import java.util.HashMap;
 import java.util.List;
 
 public interface ManagerService {
@@ -17,4 +18,6 @@ public interface ManagerService {
     String deleteManagerById(String managerId);
 
     String insertManager(Manager manager);
+
+    List<HashMap<String, Object>> findAllManagerForPoi();
 }

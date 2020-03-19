@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lhj.keepgym.manage.mapper.IncomeMapper">
+    <select id="selectAllIncome" resultType="com.lhj.keepgym.bean.Income">
+        select * from income
+    </select>
+    <!--查询上个月的收入-->
+    <select id="findIncomeLastMonth" resultType="com.lhj.keepgym.bean.Income">
+        select * from income where date_format(create_time,'%Y-%m')=date_format(DATE_SUB(curdate(), INTERVAL 1 MONTH),'%Y-%m')
+    </select>
+</mapper>

@@ -6,6 +6,7 @@ import com.lhj.keepgym.manage.mapper.ManagerMapper;
 import com.lhj.keepgym.service.ManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -82,5 +83,10 @@ public class ManagerServiceImpl implements ManagerService {
             return "success";
         }
         return "fail";
+    }
+
+    @Override
+    public List<HashMap<String, Object>> findAllManagerForPoi() {
+        return managerMapper.findAllManagerForPoi();
     }
 }

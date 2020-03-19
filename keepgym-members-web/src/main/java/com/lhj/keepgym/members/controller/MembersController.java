@@ -12,6 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.text.SimpleDateFormat;
@@ -145,10 +147,10 @@ public class MembersController {
      * @param response
      * @return
      */
-    @GetMapping("/loginOut")
+    @GetMapping("/toLoginOut")
     public String loginOut(HttpServletRequest request, HttpServletResponse response){
-        CookieUtil.deleteCookie(request,response,"oldCookie");
-        return "main";
+        CookieUtil.deleteCookie(request,response,"oldMembersToken");
+        return "index";
     }
 
 

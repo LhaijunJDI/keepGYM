@@ -6,6 +6,7 @@ import com.lhj.keepgym.members.mapper.CoachMapper;
 import com.lhj.keepgym.service.CoachService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -37,6 +38,11 @@ public class CoachServiceImpl implements CoachService {
 
     @Override
     public String insertCoach(Coach coach) {
+        return null;
+    }
+
+    @Override
+    public List<HashMap<String, Object>> findAllCoachForPoi() {
         return null;
     }
 }

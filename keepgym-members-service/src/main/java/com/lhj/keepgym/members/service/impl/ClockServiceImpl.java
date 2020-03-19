@@ -52,5 +52,15 @@ public class ClockServiceImpl implements ClockService {
         return null;
     }
 
+    @Override
+    public List<Clock> findAllClock() {
+        return null;
+    }
+
+    @Override
+    public List<Integer> findAllClockInWeek() {
+        return null;
+    }
+
 
 }

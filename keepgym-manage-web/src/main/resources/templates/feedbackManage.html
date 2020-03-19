@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <title>会员管理 - keepGym后台管理系统模板</title>
+    <link rel="icon" href="images/keep-icon.jpg" type="image/ico">
+    <meta name="author" content="yinqi">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="css/style.min.css" rel="stylesheet">
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+
+</head>
+
+<body>
+<div id="app">
+    <div class="lyear-layout-web">
+        <div class="lyear-layout-container">
+            <!--左侧导航-->
+            <aside class="lyear-layout-sidebar">
+
+                <!-- logo -->
+                <div id="logo" class="sidebar-header">
+                    <a th:href="@{'/toManageIndex?managerId='+${managerId}}"><img src="images/logo-sidebar.png"
+                                                                                  title="LightYear"
+                                                                                  alt="LightYear"/></a>
+                </div>
+                <div class="lyear-layout-sidebar-scroll">
+
+                    <nav class="sidebar-main">
+                        <ul class="nav nav-drawer">
+                            <li class="nav-item active"><a th:href="@{'/toManageIndex?managerId='+${managerId}}"><i
+                                    class="mdi mdi-home"></i> 后台首页</a></li>
+                            <li class="nav-item nav-item-has-subnav">
+                                <a href="javascript:void(0)"><i class="mdi mdi-palette"></i> 数据管理</a>
+                                <ul class="nav nav-subnav">
+                                    <li><a th:href="@{'/toMemberManage?managerId='+${managerId}}">会员管理</a></li>
+                                    <li><a th:href="@{'/toEmployeeManage?managerId='+${managerId}}">员工管理</a></li>
+                                    <li><a th:href="@{'/toCourseManage?managerId='+${managerId}}">团课私教</a></li>
+                                </ul>
+                            </li>
+
+                            <li class="nav-item nav-item-has-subnav">
+                                <a href="javascript:void(0)"><i class="mdi mdi-language-javascript"></i> 系统功能</a>
+                                <ul class="nav nav-subnav">
+                                    <li><a th:href="@{'/toFeedbackManage?managerId='+${managerId}}">意见反馈</a></li>
+                                    <li><a th:href="@{'/toNoticeManage?managerId='+${managerId}}">消息通知</a></li>
+                                    <li><a th:href="@{'/toBackUpManage?managerId='+${managerId}}">数据备份</a></li>
+                                    <input type="hidden" name="managerId" id="managerId"
+                                           th:value="${managerId}"><br>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    </nav>
+
+
+                </div>
+
+            </aside>
+            <!--End 左侧导航-->
+
+            <!--头部信息-->
+            <header class="lyear-layout-header">
+
+                <nav class="navbar navbar-default">
+                    <div class="topbar">
+
+                        <div class="topbar-left">
+                            <div class="lyear-aside-toggler">
+                                <span class="lyear-toggler-bar"></span>
+                                <span class="lyear-toggler-bar"></span>
+                                <span class="lyear-toggler-bar"></span>
+                            </div>
+                            <span class="navbar-page-title"> 意见反馈 - keepGym后台管理系统 </span>
+                        </div>
+
+                        <ul class="topbar-right">
+                            <li class="dropdown dropdown-profile">
+                                <a href="javascript:void(0)" data-toggle="dropdown">
+                                    <span th:text="'当前管理员：'+${managerName}"><span class="caret"></span></span>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    <li><a th:href="@{'/toLoginOut'}"> 退出登录</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <!--切换主题配色-->
+                            <li class="dropdown dropdown-skin">
+                                <span data-toggle="dropdown" class="icon-palette"><i class="mdi mdi-palette"></i></span>
+                                <ul class="dropdown-menu dropdown-menu-right" data-stopPropagation="true">
+                                    <li class="drop-title"><p>主题</p></li>
+                                    <li class="drop-skin-li clearfix">
+                  <span class="inverse">
+                    <input type="radio" name="site_theme" value="default" id="site_theme_1" checked>
+                    <label for="site_theme_1"></label>
+                  </span>
+                                        <span>
+                    <input type="radio" name="site_theme" value="dark" id="site_theme_2">
+                    <label for="site_theme_2"></label>
+                  </span>
+                                        <span>
+                    <input type="radio" name="site_theme" value="translucent" id="site_theme_3">
+                    <label for="site_theme_3"></label>
+                  </span>
+                                    </li>
+                                    <li class="drop-title"><p>LOGO</p></li>
+                                    <li class="drop-skin-li clearfix">
+                  <span class="inverse">
+                    <input type="radio" name="logo_bg" value="default" id="logo_bg_1" checked>
+                    <label for="logo_bg_1"></label>
+                  </span>
+                                        <span>
+                    <input type="radio" name="logo_bg" value="color_2" id="logo_bg_2">
+                    <label for="logo_bg_2"></label>
+                  </span>
+                                        <span>
+                    <input type="radio" name="logo_bg" value="color_3" id="logo_bg_3">
+                    <label for="logo_bg_3"></label>
+                  </span>
+                                        <span>
+                    <input type="radio" name="logo_bg" value="color_4" id="logo_bg_4">
+                    <label for="logo_bg_4"></label>
+                  </span>
+                                        <span>
+                    <input type="radio" name="logo_bg" value="color_5" id="logo_bg_5">
+                    <label for="logo_bg_5"></label>
+                  </span>
+                                        <span>
+                    <input type="radio" name="logo_bg" value="color_6" id="logo_bg_6">
+                    <label for="logo_bg_6"></label>
+                  </span>
+                                        <span>
+                    <input type="radio" name="logo_bg" value="color_7" id="logo_bg_7">
+                    <label for="logo_bg_7"></label>
+                  </span>
+                                        <span>
+                    <input type="radio" name="logo_bg" value="color_8" id="logo_bg_8">
+                    <label for="logo_bg_8"></label>
+                  </span>
+                                    </li>
+                                    <li class="drop-title"><p>头部</p></li>
+                                    <li class="drop-skin-li clearfix">
+                  <span class="inverse">
+                    <input type="radio" name="header_bg" value="default" id="header_bg_1" checked>
+                    <label for="header_bg_1"></label>
+                  </span>
+                                        <span>
+                    <input type="radio" name="header_bg" value="color_2" id="header_bg_2">
+                    <label for="header_bg_2"></label>
+                  </span>
+                                        <span>
+                    <input type="radio" name="header_bg" value="color_3" id="header_bg_3">
+                    <label for="header_bg_3"></label>
+                  </span>
+                                        <span>
+                    <input type="radio" name="header_bg" value="color_4" id="header_bg_4">
+                    <label for="header_bg_4"></label>
+                  </span>
+                                        <span>
+                    <input type="radio" name="header_bg" value="color_5" id="header_bg_5">
+                    <label for="header_bg_5"></label>
+                  </span>
+                                        <span>
+                    <input type="radio" name="header_bg" value="color_6" id="header_bg_6">
+                    <label for="header_bg_6"></label>
+                  </span>
+                                        <span>
+                    <input type="radio" name="header_bg" value="color_7" id="header_bg_7">
+                    <label for="header_bg_7"></label>
+                  </span>
+                                        <span>
+                    <input type="radio" name="header_bg" value="color_8" id="header_bg_8">
+                    <label for="header_bg_8"></label>
+                  </span>
+                                    </li>
+                                    <li class="drop-title"><p>侧边栏</p></li>
+                                    <li class="drop-skin-li clearfix">
+                  <span class="inverse">
+                    <input type="radio" name="sidebar_bg" value="default" id="sidebar_bg_1" checked>
+                    <label for="sidebar_bg_1"></label>
+                  </span>
+                                        <span>
+                    <input type="radio" name="sidebar_bg" value="color_2" id="sidebar_bg_2">
+                    <label for="sidebar_bg_2"></label>
+                  </span>
+                                        <span>
+                    <input type="radio" name="sidebar_bg" value="color_3" id="sidebar_bg_3">
+                    <label for="sidebar_bg_3"></label>
+                  </span>
+                                        <span>
+                    <input type="radio" name="sidebar_bg" value="color_4" id="sidebar_bg_4">
+                    <label for="sidebar_bg_4"></label>
+                  </span>
+                                        <span>
+                    <input type="radio" name="sidebar_bg" value="color_5" id="sidebar_bg_5">
+                    <label for="sidebar_bg_5"></label>
+                  </span>
+                                        <span>
+                    <input type="radio" name="sidebar_bg" value="color_6" id="sidebar_bg_6">
+                    <label for="sidebar_bg_6"></label>
+                  </span>
+                                        <span>
+                    <input type="radio" name="sidebar_bg" value="color_7" id="sidebar_bg_7">
+                    <label for="sidebar_bg_7"></label>
+                  </span>
+                                        <span>
+                    <input type="radio" name="sidebar_bg" value="color_8" id="sidebar_bg_8">
+                    <label for="sidebar_bg_8"></label>
+                  </span>
+                                    </li>
+                                </ul>
+                            </li>
+                            <!--切换主题配色-->
+                        </ul>
+
+                    </div>
+                </nav>
+
+            </header>
+            <!--End 头部信息-->
+
+            <!--页面主要内容-->
+            <main class="lyear-layout-content">
+
+                <div class="container-fluid">
+                    <div class="row">
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header"><h4>意见反馈列表</h4></div>
+                    <div class="card-body">
+                        <template>
+                            <el-table
+                                    :data="feedbackList"
+                                    border
+                                    height="700"
+                                    stripe
+                                    style="width: 100%">
+                                <el-table-column
+                                        prop="memberId"
+                                        label="会员id"
+                                        width="100">
+                                </el-table-column>
+                                <el-table-column
+                                        prop="memberName"
+                                        label="会员姓名"
+                                        width="100">
+                                </el-table-column>
+                                <el-table-column
+                                        prop="phone"
+                                        label="会员电话"
+                                        width="150">
+                                </el-table-column>
+
+                                <el-table-column
+                                        prop="resource1"
+                                        label="您对健身房整体环境及健身氛围是否满意"
+                                        width="200">
+                                </el-table-column>
+                                <el-table-column
+                                        prop="resource2"
+                                        label="您对驻场教练的服务态度是否满意"
+                                        width="200">
+                                </el-table-column>
+                                <el-table-column
+                                        prop="resource3"
+                                        label="您对健身房安排的团体操课丰富性是否满意"
+                                        width="200">
+                                </el-table-column>
+                                <el-table-column
+                                        prop="resource4"
+                                        label="您对健身房器械环境有哪些意见和建议"
+                                        width="200">
+                                </el-table-column>
+                                <el-table-column
+                                        prop="resource5"
+                                        label="您对健身房工作人员的服务态度是否满意？请输入令你满意或者不满的员工姓名（可以填写具体事例)"
+                                        width="200">
+                                </el-table-column>
+                                <el-table-column
+                                        prop="strFeedbackTime"
+                                        label="反馈时间"
+                                        width="100">
+                                </el-table-column>
+                                <el-table-column>
+                                    <template slot-scope="scope" align="center">
+                                        <el-button @click="setCurrentMemberId(4,scope.row.memberId)" type="text"
+                                                   size="small">
+                                            通知会员
+                                        </el-button>
+                                        <el-button size="small" type="text"
+                                                   @click="checkAlreadyNotice(scope.row.memberId)">
+                                            已通知内容
+                                        </el-button>
+                                    </template>
+                                </el-table-column>
+                            </el-table>
+                        </template>
+                    </div>
+                </div>
+                <!--会员通知-->
+                <el-dialog title="会员通知" :visible.sync="confirmMemberDialog">
+
+                    <el-form :model="confirmInfo">
+                        <el-form-item label="通知类型" :label-width="formLabelWidth">
+                            <el-select v-model="confirmInfo.type" placeholder="请选择通知类型">
+                                <el-option label="预约提醒" value="预约提醒"></el-option>
+                                <el-option label="过期提醒" value="过期提醒"></el-option>
+                                <el-option label="反馈提醒" value="反馈提醒"></el-option>
+                            </el-select>
+                        </el-form-item>
+                        <el-form-item label="通知内容" :label-width="formLabelWidth">
+                            <el-input
+                                    type="textarea"
+                                    :rows="5"
+                                    placeholder="请输入通知内容"
+                                    maxlength="60"
+                                    show-word-limit
+                                    v-model="confirmInfo.content">
+                            </el-input>
+                        </el-form-item>
+                    </el-form>
+                    <div slot="footer" class="dialog-footer">
+                        <el-button type="primary" @click="addMessage()">发送</el-button>
+                        <el-button @click="confirmMemberDialog = false">取 消</el-button>
+                    </div>
+                </el-dialog>
+
+                <!--已通知内容-->
+                <el-dialog title="已发通知" :visible.sync="alreadyCheckNoticeDialog">
+                    <el-table
+                            :data="alreadyCheckNotice"
+                            border
+                            height="300"
+                            stripe
+                            style="width: 100%">
+                        <el-table-column
+                                prop="id"
+                                label="序号"
+                                width="120">
+                        </el-table-column>
+                        <el-table-column
+                                prop="sendId"
+                                label="发送人id"
+                                width="120">
+                        </el-table-column>
+                        <el-table-column
+                                prop="type"
+                                label="通知类型"
+                                width="200">
+                        </el-table-column>
+                        <el-table-column
+                                prop="content"
+                                label="通知内容"
+                                width="200">
+                        </el-table-column>
+                        <el-table-column
+                                prop="strSendTime"
+                                label="发送时间"
+                                width="200">
+                        </el-table-column>
+                    </el-table>
+                </el-dialog>
+            </main>
+            <!--End 页面主要内容-->
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/perfect-scrollbar.min.js"></script>
+<script type="text/javascript" src="js/main.min.js"></script>
+<!-- import Vue before Element -->
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<!-- 引入组件库 -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script src="js/feedbackManage.js"></script>
+</body>
+</html>

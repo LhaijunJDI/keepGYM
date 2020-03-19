@@ -1,6 +1,7 @@
 package com.lhj.keepgym.service;
 
 import com.lhj.keepgym.bean.Income;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -52,4 +53,14 @@ public interface IncomeService {
      */
     boolean deleteById(Integer id);
 
+    List<Income> findAllIncome();
+
+    String findIncomeLastMonth();
+
+    List<Float> findIncomeAtMonth();
+
+    List<Float> findIncomeType();
+
+
+    List<HashMap<String, Object>> findAllIncomeForPoi();
 }

@@ -18,16 +18,16 @@ new Vue({
                     data: {"id": that.form.username, "password": that.form.password},
                     contentType: "application/json",
                     success: function (data) {
-                        if (data == 'success') {
-                            that.$message('登录成功！');
-                            window.location.href = "/toManageIndex?managerId=" + that.form.username;
-                        }
                         if (data == 'fail') {
                             that.$message({
                                 message: '密码错误，请重新登录!',
                                 type: 'warning'
                             });
                             that.clear();
+                        }
+                        if (data != null) {
+                            that.$message('登录成功！');
+                            window.location.href = "toManageIndex?managerId="+that.form.username+"&token="+data;
                         }
                     }
                 });

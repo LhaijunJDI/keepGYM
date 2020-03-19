@@ -53,4 +53,14 @@ public interface MessageService {
     boolean deleteById(Integer id);
 
     List<Message> findNoticeById(String memberId);
+
+    List<Message> findCheckNoticeById(String memberId);
+
+    String updateAllNoticeStatus(String memberId);
+
+    String updateNoticeStatus(String id);
+
+    String deleteNoticeById(String id);
+
+    String deleteAllNoticeById(String memberId);
 }

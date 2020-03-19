@@ -4,10 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 import java.io.Serializable;
 
@@ -43,10 +40,15 @@ public class Message implements Serializable {
 
     private String type;
 
+    private String status;
+
     /**
      * 发送时间
      */
     private Date sendTime;
 
-
+    @Transient
+    private String strSendTime;
+    @Transient
+    private String wh;
 }

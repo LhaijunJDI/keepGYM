@@ -9,8 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.xml.crypto.Data;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
+/**
+ * @author Shinelon
+ */
 @Service
 public class CoachServiceImpl implements CoachService {
 
@@ -43,6 +47,7 @@ public class CoachServiceImpl implements CoachService {
             return coach;
         }
         return null;
+
     }
 
     @Override
@@ -72,5 +77,10 @@ public class CoachServiceImpl implements CoachService {
             return "success";
         }
         return "fail";
+    }
+
+    @Override
+    public List<HashMap<String, Object>> findAllCoachForPoi() {
+        return coachMapper.findAllCoachForPoi();
     }
 }

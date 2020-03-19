@@ -25,6 +25,7 @@ new Vue({
                 email: '',
                 address: '',
                 endTime: '',
+                status: '',
             },
             //续费信息
             renew: {
@@ -82,65 +83,81 @@ new Vue({
         },
         //会员打卡
         clockIn() {
-            let that = this;
-            $.ajax({
-                url: "/toClockIn",
-                type: "put",
-                data: {"memberId": that.form.memberId},
-                success: function (data) {
-                    if (data == 'success') {
-                        that.$alert('祝您健身愉快', '打卡成功', {
-                            confirmButtonText: '确定',
-                            callback: action => {
-                                that.memberId = '';
-                            }
-                        });
+            if (this.memberId == null || this.memberId === '') {
+                this.$alert('请输入正确的会员卡号', '错误提示', {
+                    confirmButtonText: '确定',
+                    callback: action => {
                     }
-                    if (data == 'fail') {
-                        that.$alert('请检查用户信息是否输入正确', '打卡失败', {
-                            confirmButtonText: '确定',
-                            callback: action => {
-                                that.memberId = '';
-                            }
-                        });
+                });
+            } else {
+                let that = this;
+                $.ajax({
+                    url: "/toClockIn",
+                    type: "put",
+                    data: {"memberId": that.memberId},
+                    success: function (data) {
+                        if (data === 'success') {
+                            that.$alert('祝您健身愉快', '打卡成功', {
+                                confirmButtonText: '确定',
+                                callback: action => {
+                                    that.memberId = '';
+                                }
+                            });
+                        }
+                        if (data === 'fail') {
+                            that.$alert('请检查用户信息是否输入正确', '打卡失败', {
+                                confirmButtonText: '确定',
+                                callback: action => {
+                                    that.memberId = '';
+                                }
+                            });
+                        }
+                        if (data === 'unused') {
+                            that.$alert('该会员卡已被禁用', '打卡失败', {
+                                confirmButtonText: '确定',
+                                callback: action => {
+                                    that.memberId = '';
+                                }
+                            });
+                        }
                     }
-                    if(data == 'unused'){
-                        that.$alert('该会员卡已被禁用', '打卡失败', {
-                            confirmButtonText: '确定',
-                            callback: action => {
-                                that.memberId = '';
-                            }
-                        });
-                    }
-                }
-            });
+                });
+            }
         },
         //会员离开
         clockOut() {
-            let that = this;
-            $.ajax({
-                url: "/toClockOut",
-                type: "put",
-                data: {"memberId": that.form.memberId},
-                success: function (data) {
-                    if (data == 'success') {
-                        that.$alert('欢迎下次光临', '签退成功', {
-                            confirmButtonText: '确定',
-                            callback: action => {
-                                that.memberId = '';
-                            }
-                        });
+            if (this.memberId == null || this.memberId === '') {
+                this.$alert('请输入正确的会员卡号', '错误提示', {
+                    confirmButtonText: '确定',
+                    callback: action => {
                     }
-                    if (data == 'fail') {
-                        that.$alert('请检查用户信息是否输入正确', '签退失败', {
-                            confirmButtonText: '确定',
-                            callback: action => {
-                                that.memberId = '';
-                            }
-                        });
+                });
+            } else {
+                let that = this;
+                $.ajax({
+                    url: "/toClockOut",
+                    type: "put",
+                    data: {"memberId": that.memberId},
+                    success: function (data) {
+                        if (data == 'success') {
+                            that.$alert('欢迎下次光临', '签退成功', {
+                                confirmButtonText: '确定',
+                                callback: action => {
+                                    that.memberId = '';
+                                }
+                            });
+                        }
+                        if (data == 'fail') {
+                            that.$alert('请检查用户信息是否输入正确', '签退失败', {
+                                confirmButtonText: '确定',
+                                callback: action => {
+                                    that.memberId = '';
+                                }
+                            });
+                        }
                     }
-                }
-            });
+                });
+            }
         },
 
         //会员办理
@@ -160,6 +177,7 @@ new Vue({
                             confirmButtonText: '确定',
                             callback: action => {
                                 that.reset();
+                                that.toSearchAllMembers();
                             }
                         });
                     }
@@ -212,7 +230,6 @@ new Vue({
                 data: {"memberId": memberId},
                 dataType: "json",
                 success: function (data) {
-                    console.log(data);
                     if (data != null) {
                         that.memberInfo = data;
                         that.dialogFormVisible = true;
@@ -238,7 +255,6 @@ new Vue({
                 data: {"memberId": that.memberId},
                 dataType: "json",
                 success: function (data) {
-                    console.log(data);
                     if (data != null) {
                         that.memberInfo = data;
                         that.renewDialog = true;
@@ -265,7 +281,7 @@ new Vue({
                 data: datas,
                 contentType: "application/json",
                 success: function (data) {
-                    if (data == 'success') {
+                    if (data === 'success') {
                         that.$alert('', '修改成功', {
                             confirmButtonText: '确定',
                             callback: action => {
@@ -273,7 +289,7 @@ new Vue({
                             }
                         });
                     }
-                    if (data == 'fail') {
+                    if (data === 'fail') {
                         that.$alert('请稍后再试', '修改失败', {
                             confirmButtonText: '确定',
                             callback: action => {
@@ -309,7 +325,7 @@ new Vue({
                 type: "delete",
                 data: {"memberId": memberId},
                 success: function (data) {
-                    if (data == 'success') {
+                    if (data === 'success') {
                         that.$alert('', '删除成功', {
                             confirmButtonText: '确定',
                             callback: action => {
@@ -317,7 +333,7 @@ new Vue({
                             }
                         });
                     }
-                    if (data == 'fail') {
+                    if (data === 'fail') {
                         that.$alert('请稍后再试', '删除失败', {
                             confirmButtonText: '确定',
                             callback: action => {
@@ -328,84 +344,128 @@ new Vue({
                 }
             });
         },
+
+        //检查续费时会员id是否为空
+        checkRenewMemberId() {
+            if (this.memberId == null || this.memberId === '') {
+                this.$alert('请输入正确的会员卡号', '错误提示', {
+                    confirmButtonText: '确定',
+                    callback: action => {
+                    }
+                });
+            } else {
+                this.renewDialog = true;
+            }
+        },
+
         //会员续费
         renewTime() {
+            if (this.memberId == null || this.memberId === '') {
+                this.$alert('请输入正确的会员卡号', '错误提示', {
+                    confirmButtonText: '确定',
+                    callback: action => {
+                    }
+                });
+            } else {
+                let that = this;
+                this.form.createId = document.getElementById("managerId").value;
+                $.ajax({
+                    url: "/toRenewMember",
+                    type: "post",
+                    data: {
+                        "memberId": that.memberId,
+                        "createId": that.form.createId,
+                        "level": that.renew.level,
+                        "time": that.renew.time
+                    },
+                    success: function (data) {
+                        if (data == 'success') {
+                            that.$alert('', '续费成功', {
+                                confirmButtonText: '确定',
+                                callback: action => {
+                                    window.location.href = location.href;
+                                }
+                            });
+                        }
+                        if (data == 'fail') {
+                            that.$alert('请稍后再试', '续费失败', {
+                                confirmButtonText: '确定',
+                                callback: action => {
+                                    that.renewDialog = false;
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+        },
+
+        /*computeMoney() {
             let that = this;
-            this.form.createId = document.getElementById("managerId").value;
-            $.ajax({
-                url: "/toRenewMember",
-                type: "post",
-                data: {
-                    "memberId": that.memberId,
-                    "createId": that.form.createId,
-                    "level": that.renew.level,
-                    "time": that.renew.time
-                },
-                success: function (data) {
-                    if (data == 'success') {
-                        that.$alert('', '续费成功', {
-                            confirmButtonText: '确定',
-                            callback: action => {
-                                window.location.href = location.href;
-                            }
-                        });
+            if (this.memberId == null || this.memberId === '') {
+                this.$alert('请输入正确的会员卡号', '错误提示', {
+                    confirmButtonText: '确定',
+                    callback: action => {
                     }
-                    if (data == 'fail') {
-                        that.$alert('请稍后再试', '续费失败', {
-                            confirmButtonText: '确定',
-                            callback: action => {
-                                that.renewDialog = false;
-                            }
+                });
+            } else {
+                if (this.stopCard.stopTime === '1') {
+                    this.$confirm('停卡所需费用为50元', '确认信息', {
+                        distinguishCancelAndClose: true,
+                        confirmButtonText: '确认',
+                        cancelButtonText: '取消'
+                    })
+                        .then(() => {
+                            that.stopCard();
+                        })
+                        .catch(() => {
+                            that.stopCardDialog = false;
                         });
-                    }
                 }
-            });
-        },
+                if (this.stopCard.stopTime === '2') {
+                    this.$confirm('停卡所需费用为90元', '确认信息', {
+                        distinguishCancelAndClose: true,
+                        confirmButtonText: '确认',
+                        cancelButtonText: '取消'
+                    })
+                        .then(() => {
+                            that.stopCard();
+                        })
+                        .catch(() => {
+                            that.stopCardDialog = false;
+                        });
+                }
+                if (this.stopCard.stopTime === '3') {
+                    this.$confirm('停卡所需费用为120元', '确认信息', {
+                        distinguishCancelAndClose: true,
+                        confirmButtonText: '确认',
+                        cancelButtonText: '取消'
+                    })
+                        .then(() => {
+                            that.stopCard();
+                        })
+                        .catch(() => {
+                            that.stopCardDialog = false;
+                        });
+                }
+            }
+        },*/
 
-        computeMoney() {
-            let that = this;
-            if (this.stopCard.stopTime == '1') {
-                this.$confirm('停卡所需费用为50元', '确认信息', {
-                    distinguishCancelAndClose: true,
-                    confirmButtonText: '确认',
-                    cancelButtonText: '取消'
-                })
-                    .then(() => {
-                        that.stopCard();
-                    })
-                    .catch(action => {
-                        that.stopCardDialog = false;
-                    });
-            }
-            if (this.stopCard.stopTime == '2') {
-                this.$confirm('停卡所需费用为90元', '确认信息', {
-                    distinguishCancelAndClose: true,
-                    confirmButtonText: '确认',
-                    cancelButtonText: '取消'
-                })
-                    .then(() => {
-                        that.stopCard();
-                    })
-                    .catch(action => {
-                        that.stopCardDialog = false;
-                    });
-            }
-            if (this.stopCard.stopTime == '3') {
-                this.$confirm('停卡所需费用为120元', '确认信息', {
-                    distinguishCancelAndClose: true,
-                    confirmButtonText: '确认',
-                    cancelButtonText: '取消'
-                })
-                    .then(() => {
-                        that.stopCard();
-                    })
-                    .catch(action => {
-                        that.stopCardDialog = false;
-                    });
+        //检查停卡时会员id是否为空
+        checkStopCardMemberId() {
+            if (this.memberId == null || this.memberId === '') {
+                this.$alert('请输入正确的会员卡号', '错误提示', {
+                    confirmButtonText: '确定',
+                    callback: action => {
+                    }
+                });
+            } else {
+                this.stopCardDialog = true;
             }
         },
 
-        stopCard() {
+        //会员停卡
+        stopCard1() {
             let that = this;
             this.form.createId = document.getElementById("managerId").value;
             $.ajax({
@@ -417,15 +477,15 @@ new Vue({
                     "time": that.stopCard.stopTime,
                 },
                 success: function (data) {
-                    if (data == 'success') {
+                    if (data === 'success') {
                         that.$alert('', '停卡成功', {
                             confirmButtonText: '确定',
                             callback: action => {
-                                window.location.href = location.href;
+                                that.toSearchAllMembers();
                             }
                         });
                     }
-                    if (data == 'fail') {
+                    if (data === 'fail') {
                         that.$alert('请稍后再试', '停卡失败', {
                             confirmButtonText: '确定',
                             callback: action => {
@@ -435,8 +495,8 @@ new Vue({
                     }
                 }
             });
-
-        }
+        },
 
     }
-});
+})
+;

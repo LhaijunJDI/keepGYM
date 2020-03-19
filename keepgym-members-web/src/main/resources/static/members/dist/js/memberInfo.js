@@ -66,19 +66,20 @@ new Vue({
                 phone: '',
                 address: '',
                 email: '',
-                remainTime:''
-            },
+                remainTime: '',
 
+            },
+            renewDialog: false,
             formLabelWidth: '100px',
             alterPwdDialog: false,
-            percentage:'100',
-            color:[
-                {color:'#f5160f',percentage:'20',},
-                {color:'#f56c05',percentage:'40',},
-                {color:'#f5ea0e',percentage:'60',},
-                {color:'#9ef50a',percentage:'80',},
-                {color:'#0cf547',percentage:'100',},
-                ],
+            percentage: '100',
+            color: [
+                {color: '#f5160f', percentage: '20',},
+                {color: '#f56c05', percentage: '40',},
+                {color: '#f5ea0e', percentage: '60',},
+                {color: '#9ef50a', percentage: '80',},
+                {color: '#0cf547', percentage: '100',},
+            ],
 
             pwd: {
                 originPwd: '',
@@ -92,6 +93,10 @@ new Vue({
                 phone: '',
                 address: '',
                 email: '',
+            },
+            renewForm: {
+                type: '',
+                amount: '',
             },
 
             rules: {
@@ -107,10 +112,15 @@ new Vue({
                 confirmPwd: [
                     {required: true, validator: validatePass2, trigger: 'blur'}
                 ]
-            }
+            },
+            messageNum: '',
         }
     },
-
+    mounted() {
+        this.$nextTick(() => {
+            this.toSearchAllNotice();
+        });
+    },
     created() {
         this.getMemberInfo();
     },
@@ -141,9 +151,9 @@ new Vue({
                         that.form.address = data.address;
                         that.form.expire = data.expire;
                         that.form.remainTime = data.remainTime;
-                        that.percentage = Math.round((data.remainTime/365)*100);
+                        that.percentage = Math.round((data.remainTime / 365) * 100);
 
-                    }else{
+                    } else {
                         that.$message({
                             message: '请求超时，请刷新重试!',
                             type: 'warning'
@@ -163,33 +173,44 @@ new Vue({
             that.editForm.address = that.form.address;
             that.editForm.email = that.form.email;
             var dates = JSON.stringify(this.editForm);
-            this.$refs[form].validate((valid) => {
-                if (valid) {
-                    console.log(this.form);
-                    $.ajax({
-                        url: "/updateMember",
-                        type: "put",
-                        data: dates,
-                        contentType: "application/json",
-                        success: function (data) {
-                            if (data == 'success') {
-                                that.$message('修改成功！');
-                                window.location.href = location.href;
+            this.$confirm('你确定要修改个人信息吗？', '修改提醒', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                that.$refs[form].validate((valid) => {
+                    if (valid) {
+                        $.ajax({
+                            url: "/updateMember",
+                            type: "put",
+                            data: dates,
+                            contentType: "application/json",
+                            success: function (data) {
+                                if (data == 'success') {
+                                    that.$message('修改成功！');
+                                    window.location.href = location.href;
+                                }
+                                if (data == 'fail') {
+                                    that.$message({
+                                        message: '修改信息失败，请重新修改！',
+                                        type: 'warning'
+                                    });
+                                    window.location.href = location.href;
+                                }
                             }
-                            if (data == 'fail') {
-                                that.$message({
-                                    message: '修改信息失败，请重新修改！',
-                                    type: 'warning'
-                                });
-                                window.location.href = location.href;
-                            }
-                        }
-                    });
-                } else {
-                    console.log('error!!');
-                    return false;
-                }
+                        });
+                    } else {
+                        return false;
+                    }
+                });
+            }).catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: '取消修改'
+                });
+
             });
+
         },
         alterPwd() {
             let that = this;
@@ -226,8 +247,54 @@ new Vue({
             this.pwd.newPwd = "";
             this.pwd.confirmPwd = "";
         },
-        reset(){
+        reset() {
             this.getMemberInfo();
         },
+        toSearchAllNotice() {
+            let that = this;
+            var memberId = document.getElementById("memberId").value;
+            $.ajax({
+                url: "/toSearchAllNotice",
+                type: "get",
+                data: {
+                    "memberId": memberId,
+                },
+                contentType: 'application/json',
+                success: function (data) {
+                    if (data != null) {
+                        that.memberNotice = data;
+                        console.log(data.length);
+                        that.messageNum = data.length;
+                    }
+                    if (data == null) {
+                        alert("请求超时，请刷新重试！");
+                    }
+                },
+            });
+        },
+        //退出登录
+        loginout() {
+            $.ajax({
+                url: "/loginOut",
+                type: "get",
+                data: {},
+                success: function () {
+                }
+            })
+        },
+        renew() {
+            let that = this;
+            var memberId = document.getElementById("memberId").value;
+            if (this.renewForm.type === '年卡') {
+                this.renewForm.amount = 1200;
+            }
+            if (this.renewForm.type === '季卡') {
+                this.renewForm.amount = 600;
+            }
+            if (this.renewForm.type === '月卡') {
+                this.renewForm.amount = 200;
+            }
+            window.location.href = "goPay?totalAmount="+this.renewForm.amount+"&subject="+this.renewForm.type+"&memberId="+memberId;
+        }
     }
-})
+});

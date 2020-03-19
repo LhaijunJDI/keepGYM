@@ -4,27 +4,28 @@ new Vue({
         return {
             //查询会员预约信息
             course: '',
-            coach:'',
+            coach: '',
             memberInfo: [{}],
             orderCourseInfo: [{}],
             orderCoachInfo: [{}],
-            confirmMemberCourseDialog: false,
-            confirmMemberCoachDialog: false,
-            confirmMemberEndTimeDialog: false,
-            confirmMemberDialog:false,
+            alreadyCheckNotice: [{}],
+            confirmMemberDialog: false,
+            alreadyCheckNoticeDialog: false,
             confirmInfo: {
-                receiveId:'',
-                sendId:'',
+                wh: '',
+                receiveId: '',
+                sendId: '',
                 type: '',
                 content: '',
             },
-            currentMemberId:'',
+            currentMemberId: '',
         }
 
     },
     created() {
         this.toSearchAllMembers();
         this.toSearchAllOrderCourse();
+        this.toSearchAllOrderCoach();
     },
     computed: {
         // 模糊搜索
@@ -114,18 +115,18 @@ new Vue({
                 data: {},
                 dataType: "json",
                 success: function (data) {
-                    console.log(data);
                     if (data != null) {
                         that.memberInfo = data;
                     }
                 }
             })
         },
-        setCurrentMemberId(id){
+        setCurrentMemberId(wh, id) {
+            this.confirmInfo.wh = wh;
             this.currentMemberId = id;
             this.confirmMemberDialog = true;
         },
-        addMessage(){
+        addMessage() {
             let that = this;
             this.confirmInfo.sendId = document.getElementById("managerId").value;
             this.confirmInfo.receiveId = this.currentMemberId;
@@ -134,17 +135,90 @@ new Vue({
                 url: "/toAddMessage",
                 type: "put",
                 data: datas,
-                contentType:"application/json",
+                contentType: "application/json",
                 success: function (data) {
-                    console.log(data);
                     if (data == 'success') {
-
+                        that.$alert('', '通知成功', {
+                            confirmButtonText: '确定',
+                            callback: action => {
+                                that.toSearchAllMembers();
+                                that.toSearchAllOrderCourse();
+                                that.toSearchAllOrderCoach();
+                                that.confirmMemberDialog = false;
+                            }
+                        });
                     }
-                    if(data == 'fail'){
+                    if (data == 'fail') {
+                        that.$alert('请稍后再试', '通知失败', {
+                            confirmButtonText: '确定',
+                            callback: action => {
 
+                            }
+                        });
                     }
                 }
             })
-        }
+        },
+        checkAlreadyNotice(id) {
+            let that = this;
+            $.ajax({
+                url: "/toSearchAlreadyNotice",
+                type: "get",
+                data: {"memberId": id},
+                success: function (data) {
+                    if (data != null) {
+                        that.alreadyCheckNotice = data;
+                        that.alreadyCheckNoticeDialog = true;
+                    }
+                    if (data == null) {
+                        that.$alert('请稍后再试', '查询失败', {
+                            confirmButtonText: '确定',
+                            callback: action => {
+                            }
+                        });
+                    }
+                }
+            })
+        },
+        setOrderCoachNum(coachId, memberId) {
+            let that = this ;
+            this.$confirm('该会员已上一节私教?', '授课提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+               $.ajax({
+                   url:'/toUpdateOrderCoachNum',
+                   type:'post',
+                   data:{"coachId":coachId,"memberId":memberId},
+                   success:function (data) {
+                       if(data === 'success'){
+                           that.$alert('', '打卡成功', {
+                               confirmButtonText: '确定',
+                               callback: action => {
+                                   that.toSearchAllOrderCoach();
+                               }
+                           });
+                       }
+                       if(data === 'fail'){
+                           that.$alert('请稍后再试', '打卡失败', {
+                               confirmButtonText: '确定',
+                               callback: action => {
+                               }
+                           });
+                       }
+                       if(data === 'zero'){
+                           that.$alert('该会员剩余私教课为零', '打卡失败', {
+                               confirmButtonText: '确定',
+                               callback: action => {
+                               }
+                           });
+                       }
+                   }
+               });
+            }).catch(() => {
+
+            });
+        },
     }
 });
