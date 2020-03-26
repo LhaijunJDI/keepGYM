@@ -17,11 +17,10 @@ import java.util.List;
 @RestController
 public class IncomeController {
 
-    @Reference
+    @Reference(group = "manage")
     private IncomeService incomeService;
 
     /**
-     *
      * @return 查询上个月的总收入
      */
     @GetMapping("/toSearchTotalIncome")
@@ -30,20 +29,18 @@ public class IncomeController {
     }
 
     /**
-     *
      * @return 上个月每周的收入
      */
     @GetMapping("/toSearchIncomeAtMonth")
-    public List<Float> toSearchIncomeAtMonth() {
+    public List<Double> toSearchIncomeAtMonth() {
         return incomeService.findIncomeAtMonth();
     }
 
     /**
-     *
      * @return 上个月收入分布
      */
     @GetMapping("/toSearchIncomeType")
-    public List<Float> toSearchIncomeType() {
+    public List<Double> toSearchIncomeType() {
         return incomeService.findIncomeType();
     }
 

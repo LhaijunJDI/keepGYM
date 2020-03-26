@@ -306,7 +306,7 @@ new Vue({
                         that.$alert('', '购买成功', {
                             confirmButtonText: '确定',
                             callback: action => {
-                                window.location.href = location.href;
+                               that.orderCoachDialog = false;
                             }
                         });
                     }
@@ -314,7 +314,7 @@ new Vue({
                         that.$alert('请确认信息是否正确', '购买失败', {
                             confirmButtonText: '确定',
                             callback: action => {
-                                window.location.href = location.href;
+                                that.orderCoachDialog = false;
                             }
                         });
                     }
@@ -334,7 +334,8 @@ new Vue({
                         that.$alert('', '预约成功', {
                             confirmButtonText: '确定',
                             callback: action => {
-                                window.location.href = location.href;
+                                that.toSearchAllOrderCourse();
+                                that.orderCourseDialog = false;
                             }
                         });
                     }
@@ -342,12 +343,20 @@ new Vue({
                         that.$alert('请确认信息是否正确', '预约失败', {
                             confirmButtonText: '确定',
                             callback: action => {
-                                window.location.href = location.href;
+                                that.orderCourseDialog = false;
                             }
                         });
                     }
                     if (data === 'already') {
                         that.$alert('该会员已预约了此课程', '预约失败', {
+                            confirmButtonText: '确定',
+                            callback: action => {
+                                that.orderCourseDialog = false;
+                            }
+                        });
+                    }
+                    if (data === 'full') {
+                        that.$alert('该课程预约人数已满', '预约失败', {
                             confirmButtonText: '确定',
                             callback: action => {
                                 that.orderCourseDialog = false;

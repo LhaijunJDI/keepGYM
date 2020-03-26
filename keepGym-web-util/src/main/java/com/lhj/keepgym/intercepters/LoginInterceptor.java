@@ -47,12 +47,9 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
             //token不为空则需要校验token是否为真，若为空则说明用户没有登录，返回到登录界面
             if (!StringUtils.isEmpty(token)) {
                 //获取ip地址传递给校验方法
-                String currentIp = request.getRemoteAddr();
-                if (!StringUtils.isEmpty(currentIp)) {
-                    currentIp = "127.0.0.1";
-                }
+                String currentIp = "127.0.0.1";
                 //使用httpClient工具包发送浏览器请求并把当前ip传递过去
-                String resultJson = HttpclientUtil.doGet("http://localhost:8080/verify?token=" + token + "&currentIp=" + currentIp);
+                String resultJson = HttpclientUtil.doGet("http://47.98.241.105:8081/verify?token=" + token + "&currentIp=" + currentIp);
                 //将返回的json数据封装到map中
                 resultMap = JSON.parseObject(resultJson, Map.class);
                 assert resultMap != null;
@@ -89,12 +86,9 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
         //token不为空则需要校验token是否为真，若为空则说明用户没有登录，返回到登录界面
         if (!StringUtils.isEmpty(token)) {
             //获取ip地址传递给校验方法
-            String currentIp = request.getRemoteAddr();
-            if (!StringUtils.isEmpty(currentIp)) {
-                currentIp = "127.0.0.1";
-            }
+            String currentIp = "127.0.0.1";
             //使用httpClient工具包发送浏览器请求并把当前ip传递过去
-            String resultJson = HttpclientUtil.doGet("http://localhost:8081/verifyManager?token=" + token + "&currentIp=" + currentIp);
+            String resultJson = HttpclientUtil.doGet("http://47.98.241.105:8082/verifyManager?token=" + token + "&currentIp=" + currentIp);
             //将返回的json数据封装到map中
             resultMap = JSON.parseObject(resultJson, Map.class);
             assert resultMap != null;

@@ -5,13 +5,17 @@ import com.lhj.keepgym.bean.Message;
 import com.lhj.keepgym.members.mapper.MessageMapper;
 import com.lhj.keepgym.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
 import java.text.SimpleDateFormat;
 import java.util.Iterator;
 import java.util.List;
 
-@Service
+/**
+ * @author Shinelon
+ */
+@Service(group = "member")
 public class MessageServiceImpl implements MessageService {
     @Autowired
     private MessageMapper messageMapper;
@@ -73,6 +77,7 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
+    @Transactional
     public String updateAllNoticeStatus(String memberId) {
         Example example = new Example(Message.class);
         example.createCriteria().andEqualTo("receiveId",memberId);
@@ -112,6 +117,7 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
+    @Transactional
     public String deleteAllNoticeById(String memberId) {
         Message message = new Message();
         Example example = new Example(Message.class);

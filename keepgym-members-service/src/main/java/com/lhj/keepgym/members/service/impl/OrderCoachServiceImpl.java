@@ -14,7 +14,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-@Service
+/**
+ * @author Shinelon
+ */
+@Service(group = "member")
 public class OrderCoachServiceImpl implements OrderCoachService {
     @Autowired
     private MembersMapper membersMapper;

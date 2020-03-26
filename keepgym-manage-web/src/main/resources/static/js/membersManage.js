@@ -285,7 +285,8 @@ new Vue({
                         that.$alert('', '修改成功', {
                             confirmButtonText: '确定',
                             callback: action => {
-                                window.location.href = location.href;
+                                that.dialogFormVisible = false;
+                                that.toSearchAllMembers();
                             }
                         });
                     }
@@ -309,7 +310,7 @@ new Vue({
                 cancelButtonText: '取消',
                 type: 'warning'
             }).then(() => {
-                that.deleteCourse(courseId);
+                that.deleteMember(memberId);
             }).catch(() => {
                 this.$message({
                     type: 'info',
@@ -329,7 +330,7 @@ new Vue({
                         that.$alert('', '删除成功', {
                             confirmButtonText: '确定',
                             callback: action => {
-                                window.location.href = location.href;
+                               that.toSearchAllMembers();
                             }
                         });
                     }
@@ -383,7 +384,8 @@ new Vue({
                             that.$alert('', '续费成功', {
                                 confirmButtonText: '确定',
                                 callback: action => {
-                                    window.location.href = location.href;
+                                    that.renewDialog = false;
+                                    that.toSearchAllMembers();
                                 }
                             });
                         }
@@ -399,57 +401,6 @@ new Vue({
                 });
             }
         },
-
-        /*computeMoney() {
-            let that = this;
-            if (this.memberId == null || this.memberId === '') {
-                this.$alert('请输入正确的会员卡号', '错误提示', {
-                    confirmButtonText: '确定',
-                    callback: action => {
-                    }
-                });
-            } else {
-                if (this.stopCard.stopTime === '1') {
-                    this.$confirm('停卡所需费用为50元', '确认信息', {
-                        distinguishCancelAndClose: true,
-                        confirmButtonText: '确认',
-                        cancelButtonText: '取消'
-                    })
-                        .then(() => {
-                            that.stopCard();
-                        })
-                        .catch(() => {
-                            that.stopCardDialog = false;
-                        });
-                }
-                if (this.stopCard.stopTime === '2') {
-                    this.$confirm('停卡所需费用为90元', '确认信息', {
-                        distinguishCancelAndClose: true,
-                        confirmButtonText: '确认',
-                        cancelButtonText: '取消'
-                    })
-                        .then(() => {
-                            that.stopCard();
-                        })
-                        .catch(() => {
-                            that.stopCardDialog = false;
-                        });
-                }
-                if (this.stopCard.stopTime === '3') {
-                    this.$confirm('停卡所需费用为120元', '确认信息', {
-                        distinguishCancelAndClose: true,
-                        confirmButtonText: '确认',
-                        cancelButtonText: '取消'
-                    })
-                        .then(() => {
-                            that.stopCard();
-                        })
-                        .catch(() => {
-                            that.stopCardDialog = false;
-                        });
-                }
-            }
-        },*/
 
         //检查停卡时会员id是否为空
         checkStopCardMemberId() {
@@ -481,6 +432,7 @@ new Vue({
                         that.$alert('', '停卡成功', {
                             confirmButtonText: '确定',
                             callback: action => {
+                                that.stopCardDialog = false;
                                 that.toSearchAllMembers();
                             }
                         });

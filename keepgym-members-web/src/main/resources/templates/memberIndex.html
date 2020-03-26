@@ -49,7 +49,7 @@
                 <!-- Logo -->
                 <!-- ============================================================== -->
                 <div class="navbar-header">
-                    <a class="navbar-brand" th:href="@{'/toMemberGym?memberId='+${memberId}}">
+                    <a class="navbar-brand" th:href="@{'/toMemberGym'}">
                         <!-- Logo icon --><b>
                         <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
                         <!-- Dark Logo icon -->
@@ -88,25 +88,25 @@
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
-                        <li><a class="waves-effect waves-dark" th:href="@{'/toMemberGym?memberId='+${memberId}}"
+                        <li><a class="waves-effect waves-dark" th:href="@{'/toMemberGym'}"
                                aria-expanded="false">
                             <i class="fa fa-tachometer"></i><span class="hide-menu">打卡记录</span></a></li>
-                        <li><a class="waves-effect waves-dark" th:href="@{'/toMemberCourse?memberId='+${memberId}}"
+                        <li><a class="waves-effect waves-dark" th:href="@{'/toMemberCourse'}"
                                aria-expanded="false"><i
                                 class="fa fa-user-circle-o"></i><span class="hide-menu">课表信息</span></a></li>
-                        <li><a class="waves-effect waves-dark" th:href="@{'/toMemberCoach?memberId='+${memberId}}"
+                        <li><a class="waves-effect waves-dark" th:href="@{'/toMemberCoach'}"
                                aria-expanded="false"><i
                                 class="fa fa-table"></i><span class="hide-menu"></span>教练详情</a></li>
-                        <li><a class="waves-effect waves-dark" th:href="@{'/toMemberInfo?memberId='+${memberId}}"
+                        <li><a class="waves-effect waves-dark" th:href="@{'/toMemberInfo'}"
                                aria-expanded="false"><i class="fa fa-smile-o"></i><span
                                 class="hide-menu"></span>个人信息</a></li>
                         <li>
-                            <a class="waves-effect waves-dark" th:href="@{'/toMemberNotice?memberId='+${memberId}}"
+                            <a class="waves-effect waves-dark" th:href="@{'/toMemberNotice'}"
                                aria-expanded="false"><i
                                     class="fa fa-globe"></i><span class="hide-menu"></span>
                                 <el-badge :value="messageNum" class="item" type="primary">消息通知</el-badge>
                             </a></li>
-                        <li><a class="waves-effect waves-dark" th:href="@{'/toMemberFeedback?memberId='+${memberId}}"
+                        <li><a class="waves-effect waves-dark" th:href="@{'/toMemberFeedback'}"
                                aria-expanded="false"><i
                                 class="fa fa-bookmark-o"></i><span class="hide-menu"></span>意见反馈</a></li>
                         <li>
@@ -140,7 +140,7 @@
                         <div class="d-flex justify-content-end align-items-center">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a
-                                        th:href="@{'/toMemberInfo?memberId='+${memberId}}"
+                                        th:href="@{'/toMemberInfo'}"
                                         th:text="'当前用户：'+${memberName}"></a></li>
                                 <li class="breadcrumb-item active">打卡记录</li>
                             </ol>

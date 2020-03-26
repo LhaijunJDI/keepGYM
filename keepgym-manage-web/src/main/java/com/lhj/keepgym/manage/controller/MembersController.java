@@ -15,7 +15,7 @@ import java.util.Map;
 @RestController
 public class MembersController {
 
-   @Reference
+   @Reference(group = "manage")
     private MembersService membersService;
 
     /**

@@ -11,7 +11,7 @@ import java.util.List;
 @RestController
 public class FeedbackController {
 
-    @Reference
+    @Reference(group = "manage")
     private FeedbackService feedbackService;
 
     /**

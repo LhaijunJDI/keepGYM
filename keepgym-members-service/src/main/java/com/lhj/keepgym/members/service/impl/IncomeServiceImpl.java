@@ -7,6 +7,7 @@ import com.lhj.keepgym.members.mapper.IncomeMapper;
 import com.lhj.keepgym.members.mapper.MembersMapper;
 import com.lhj.keepgym.service.IncomeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -16,7 +17,7 @@ import java.util.List;
 /**
  * @author Shinelon
  */
-@Service
+@Service(group = "member")
 public class IncomeServiceImpl implements IncomeService {
     @Autowired
     private IncomeMapper incomeMapper;
@@ -35,6 +36,7 @@ public class IncomeServiceImpl implements IncomeService {
     }
 
     @Override
+    @Transactional
     public Income insert(Income income) {
         income.setCreateTime(new Date());
         String memberId = income.getCreateId();
@@ -83,12 +85,12 @@ public class IncomeServiceImpl implements IncomeService {
     }
 
     @Override
-    public List<Float> findIncomeAtMonth() {
+    public List<Double> findIncomeAtMonth() {
         return null;
     }
 
     @Override
-    public List<Float> findIncomeType() {
+    public List<Double> findIncomeType() {
         return null;
     }
 

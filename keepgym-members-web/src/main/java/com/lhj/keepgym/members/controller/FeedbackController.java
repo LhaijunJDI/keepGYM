@@ -13,14 +13,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class FeedbackController {
-    @Reference
+    @Reference(group = "member")
     private FeedbackService feedbackService;
 
     //前往意见反馈页面
     @LoginRequired
     @RequestMapping("/toMemberFeedback")
-    public String toMemberFeedback(String memberId, Model model) {
-        model.addAttribute("memberId", memberId);
+    public String toMemberFeedback() {
         return "memberFeedback";
     }
 

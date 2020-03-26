@@ -57,9 +57,9 @@ public interface IncomeService {
 
     String findIncomeLastMonth();
 
-    List<Float> findIncomeAtMonth();
+    List<Double>  findIncomeAtMonth();
 
-    List<Float> findIncomeType();
+    List<Double> findIncomeType();
 
 
     List<HashMap<String, Object>> findAllIncomeForPoi();

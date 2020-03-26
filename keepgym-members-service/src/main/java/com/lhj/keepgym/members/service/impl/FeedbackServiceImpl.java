@@ -11,7 +11,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-@Service
+/**
+ * @author Shinelon
+ */
+@Service(group = "member")
 public class FeedbackServiceImpl implements FeedbackService {
 
     @Autowired

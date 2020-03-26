@@ -7,8 +7,10 @@ import tk.mybatis.mapper.common.Mapper;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
+/**
+ * @author Shinelon
+ */
 @Repository
 public interface IncomeMapper extends Mapper<Income> {
     List<Income> selectAllIncome();

@@ -144,22 +144,6 @@ new Vue({
             this.showPicDialog = true;
         },
 
-       /* findCurrentManager() {
-            let that = this;
-            this.currentManagerInfo.id = document.getElementById("managerId").value;
-            $.ajax({
-                url: "/toSearchManagerInfo",
-                type: "get",
-                data: {"managerId": that.currentManagerInfo.id},
-                dataType: "json",
-                success: function (data) {
-                    if (data != null) {
-                        that.currentManagerInfo.power = data.power;
-                    }
-                }
-            })
-        },*/
-
         editManagerInfo(managerId) {
             let that = this;
             this.managerInfo.id = managerId;
@@ -186,7 +170,7 @@ new Vue({
         },
         alterManagerInfo() {
             let that = this;
-            var datas = JSON.stringify(that.ManagerInfo);
+            var datas = JSON.stringify(that.managerInfo);
             $.ajax({
                 url: "/toAlterManagerInfo",
                 type: "post",
@@ -197,7 +181,8 @@ new Vue({
                         that.$alert('', '修改成功', {
                             confirmButtonText: '确定',
                             callback: action => {
-                                window.location.href = location.href;
+                               that.toSearchAllManager();
+                               that.alterManagerDialog = false;
                             }
                         });
                     }
@@ -250,7 +235,8 @@ new Vue({
                         that.$alert('', '修改成功', {
                             confirmButtonText: '确定',
                             callback: action => {
-                                window.location.href = location.href;
+                               that.toSearchAllCoach();
+                               that.alterCoachDialog = false;
                             }
                         });
                     }
@@ -285,7 +271,7 @@ new Vue({
         },
         confirmDeleteCoach(id) {
             let that = this;
-            this.$confirm('你确定要删除该管理员吗？', '删除提醒', {
+            this.$confirm('你确定要删除该教练吗？', '删除提醒', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
                 type: 'warning'
@@ -311,7 +297,7 @@ new Vue({
                         that.$alert('', '删除成功', {
                             confirmButtonText: '确定',
                             callback: action => {
-                                window.location.href = location.href;
+                              that.toSearchAllManager();
                             }
                         });
                     }
@@ -339,7 +325,7 @@ new Vue({
                         that.$alert('', '删除成功', {
                             confirmButtonText: '确定',
                             callback: action => {
-                                window.location.href = location.href;
+                                that.toSearchAllCoach();
                             }
                         });
                     }
@@ -356,11 +342,12 @@ new Vue({
         },
 
         resetManagerInfo() {
-            this.managerInfo = '';
+            this.managerInfo = {};
             this.addManagerDialog = true;
         },
         resetCoachInfo() {
-            this.coachInfo = '';
+            this.coachInfo = {};
+            this.coachInfo.pictureSrc = "members/assets/images/coach/";
             this.addCoachDialog = true;
         },
         addManager() {
@@ -370,12 +357,14 @@ new Vue({
                 url: "/toAddManager",
                 type: "put",
                 data: datas,
+                contentType: "application/json",
                 success: function (data) {
                     if (data === 'success') {
                         that.$alert('', '添加员工成功', {
                             confirmButtonText: '确定',
                             callback: action => {
-                                window.location.href = location.href;
+                                that.toSearchAllManager();
+                                that.addManagerDialog = false;
                             }
                         });
                     }
@@ -383,7 +372,7 @@ new Vue({
                         that.$alert('请稍后再试', '添加失败', {
                             confirmButtonText: '确定',
                             callback: action => {
-                                window.location.href = location.href;
+                                that.addManagerDialog = false;
                             }
                         });
                     }
@@ -397,12 +386,14 @@ new Vue({
                 url: "/toAddCoach",
                 type: "put",
                 data: datas,
+                contentType: "application/json",
                 success: function (data) {
                     if (data == 'success') {
                         that.$alert('', '添加员工成功', {
                             confirmButtonText: '确定',
                             callback: action => {
-                                window.location.href = location.href;
+                                that.toSearchAllCoach();
+                                that.addCoachDialog = false;
                             }
                         });
                     }
@@ -410,7 +401,7 @@ new Vue({
                         that.$alert('请稍后再试', '添加失败', {
                             confirmButtonText: '确定',
                             callback: action => {
-                                window.location.href = location.href;
+                                that.addCoachDialog = false;
                             }
                         });
                     }
@@ -418,19 +409,6 @@ new Vue({
             });
         },
 
-        /*confirmChangePower(managerId) {
-            let that = this;
-            if(this.currentManagerInfo.power == 'crud'){
-            this.searchMemberInfo(managerId);
-            this.changePowerDialog = true ;
-            }else{
-                that.$alert('', '当前用户权限不足', {
-                    confirmButtonText: '确定',
-                    callback: action => {
-                        window.location.href = location.href;
-                    }
-                });
-            }
-        },*/
+
     }
 })

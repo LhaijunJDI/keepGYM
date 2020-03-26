@@ -29,9 +29,16 @@ import java.util.UUID;
  */
 @Controller
 public class AliPayController {
-    @Reference
+    @Reference(group = "member")
     private IncomeService incomeService;
 
+    /**
+     * 存储订单信息后前往支付页面
+     * @param totalAmount
+     * @param subject
+     * @param memberId
+     * @return
+     */
     @RequestMapping("/goPay")
     public ModelAndView goPay(String totalAmount, String subject, String memberId) {
         ModelAndView mv = new ModelAndView("redirect:/toPay");
@@ -42,8 +49,15 @@ public class AliPayController {
     }
 
 
-
-
+    /**
+     * alipay支付页面
+     * @param totalAmount
+     * @param subject
+     * @param memberId
+     * @param httpResponse
+     * @throws ServletException
+     * @throws IOException
+     */
     @RequestMapping(value = "/toPay", produces = "text/html; charset=UTF-8")
     @ResponseBody
     public void toPay(String totalAmount, String subject, String memberId,
@@ -54,14 +68,6 @@ public class AliPayController {
         alipayRequest.setNotifyUrl(AlipayConfig.notify_url);
         UUID uuid = UUID.randomUUID();
         String out_trade_no = memberId+"_"+uuid.toString();
-       /* Map<String, String> map = new HashMap<String, String>();
-        map.put("out_trade_no", out_trade_no);
-        map.put("product_code", "FAST_INSTANT_TRADE_PAY");
-        map.put("total_amount", totalAmount);
-        map.put("subject", subject);
-        map.put("body", memberId);
-        String param = JSON.toJSONString(map);*/
-
         alipayRequest.setBizContent("{\"out_trade_no\":\"" + out_trade_no + "\","
                 + "\"subject\":\"" + subject + "\","
                 + "\"total_amount\":\"" + totalAmount + "\","
@@ -81,6 +87,12 @@ public class AliPayController {
 
     }
 
+    /**
+     * 支付成功后返回的页面
+     * @param response
+     * @param request
+     * @return
+     */
     @RequestMapping("/alipayCallback")
     public String alipayCallback(HttpServletResponse response, HttpServletRequest request) {
 
@@ -100,5 +112,11 @@ public class AliPayController {
         return "redirect:toMemberInfo?memberId="+memberId;
     }
 
+
+    @RequestMapping("/alipayNotify")
+    public String alipayNotify(HttpServletRequest request){
+
+        return "success";
+    }
 
 }

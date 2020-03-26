@@ -7,11 +7,12 @@ import com.lhj.keepgym.manage.mapper.IncomeMapper;
 import com.lhj.keepgym.manage.mapper.MembersMapper;
 import com.lhj.keepgym.service.MembersService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-@Service
+@Service(group = "manage")
 public class MembersServiceImpl implements MembersService {
 
     @Autowired
@@ -49,6 +50,7 @@ public class MembersServiceImpl implements MembersService {
     }
 
     @Override
+    @Transactional
     public String insertMember(Members members) {
         Income income = new Income();
         Calendar curr = Calendar.getInstance();
@@ -158,6 +160,7 @@ public class MembersServiceImpl implements MembersService {
     }
 
     @Override
+    @Transactional
     public String updateStopCardMember(String memberId, String createId, String time) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Calendar calendar = Calendar.getInstance();

@@ -9,13 +9,15 @@ import com.lhj.keepgym.manage.mapper.MembersMapper;
 import com.lhj.keepgym.manage.mapper.OrderCourseMapper;
 import com.lhj.keepgym.service.OrderCourseService;
 import org.springframework.beans.factory.annotation.Autowired;
-import tk.mybatis.mapper.entity.Example;
-
+import org.springframework.transaction.annotation.Transactional;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-@Service
+/**
+ * @author Shinelon
+ */
+@Service(group = "manage")
 public class OrderCourseServiceImpl implements OrderCourseService {
 
     @Autowired
@@ -28,6 +30,7 @@ public class OrderCourseServiceImpl implements OrderCourseService {
     private CourseMapper courseMapper;
 
     @Override
+    @Transactional
     public String saveOrderCourse(OrderCourse orderCourse) {
 
         OrderCourse orderCourse1 = orderCourseMapper.selectOrderCourseById(orderCourse.getCourseId(),orderCourse.getMemberId());

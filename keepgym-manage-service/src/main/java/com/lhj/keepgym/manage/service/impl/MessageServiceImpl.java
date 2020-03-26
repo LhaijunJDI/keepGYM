@@ -11,13 +11,17 @@ import com.lhj.keepgym.manage.mapper.OrderCoachMapper;
 import com.lhj.keepgym.manage.mapper.OrderCourseMapper;
 import com.lhj.keepgym.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-@Service
+/**
+ * @author Shinelon
+ */
+@Service(group = "manage")
 public class MessageServiceImpl implements MessageService {
     @Autowired
     private MessageMapper messageMapper;
@@ -42,18 +46,20 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
+    @Transactional
     public String insert(Message message) {
         int i1 = 0;
         message.setSendTime(new Date());
         message.setStatus("0");
-        int i = messageMapper.insertSelective(message);
+        int i = messageMapper.insert(message);
         if (i > 0) {
             //课程预约通知
             if("1".equals(message.getWh())){
                 OrderCourse orderCourse = new OrderCourse();
-                orderCourse.setId(Integer.parseInt(message.getReceiveId()));
                 orderCourse.setStatus("1");
-                 i1 = orderCourseMapper.updateByPrimaryKeySelective(orderCourse);
+                Example example = new Example(OrderCourse.class);
+                example.createCriteria().andEqualTo("memberId",message.getReceiveId());
+                 i1 = orderCourseMapper.updateByExampleSelective(orderCourse,example);
             }
             //私教预约通知
             if("2".equals(message.getWh())){

@@ -18,7 +18,7 @@ import java.util.Map;
 /**
  * @author Shinelon
  */
-@Service
+@Service(group = "manage")
 public class ClockServiceImpl implements ClockService {
 
     @Autowired

@@ -9,12 +9,16 @@ import com.lhj.keepgym.members.mapper.CourseMapper;
 import com.lhj.keepgym.members.mapper.MembersMapper;
 import com.lhj.keepgym.service.OrderCourseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-@Service
+/**
+ * @author Shinelon
+ */
+@Service(group = "member")
 public class OrderCourseServiceImpl implements OrderCourseService {
 
     @Autowired
@@ -27,6 +31,7 @@ public class OrderCourseServiceImpl implements OrderCourseService {
     private CourseMapper courseMapper;
 
     @Override
+    @Transactional
     public String saveOrderCourse(OrderCourse orderCourse) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
         Date orderTime = new Date();

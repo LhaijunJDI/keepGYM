@@ -9,13 +9,20 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+/**
+ * @author Shinelon
+ */
 @Controller
 public class OrderCourseController {
 
-    @Reference
+    @Reference(group = "member")
     private OrderCourseService orderCourseService;
 
-    //预约课程
+    /**
+     * 预约课程
+     * @param orderCourse
+     * @return
+     */
     @LoginRequired
     @PostMapping("/saveOrderCourse")
     @ResponseBody

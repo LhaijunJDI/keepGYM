@@ -25,14 +25,15 @@ import java.util.Map;
  */
 @Controller
 public class ManagerController {
-    @Reference
+    @Reference(group = "manage")
     private ManagerService managerService;
 
-    @Reference
+    @Reference(group = "manage")
     private ClockService clockService;
 
     /**
      * 管理员登录
+     *
      * @param id
      * @param password
      * @param request
@@ -48,10 +49,7 @@ public class ManagerController {
             userMap.put("managerId", id);
             userMap.put("managerName", manager.getName());
             //从request中获取ip
-            String ip = request.getRemoteAddr();
-            if(!StringUtils.isEmpty(ip)){
-                ip = "127.0.0.1";
-            }
+            String ip = "127.0.0.1";
             //按照加密算法生成token
             token = JwtUtil.encode("Lhaijun", userMap, ip);
             if (!StringUtils.isEmpty(token)) {
@@ -65,114 +63,115 @@ public class ManagerController {
     //检验token是否正确并将状态和用户id和密码返回给拦截器
     @RequestMapping("/verifyManager")
     @ResponseBody
-    public String verify(String token,String currentIp) {
+    public String verify(String token, String currentIp) {
 
-        Map<String,String> map = new HashMap<String, String>();
+        Map<String, String> map = new HashMap<String, String>();
         // 通过jwt校验token真假
         Map<String, Object> decode = JwtUtil.decode(token, "Lhaijun", currentIp);
-        if(StringUtils.isEmpty(decode)){
-            map.put("status","fail");
+        if (StringUtils.isEmpty(decode)) {
+            map.put("status", "fail");
             return JSON.toJSONString(map);
         }
-        map.put("status","success");
-        map.put("managerId",(String)decode.get("managerId"));
-        map.put("managerName",(String)decode.get("managerName"));
+        map.put("status", "success");
+        map.put("managerId", (String) decode.get("managerId"));
+        map.put("managerName", (String) decode.get("managerName"));
         return JSON.toJSONString(map);
     }
 
     /**
      * 前往后台管理员首页
+     *
      * @param managerId
      * @param model
      * @return
      */
     @LoginRequired(isManager = true)
     @RequestMapping("/toManageIndex")
-    public String toManageIndex(String managerId, Model model) {
-        model.addAttribute("managerId", managerId);
+    public String toManageIndex() {
         return "manageIndex";
     }
 
     /**
      * 前往会员管理页面
+     *
      * @param managerId
      * @param model
      * @return
      */
     @LoginRequired(isManager = true)
     @RequestMapping("/toMemberManage")
-    public String toMemberManage(String managerId, Model model) {
-        model.addAttribute("managerId", managerId);
+    public String toMemberManage() {
         return "memberManage";
     }
 
     /**
      * 前往员工管理页面
+     *
      * @param managerId
      * @param model
      * @return
      */
     @LoginRequired(isManager = true)
     @RequestMapping("/toEmployeeManage")
-    public String toEmployeeManage(String managerId, Model model) {
-        model.addAttribute("managerId", managerId);
+    public String toEmployeeManage() {
         return "employeeManage";
     }
 
     /**
      * 前往私教团课页面
+     *
      * @param managerId
      * @param model
      * @return
      */
     @LoginRequired(isManager = true)
     @RequestMapping("/toCourseManage")
-    public String toCourseManage(String managerId, Model model) {
-        model.addAttribute("managerId", managerId);
+    public String toCourseManage() {
         return "courseManage";
     }
 
     /**
      * 前往会员通知页面
+     *
      * @param managerId
      * @param model
      * @return
      */
     @LoginRequired(isManager = true)
     @RequestMapping("/toNoticeManage")
-    public String toNoticeManage(String managerId, Model model) {
-        model.addAttribute("managerId", managerId);
+    public String toNoticeManage() {
         return "noticeManage";
     }
 
     /**
      * 前往意见反馈页面
+     *
      * @param managerId
      * @param model
      * @return
      */
     @LoginRequired(isManager = true)
     @RequestMapping("/toFeedbackManage")
-    public String toFeedbackManage(String managerId, Model model) {
-        model.addAttribute("managerId", managerId);
+    public String toFeedbackManage() {
         return "feedbackManage";
     }
 
     /**
      * 前往数据导出页面
+     *
      * @param managerId
      * @param model
      * @return
      */
     @LoginRequired(isManager = true)
     @RequestMapping("/toBackUpManage")
-    public String toBackUpManage(String managerId, Model model) {
-        model.addAttribute("managerId", managerId);
+    public String toBackUpManage() {
         return "backupManage";
     }
 
     /**
      * 查询所有的管理员
+     *
      * @return
      */
     @GetMapping("/toSearchAllManager")
@@ -183,6 +182,7 @@ public class ManagerController {
 
     /**
      * 查询管理员信息
+     *
      * @param managerId
      * @return
      */
@@ -194,6 +194,7 @@ public class ManagerController {
 
     /**
      * 修改管理员信息
+     *
      * @param manager
      * @return
      */
@@ -206,6 +207,7 @@ public class ManagerController {
 
     /**
      * 删除管理员
+     *
      * @param managerId
      * @return
      */
@@ -217,6 +219,7 @@ public class ManagerController {
 
     /**
      * 添加管理员
+     *
      * @param manager
      * @return
      */
@@ -229,13 +232,14 @@ public class ManagerController {
 
     /**
      * 退出登录
+     *
      * @param request
      * @param response
      * @return
      */
     @GetMapping("/toLoginOut")
     public String toLoginOut(HttpServletRequest request, HttpServletResponse response) {
-        CookieUtil.deleteCookie(request,response,"oldManagerToken");
+        CookieUtil.deleteCookie(request, response, "oldManagerToken");
         return "login";
     }
 }

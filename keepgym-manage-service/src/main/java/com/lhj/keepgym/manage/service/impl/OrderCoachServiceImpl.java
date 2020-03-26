@@ -12,13 +12,17 @@ import com.lhj.keepgym.manage.mapper.OrderCourseMapper;
 import com.lhj.keepgym.service.OrderCoachService;
 import com.lhj.keepgym.service.OrderCourseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-@Service
+/**
+ * @author Shinelon
+ */
+@Service(group = "manage")
 public class OrderCoachServiceImpl implements OrderCoachService {
 
     @Autowired
@@ -55,6 +59,7 @@ public class OrderCoachServiceImpl implements OrderCoachService {
     }
 
     @Override
+    @Transactional
     public String buyCoachClass(OrderCoach orderCoach, String managerId) {
         OrderCoach orderCoach1 = orderCoachMapper.selectOrderCoachById(orderCoach.getCoachId(),orderCoach.getMemberId());
         if (orderCoach1 == null) {

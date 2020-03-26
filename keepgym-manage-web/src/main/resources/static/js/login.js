@@ -27,7 +27,7 @@ new Vue({
                         }
                         if (data != null) {
                             that.$message('登录成功！');
-                            window.location.href = "toManageIndex?managerId="+that.form.username+"&token="+data;
+                            window.location.href = "toManageIndex?token="+data;
                         }
                     }
                 });

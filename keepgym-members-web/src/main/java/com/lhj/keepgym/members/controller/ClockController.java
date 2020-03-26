@@ -13,7 +13,7 @@ import java.util.List;
 @Controller
 public class ClockController {
 
-    @Reference
+    @Reference(group = "member")
     private ClockService clockService;
 
     /**

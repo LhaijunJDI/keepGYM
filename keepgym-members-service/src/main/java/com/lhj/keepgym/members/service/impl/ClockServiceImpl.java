@@ -10,7 +10,10 @@ import tk.mybatis.mapper.entity.Example;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-@Service
+/**
+ * @author Shinelon
+ */
+@Service(group = "member")
 public class ClockServiceImpl implements ClockService {
     @Autowired
     private ClockMapper clockMapper;

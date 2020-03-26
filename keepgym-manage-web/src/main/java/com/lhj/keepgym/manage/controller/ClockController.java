@@ -1,22 +1,19 @@
 package com.lhj.keepgym.manage.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.lhj.keepgym.annotations.LoginRequired;
 import com.lhj.keepgym.bean.Clock;
 import com.lhj.keepgym.service.ClockService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Shinelon
  */
 @RestController
 public class ClockController {
-    @Reference
+    @Reference(group = "manage")
     private ClockService clockService;
 
     /**

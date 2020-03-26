@@ -2,6 +2,7 @@ package com.lhj.keepgym.manage.mapper;
 
 import com.lhj.keepgym.bean.Clock;
 import com.lhj.keepgym.bean.Members;
+import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 import tk.mybatis.mapper.common.Mapper;
@@ -19,6 +20,7 @@ public interface ClockMapper extends Mapper<Clock> {
      *
      * @return
      */
+    @Select(" select * from clock where TO_DAYS(clock_in_time) = TO_DAYS(NOW())")
     List<Clock> findCurrentDayMembers();
 
     /**
@@ -26,6 +28,7 @@ public interface ClockMapper extends Mapper<Clock> {
      *
      * @return
      */
+    @Select("select count(*) from clock where TO_DAYS(clock_in_time) = TO_DAYS(NOW())-1")
     Integer findADayMembers();
 
     /**
@@ -33,6 +36,7 @@ public interface ClockMapper extends Mapper<Clock> {
      *
      * @return
      */
+    @Select("select count(*) from clock where TO_DAYS(clock_in_time) = TO_DAYS(NOW())-2")
     Integer findBDayMembers();
 
     /**
@@ -40,6 +44,7 @@ public interface ClockMapper extends Mapper<Clock> {
      *
      * @return
      */
+    @Select("select count(*) from clock where TO_DAYS(clock_in_time) = TO_DAYS(NOW())-3")
     Integer findCDayMembers();
 
     /**
@@ -47,6 +52,7 @@ public interface ClockMapper extends Mapper<Clock> {
      *
      * @return
      */
+    @Select("select count(*) from clock where TO_DAYS(clock_in_time) = TO_DAYS(NOW())-4")
     Integer findDDayMembers();
 
     /**
@@ -54,6 +60,7 @@ public interface ClockMapper extends Mapper<Clock> {
      *
      * @return
      */
+    @Select("select count(*) from clock where TO_DAYS(clock_in_time) = TO_DAYS(NOW())-5")
     Integer findEDayMembers();
 
     /**
@@ -61,6 +68,7 @@ public interface ClockMapper extends Mapper<Clock> {
      *
      * @return
      */
+    @Select("select count(*) from clock where TO_DAYS(clock_in_time) = TO_DAYS(NOW())-6")
     Integer findFDayMembers();
 
     /**
@@ -68,6 +76,7 @@ public interface ClockMapper extends Mapper<Clock> {
      *
      * @return
      */
+    @Select("select count(*) from clock where TO_DAYS(clock_in_time) = TO_DAYS(NOW())-7")
     Integer findGDayMembers();
 
     /**

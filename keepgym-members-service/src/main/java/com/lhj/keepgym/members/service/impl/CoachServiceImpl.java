@@ -9,7 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.HashMap;
 import java.util.List;
 
-@Service
+/**
+ * @author Shinelon
+ */
+@Service(group = "member")
 public class CoachServiceImpl implements CoachService {
 
     @Autowired
@@ -17,8 +20,7 @@ public class CoachServiceImpl implements CoachService {
 
     @Override
     public List<Coach> findAllCoach() {
-        List<Coach> coaches = coachMapper.selectAll();
-        return coaches;
+        return coachMapper.selectAll();
     }
 
     @Override

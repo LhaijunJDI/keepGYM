@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * @author Shinelon
  */
-@Service
+@Service(group = "manage")
 public class ManagerServiceImpl implements ManagerService {
 
     @Autowired

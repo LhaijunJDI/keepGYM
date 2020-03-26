@@ -15,7 +15,7 @@ import java.util.List;
  */
 @RestController
 public class OrderCoachController {
-    @Reference
+    @Reference(group = "manage")
     private OrderCoachService orderCoachService;
 
 

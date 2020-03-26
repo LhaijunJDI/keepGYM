@@ -15,14 +15,13 @@ import java.util.List;
 @Controller
 public class CourseController {
 
-    @Reference
+    @Reference(group = "member")
     private CourseService courseService;
 
     //前往课程详情页面
     @LoginRequired
     @RequestMapping("/toMemberCourse")
-    public String toMemberCourse(String memberId, Model model) {
-        model.addAttribute("memberId", memberId);
+    public String toMemberCourse() {
         return "memberCourse";
     }
 

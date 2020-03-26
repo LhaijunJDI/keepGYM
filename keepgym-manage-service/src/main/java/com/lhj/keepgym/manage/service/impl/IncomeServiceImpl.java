@@ -5,13 +5,14 @@ import com.lhj.keepgym.bean.Income;
 import com.lhj.keepgym.manage.mapper.IncomeMapper;
 import com.lhj.keepgym.service.IncomeService;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-@Service
+/**
+ * @author Shinelon
+ */
+@Service(group = "manage")
 public class IncomeServiceImpl implements IncomeService {
 
     @Autowired
@@ -60,41 +61,41 @@ public class IncomeServiceImpl implements IncomeService {
     }
 
     @Override
-    public List<Float> findIncomeAtMonth() {
-        float money = 0;
-        List<Float> list = new ArrayList<Float>();
-        List<Income> incomeList = new ArrayList<Income>();
+    public List<Double> findIncomeAtMonth() {
+        Double money = 0.0;
+        List<Double> list = new ArrayList<Double>();
+        List<Income> incomeList;
         incomeList = incomeMapper.findIncomeAWeek();
         if (incomeList != null) {
             for (Income income : incomeList) {
-                money = money + Float.parseFloat(income.getMoney());
+                money = money + Double.parseDouble(income.getMoney());
             }
         }
         list.add(money);
-        money = 0;
+        money = 0.0;
 
         incomeList = incomeMapper.findIncomeBWeek();
         if (incomeList != null) {
             for (Income income : incomeList) {
-                money = money + Float.parseFloat(income.getMoney());
+                money = money + Double.parseDouble(income.getMoney());
             }
         }
         list.add(money);
-        money = 0;
+        money = 0.0;
 
         incomeList = incomeMapper.findIncomeCWeek();
         if (incomeList != null) {
             for (Income income : incomeList) {
-                money = money + Float.parseFloat(income.getMoney());
+                money = money + Double.parseDouble(income.getMoney());
             }
         }
         list.add(money);
-        money = 0;
+        money = 0.0;
 
         incomeList = incomeMapper.findIncomeDWeek();
         if (incomeList != null) {
             for (Income income : incomeList) {
-                money = money + Float.parseFloat(income.getMoney());
+                money = money + Double.parseDouble(income.getMoney());
             }
         }
         list.add(money);
@@ -103,26 +104,26 @@ public class IncomeServiceImpl implements IncomeService {
     }
 
     @Override
-    public List<Float> findIncomeType() {
-        float addCardIncome = 0;
-        float stopCardIncome = 0;
-        float renewCardIncome = 0;
-        float coachIncome = 0;
+    public List<Double> findIncomeType() {
+        Double addCardIncome = 0.0;
+        Double stopCardIncome = 0.0;
+        Double renewCardIncome = 0.0;
+        Double coachIncome = 0.0;
         List<Income> incomeLastMonth = incomeMapper.findIncomeLastMonth();
-        List<Float> list = new ArrayList<Float>();
+        List<Double> list = new ArrayList<Double>();
         if (incomeLastMonth != null) {
             for (Income income : incomeLastMonth) {
                 if("会员办卡".equals(income.getRevenueType())){
-                    addCardIncome = addCardIncome + Float.parseFloat(income.getMoney());
+                    addCardIncome = addCardIncome + Double.parseDouble(income.getMoney());
                 }
                 if("会员续费".equals(income.getRevenueType())){
-                    renewCardIncome = renewCardIncome + Float.parseFloat(income.getMoney());
+                    renewCardIncome = renewCardIncome + Double.parseDouble(income.getMoney());
                 }
                 if("会员停卡".equals(income.getRevenueType())){
-                    stopCardIncome = stopCardIncome + Float.parseFloat(income.getMoney());
+                    stopCardIncome = stopCardIncome + Double.parseDouble(income.getMoney());
                 }
                 if("私教收入".equals(income.getRevenueType())){
-                    coachIncome = coachIncome + Float.parseFloat(income.getMoney());
+                    coachIncome = coachIncome + Double.parseDouble(income.getMoney());
                 }
             }
             list.add(addCardIncome);

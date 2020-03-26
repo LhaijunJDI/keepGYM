@@ -17,7 +17,7 @@ import java.util.List;
 @RestController
 public class MessageController {
 
-    @Reference
+    @Reference(group = "manage")
     private MessageService messageService;
 
     /**

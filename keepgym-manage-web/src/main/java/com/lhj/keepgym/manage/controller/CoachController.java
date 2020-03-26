@@ -14,7 +14,7 @@ import java.util.List;
 @RestController
 public class CoachController {
 
-    @Reference
+    @Reference(group = "manage")
     private CoachService coachService;
 
     /**

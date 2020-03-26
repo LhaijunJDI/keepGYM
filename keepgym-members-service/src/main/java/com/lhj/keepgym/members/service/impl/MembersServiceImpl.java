@@ -12,7 +12,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Service
+/**
+ * @author Shinelon
+ */
+@Service(group = "member")
 public class MembersServiceImpl implements MembersService {
 
     @Autowired

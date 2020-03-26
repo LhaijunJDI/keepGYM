@@ -18,14 +18,13 @@ import java.util.List;
 @Controller
 public class CoachController {
 
-    @Reference
+    @Reference(group = "member")
     private CoachService coachService;
 
     //前往教练信息页面
     @RequestMapping("/toMemberCoach")
     @LoginRequired
-    public String toMemberCoach(String memberId, Model model) {
-        model.addAttribute("memberId", memberId);
+    public String toMemberCoach() {
         return "memberCoach";
     }
 

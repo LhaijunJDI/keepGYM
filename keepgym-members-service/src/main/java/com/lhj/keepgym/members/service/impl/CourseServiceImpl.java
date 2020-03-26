@@ -9,7 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.text.ParseException;
 import java.util.List;
 
-@Service
+/**
+ * @author Shinelon
+ */
+@Service(group = "member")
 public class CourseServiceImpl implements CourseService {
 
     @Autowired
@@ -17,8 +20,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public List<Course> findAllCourse() {
-        List<Course>  courses = courseMapper.findAllCourse();
-        return courses;
+        return courseMapper.findAllCourse();
     }
 
     @Override

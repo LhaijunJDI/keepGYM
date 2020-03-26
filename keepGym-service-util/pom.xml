@@ -37,10 +37,7 @@
             <scope>runtime</scope>
         </dependency>
 
-        <dependency>
-            <groupId>org.apache.curator</groupId>
-            <artifactId>curator-framework</artifactId>
-        </dependency>
+
 
         <dependency>
             <groupId>redis.clients</groupId>

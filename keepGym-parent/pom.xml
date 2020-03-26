@@ -8,7 +8,7 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-parent</artifactId>
         <version>2.2.4.RELEASE</version>
-
+        <relativePath/>
     </parent>
 
     <modules>
@@ -44,14 +44,14 @@
         <jsoup.version>1.11.2</jsoup.version>
         <httpclient.version>4.5.5</httpclient.version>
         <commons-lang3.version>3.7</commons-lang3.version>
-        <mapper-starter.version>1.2.3</mapper-starter.version>
+        <mapper-starter.version>2.1.5</mapper-starter.version>
         <jedis.version>2.9.0</jedis.version>
         <jest.version>5.3.3</jest.version>
         <jna.version>4.5.1</jna.version>
         <beanUtils.version>1.9.3</beanUtils.version>
         <support.version>1.0.2</support.version>
-        <curator.version>2.6.0</curator.version>
-
+        <curator.version>2.12.0</curator.version>
+        <netty.version>4.1.32.Final</netty.version>
     </properties>
 
     <dependencyManagement>
@@ -62,23 +62,25 @@
                 <version>${fastjson.version}</version>
             </dependency>
 
-            <dependency>
+           <!-- <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>dubbo</artifactId>
                 <version>${dubbo.version}</version>
             </dependency>
-
-            <dependency>
+-->
+            <!--<dependency>
                 <groupId>com.101tec</groupId>
                 <artifactId>zkclient</artifactId>
                 <version>${zkclient.version}</version>
-            </dependency>
+            </dependency>-->
 
-            <dependency>
+            <!--<dependency>
                 <groupId>com.alibaba.boot</groupId>
                 <artifactId>dubbo-spring-boot-starter</artifactId>
                 <version>${dbstarter.version}</version>
-            </dependency>
+            </dependency>-->
+
+
 
             <dependency>
                 <groupId>org.mybatis.spring.boot</groupId>
@@ -87,30 +89,8 @@
             </dependency>
 
 
-            <dependency>
-                <groupId>net.sourceforge.nekohtml</groupId>
-                <artifactId>nekohtml</artifactId>
-                <version>${nekohtml.version}</version>
-            </dependency>
 
-            <dependency>
-                <groupId>xml-apis</groupId>
-                <artifactId>xml-apis</artifactId>
-                <version>${xml-apis.version}</version>
-            </dependency>
 
-            <dependency>
-                <groupId>org.apache.xmlgraphics</groupId>
-                <artifactId>batik-ext</artifactId>
-                <version>${batik-ext.version}</version>
-            </dependency>
-
-            <!-- https://mvnrepository.com/artifact/org.jsoup/jsoup -->
-            <dependency>
-                <groupId>org.jsoup</groupId>
-                <artifactId>jsoup</artifactId>
-                <version>${jsoup.version}</version>
-            </dependency>
 
             <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
             <dependency>
@@ -138,19 +118,7 @@
                 <version>${jedis.version}</version>
             </dependency>
 
-            <!-- https://mvnrepository.com/artifact/io.searchbox/jest -->
-            <dependency>
-                <groupId>io.searchbox</groupId>
-                <artifactId>jest</artifactId>
-                <version>${jest.version}</version>
-            </dependency>
 
-            <!-- https://mvnrepository.com/artifact/net.java.dev.jna/jna -->
-            <dependency>
-                <groupId>net.java.dev.jna</groupId>
-                <artifactId>jna</artifactId>
-                <version>${jna.version}</version>
-            </dependency>
 
             <dependency>
                 <groupId>commons-beanutils</groupId>
@@ -158,27 +126,26 @@
                 <version>${beanUtils.version}</version>
             </dependency>
 
-            <dependency>
+            <!--<dependency>
                 <groupId>com.alibaba.spring</groupId>
                 <artifactId>spring-context-support</artifactId>
                 <version>${support.version}</version>
-            </dependency>
+            </dependency>-->
 
-            <dependency>
+          <!--  <dependency>
                 <groupId>org.apache.curator</groupId>
                 <artifactId>curator-framework</artifactId>
                 <version>${curator.version}</version>
+            </dependency>-->
+
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-all</artifactId>
+                <version>${netty.version}</version>
             </dependency>
 
         </dependencies>
     </dependencyManagement>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
+
 </project>

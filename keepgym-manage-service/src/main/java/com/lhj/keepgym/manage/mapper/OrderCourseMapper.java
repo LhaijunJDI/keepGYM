@@ -8,6 +8,9 @@ import tk.mybatis.mapper.common.Mapper;
 
 import java.util.List;
 
+/**
+ * @author Shinelon
+ */
 @Repository
 public interface OrderCourseMapper  extends Mapper<OrderCourse> {
     List<OrderCourse> findAllOrders();

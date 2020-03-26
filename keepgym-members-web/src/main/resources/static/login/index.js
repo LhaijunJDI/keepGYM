@@ -30,7 +30,7 @@ new Vue({
                             }
                             if (data != null) {
                                 that.$message('登录成功！');
-                                window.location.href = "toMemberGym?memberId="+that.userInfo.username+"&token="+data;
+                                window.location.href = "toMemberGym?"+"token="+data;
                             }
                         }
                     });

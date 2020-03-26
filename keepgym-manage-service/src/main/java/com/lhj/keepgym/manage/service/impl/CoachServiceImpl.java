@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * @author Shinelon
  */
-@Service
+@Service(group = "manage")
 public class CoachServiceImpl implements CoachService {
 
     @Autowired
@@ -23,7 +23,7 @@ public class CoachServiceImpl implements CoachService {
 
     @Override
     public List<Coach> findAllCoach() {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         List<Coach> coaches = coachMapper.selectAll();
         if (coaches != null) {
             for (Coach coach : coaches) {

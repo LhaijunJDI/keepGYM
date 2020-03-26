@@ -2,7 +2,6 @@ package com.lhj.keepgym.manage.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 
-import com.lhj.keepgym.manage.mapper.MembersMapper;
 import com.lhj.keepgym.service.*;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -10,16 +9,12 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import static com.sun.xml.internal.ws.policy.sourcemodel.wspolicy.XmlToken.Name;
 
 
 /**
@@ -29,19 +24,19 @@ import static com.sun.xml.internal.ws.policy.sourcemodel.wspolicy.XmlToken.Name;
 @RestController
 public class PoiController {
 
-    @Reference
+    @Reference(group = "manage")
     private IncomeService incomeService;
 
-    @Reference
+    @Reference(group = "manage")
     private MembersService membersService;
 
-    @Reference
+    @Reference(group = "manage")
     private ManagerService managerService;
 
-    @Reference
+    @Reference(group = "manage")
     private CoachService coachService;
 
-    @Reference
+    @Reference(group = "manage")
     private FeedbackService feedbackService;
 
     @GetMapping("/toIncomeExcel")
