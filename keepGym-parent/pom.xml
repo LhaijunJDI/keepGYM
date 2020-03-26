@@ -51,7 +51,7 @@
         <beanUtils.version>1.9.3</beanUtils.version>
         <support.version>1.0.2</support.version>
         <curator.version>2.12.0</curator.version>
-        <netty.version>4.1.32.Final</netty.version>
+        <netty.version>4.1.42.Final</netty.version>
     </properties>
 
     <dependencyManagement>
